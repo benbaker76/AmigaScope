@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "amigascope": {
+      "command": "python3",
+      "args": ["/ABSOLUTE/PATH/TO/AmigaScope/amigascope_mcp.py"],
+      "env": {
+        "AMIGASCOPE_ENV": "/ABSOLUTE/PATH/TO/your-project.env",
+        "AMIGASCOPE_ELF": "/ABSOLUTE/PATH/TO/your.elf"
+      }
+    }
+  }
+}

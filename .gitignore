@@ -13,6 +13,9 @@ __pycache__/
 /*.png
 !docs/**
 
+# A user's real MCP client config (with their absolute paths) — keep .example only
+/.mcp.json
+
 # Editor / OS
 .vscode/
 .idea/

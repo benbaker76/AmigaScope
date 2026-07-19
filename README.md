@@ -62,12 +62,12 @@ constructing shell commands — structured results, and DMA maps / frontbuffer c
 back as inline images. Same engine (the CLI); MCP is just the AI-facing face.
 
 ```sh
-pip install mcp                 # one-time; only the MCP server needs it
-python3 amigascope_mcp.py       # stdio transport
+pip install -r requirements.txt   # Pillow + mcp
+python3 amigascope_mcp.py         # stdio transport
 ```
 
-Register it as a stdio server in your client (command `python3`, arg `amigascope_mcp.py`).
-It exposes ~24 tools — `read_memory` / `write_memory` / `read_symbol` / `write_symbol`,
+**Registration:** see **[docs/MCP.md](docs/MCP.md)** for Claude Code / Claude Desktop setup
+(there's a ready-to-edit `.mcp.json.example`). It exposes ~24 tools — `read_memory` / `write_memory` / `read_symbol` / `write_symbol`,
 `set_breakpoint` / `set_watchpoint` / `continue_and_wait` / `step_instruction` /
 `backtrace` / `registers` / `disassemble` / `gdb_raw`, plus `dma_profile` / `dma_map` /
 `cpu_flamegraph` / `size_profile` / `disasm_copper` / `capture_frontbuffer` and
@@ -114,7 +114,7 @@ function is eating the frame budget?* — with **measurement, not guesswork.**
 git clone --recursive git@github.com:benbaker76/AmigaScope.git   # pulls FlameGraph too
 # already cloned? grab the submodule:
 git submodule update --init --recursive
-pip install pillow
+pip install -r requirements.txt      # Pillow (CLI) + mcp (MCP server)
 ```
 
 ## Quick start
