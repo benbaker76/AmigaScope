@@ -1,6 +1,7 @@
 # AmigaScope
 
-**A headless, AI-friendly harness for debugging and profiling real Amiga (and SDL) code.**
+**A headless, AI-friendly harness for debugging, instrumenting, and profiling real Amiga
+(and SDL) code.**
 
 One command-line pipe — **no IDE, no GUI**:
 
@@ -10,9 +11,10 @@ One command-line pipe — **no IDE, no GUI**:
    is **scriptable**, so an AI assistant (Claude Code, etc.) or any tool can read/write
    memory, set breakpoints and watchpoints, inspect registers, single-step, and drive the
    target one command at a time.
-2. **Profiling.** On the same pipe: cycle-exact **DMA raster maps**, **CPU flame graphs**
-   (flat or hierarchical), live **copper** disassembly, and **frontbuffer** capture — what's
-   eating the frame budget and what the hardware is doing, cycle-exact.
+2. **Instrumentation.** Observe the live machine, cycle-exact: **DMA raster maps** (which
+   channel owns every colour-clock), live **copper** disassembly, and **frontbuffer** capture.
+3. **Profiling.** Where the cycles go: **CPU flame graphs** (flat or hierarchical) and
+   DMA-contention analysis — what's eating the frame budget.
 
 | Tool | What it does |
 |------|--------------|
@@ -51,10 +53,10 @@ The **same** harness with `--mode sdl` drives the native Linux/SDL build under `
 watchpoint, continue, read the faulting struct, correlate with source — with no human clicking
 in an IDE. That is the point of AmigaScope; the profilers below are a bonus built on the same pipe.
 
-## Profiling
+## Instrumentation & profiling
 
-Once you can drive the target headlessly, the same pipe feeds cycle-exact profiling.
-Screenshots tell you *what* went wrong; these tell you *why* — *is the blitter running on
+Once you can drive the target headlessly, the same pipe feeds cycle-exact instrumentation
+and profiling. Screenshots tell you *what* went wrong; these tell you *why* — *is the blitter running on
 display lines? where does the bitplane fetch start relative to the sprite DMA slots? what
 function is eating the frame budget?* — with **measurement, not guesswork.**
 
