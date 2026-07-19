@@ -56,24 +56,59 @@ def _count_blocks(path):
         c += 1; off = i + len(MARKER)
     return c
 
-def do_profile(n, out, wait=None):
-    if os.path.exists(out): os.remove(out)
-    # IMPORTANT: `monitor profile` does NOT block until the file is ready. It sends
-    # an INSTANT benign ack ("Protocol error with Rcmd: 01"), resumes the target via
-    # deactivate_debugger(), and profiles N frames ASYNCHRONOUSLY — writing the file
-    # only when done. Under the cycle-exact DMA recorder each frame costs ~15-25s of
-    # wall-clock, so we must POLL for the file, not test os.path.exists() right after
-    # the ack (the historic bug that made this always report FAILED). Completion =
-    # N DMA frame-blocks present. Budget scales with N (cycle-exact is slow); active
-    # HW-sprite ("band") frames are far slower still and may not complete — profile
-    # the bob path for the bitplane-fetch geometry instead.
-    gdb(f'monitor profile {n} "" "{out}"', t=30)
-    deadline = time.time() + (wait if wait is not None else n * 90 + 60)
-    while time.time() < deadline:
-        if _count_blocks(out) >= n:
-            time.sleep(1)   # let trailing resource/screenshot bytes flush
-            return True
-        time.sleep(2)
+def _gdb_pids():
+    try:
+        r = subprocess.run(["pgrep", "-f", "m68k-amiga-elf-gdb"],
+                           capture_output=True, text=True, timeout=10)
+        return [int(x) for x in r.stdout.split()]
+    except Exception:
+        return []
+
+def _interrupt():
+    import signal
+    for pid in _gdb_pids():
+        try: os.kill(pid, signal.SIGINT)
+        except (ProcessLookupError, PermissionError): pass
+
+def _proxy(*args, t=15):
+    try:
+        return subprocess.run(["python3", PROXY, *args],
+                              capture_output=True, text=True, timeout=t).stdout
+    except Exception:
+        return ""
+
+def do_profile(n, out, wait=None, attempts=8, per_frame=22):
+    """Capture N frames of cycle-exact DMA/CPU into `out`.
+
+    `monitor profile` returns an INSTANT benign ack ("Protocol error with Rcmd: 01") and
+    writes the file ASYNCHRONOUSLY — completion = N MARKER blocks present; never test
+    os.path.exists right after the ack (the historic always-FAILED bug).
+
+    The recorder's cost scales with DMA *volume*: a DMA-heavy frame (boot-time RNC
+    decompress, active HW sprites, a mega-blit frame) takes minutes — a stall — while a
+    light steady-render frame finishes in ~1-5 s. So each attempt is watchdogged; on a
+    stall we ABORT and advance the rig to a later (lighter) frame, then retry. That is what
+    makes profiling work right after a fresh `amiga_gdb.sh up`, while the rig is still
+    churning through boot, without hanging on the heavy frames."""
+    budget = wait if wait is not None else per_frame * n
+    for attempt in range(attempts):
+        if os.path.exists(out):
+            try: os.remove(out)
+            except OSError: pass
+        gdb(f'monitor profile {n} "" "{out}"', t=30)
+        deadline = time.time() + budget
+        while time.time() < deadline:
+            if _count_blocks(out) >= n:
+                time.sleep(1)               # let trailing resource/screenshot bytes flush
+                return True
+            time.sleep(2)
+        if attempt < attempts - 1:          # stalled on a heavy frame -> abort + advance
+            _interrupt(); time.sleep(2)
+            _proxy("waitstop", "8")
+            _proxy("cmd", "delete")
+            _proxy("cmd", "continue", "--timeout", "2", t=8)   # run a few frames past it
+            _interrupt(); time.sleep(1)
+            _proxy("waitstop", "8")
     return _count_blocks(out) >= n
 
 def parse(path):
@@ -93,6 +128,7 @@ def parse(path):
     print(f"{os.path.basename(path)}: {len(blocks)} DMA frame block(s)")
     for fi, (start, blk) in enumerate(blocks):
         analyze_frame(fi, blk)
+        analyze_budget(fi, blk)
         analyze_fetch(fi, blk)
 
 FETCH_DISPLAY_VLO, FETCH_DISPLAY_VHI = 36, 307   # SWOS AGA pitch vertical window
@@ -138,6 +174,44 @@ def analyze_fetch(fi, blk):
             print(f"    CLEAR: fetch start 0x{bpl_min:02x} is past all sprite slots -> sprites safe")
     else:
         print("    (no sprite DMA slots recorded this frame)")
+
+# vscode-amiga-debug-style DMA channel breakdown: every colour-clock categorised by
+# channel (type at rec+29) and subtype (extra at rec+31), as % of the frame raster.
+DMA_GROUP   = {1: "Refresh", 2: "CPU", 3: "Copper", 4: "Audio", 5: "Blitter",
+               6: "Bitplane", 7: "Sprite", 8: "Disk", 9: "Conflict"}
+_CPU_SUB    = {0: "Code", 1: "Data"}
+_COPPER_SUB = {0: "Copper", 1: "Wait", 2: "Special"}
+
+def analyze_budget(fi, blk):
+    """Frame DMA budget: every colour-clock by channel (+ CPU Code/Data and Copper
+    Copper/Wait/Special subtypes), as % of the frame raster — the breakdown the
+    vscode-amiga-debug frame profiler shows beside the flame graph."""
+    cat = {}; used = 0
+    for idx in range(DMACOUNT):
+        b = idx * SIZEOF_DMAREC
+        typ = struct.unpack_from("<h", blk, b + 29)[0]
+        if typ <= 0:
+            continue
+        used += 1
+        extra = struct.unpack_from("<H", blk, b + 31)[0]
+        if typ == 2:                                    # CPU -> Code/Data
+            key = ("CPU", _CPU_SUB.get(extra & 1, "?"))
+        elif typ == 3:                                  # Copper -> Copper/Wait/Special
+            key = ("Copper", _COPPER_SUB.get(extra, "Copper"))
+        else:
+            key = (DMA_GROUP.get(typ, str(typ)), None)
+        cat[key] = cat.get(key, 0) + 1
+    pct = lambda c: 100.0 * c / DMACOUNT
+    print(f"    DMA budget — {used:,}/{DMACOUNT:,} colour-clocks used ({pct(used):.1f}% of frame):")
+    for grp in ("CPU", "Blitter", "Bitplane", "Copper", "Sprite", "Refresh", "Audio", "Disk", "Conflict"):
+        subs = {k[1]: v for k, v in cat.items() if k[0] == grp}
+        if not subs:
+            continue
+        tot = sum(subs.values())
+        print(f"      {grp:9} {pct(tot):6.2f}%  ({tot:,} cc)")
+        for sub, v in sorted(subs.items(), key=lambda kv: -kv[1]):
+            if sub is not None:
+                print(f"        {sub:7} {pct(v):6.2f}%  ({v:,} cc)")
 
 def analyze_frame(fi, blk):
     # per-scanline channel tallies

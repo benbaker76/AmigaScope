@@ -19,14 +19,17 @@ One command-line pipe — **no IDE, no GUI**:
 | Tool | What it does |
 |------|--------------|
 | **gdb harness** — `gdb_proxy.py` + `amiga_gdb.sh` | **The core.** Launch + attach gdb to a running Amiga (m68k via FS-UAE) *or* the SDL/x86 build, then drive it headlessly: read/write memory, breakpoints, watchpoints, registers, backtraces, `stepi`, `continue`. One command per call, async-halt aware — built for scripts and AI assistants. |
-| DMA raster map — `dma_profile.py` | Every colour-clock × scanline, colour-coded by DMA channel; *see* the blitter steal the beam or a fetch clobber a sprite slot. |
+| DMA raster map — `dma_profile.py` | Every colour-clock × scanline, colour-coded by DMA channel; *see* the blitter steal the beam or a fetch clobber a sprite slot. Plus a per-channel **frame budget** (CPU Code/Data, Blitter, Bitplane, Copper Copper/Wait/Special, Sprite, Refresh, Audio). |
 | CPU flame graph — `cpu_flamegraph.py` | Where the 68k spends the frame — flat or hierarchical (DWARF unwind), via FlameGraph. |
 | Size profiler — `size_profile.py` | Where the *bytes* go — functions / data / references (relocations), with a size flame graph. Static (no running target). |
 | Copper disassembler — `copper_disasm.py` | A live copper list decoded (BPLCON0 planes, FMODE, DDF/DIW, fine-scroll, colours). |
 | Frontbuffer capture — `fb_capture.py` | The displayed bitmap decoded straight from chip RAM. |
 
 It grew out of debugging AGA rendering on a Sensible World of Soccer port, but the harness
-is generic Amiga (+ SDL) debugging.
+is generic Amiga (+ SDL) debugging. **Works with C *and* assembler projects** (anything gdb
+can debug — e.g. vasm/vlink builds from vscode-amiga-assembly): symbol resolution matches
+the `.text` section, not a C function type. Hierarchical CPU stacks want DWARF
+`.debug_frame` (C toolchains emit it); without it the CPU profile is a flat self-time view.
 
 ## Debugging — the core
 

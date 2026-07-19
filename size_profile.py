@@ -35,7 +35,12 @@ def symbols(elf):
         sec = next((t for t in lt if t.startswith(".")), None)
         if not sec:
             continue
-        kind = "func" if "F" in lt else ("data" if "O" in lt else "other")
+        # C emits F(unction)/O(bject) types; assembler labels are untyped, so fall back
+        # to the section: anything in .text is code, everything else is data.
+        if "F" in lt:      kind = "func"
+        elif "O" in lt:    kind = "data"
+        elif sec == ".text": kind = "func"
+        else:              kind = "data"
         try:
             size = int(right.split()[0], 16)
             name = right.split(None, 1)[1]

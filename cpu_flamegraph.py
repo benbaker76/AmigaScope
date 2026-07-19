@@ -43,18 +43,22 @@ def load_symbols(elf):
         sys.stderr.write(f"objdump -t failed: {e}\n"); return [], []
     ents = []
     for line in out.splitlines():
-        if " F .text" not in line:
+        # Any symbol whose section is .text — C functions are typed `F`, but assembler
+        # labels (vasm/vlink) are plain (no `F`), so match the section, not the type.
+        # "00139454 l     F .text\t00000402 name"  or  "00001234 l       .text\t0 label"
+        if "\t" not in line:
             continue
-        # "00139454 l     F .text\t00000402 MainKeysCheck.part.0"
+        left, right = line.split("\t", 1)
+        if not left.rstrip().endswith(".text"):
+            continue
         try:
-            addr = int(line[:8], 16)
-            rest = line.split(" F .text", 1)[1].strip()
-            sz, _, name = rest.partition(" ")
-            size = int(sz, 16)
+            addr = int(left[:8], 16)
+            sz, _, name = right.partition(" ")
+            size = int(sz, 16)                      # 0 for un-sized asm labels
         except (ValueError, IndexError):
             continue
         if name:
-            ents.append((addr, addr + max(size, 2), name))
+            ents.append((addr, addr + size, name))  # end==addr when size unknown (asm)
     ents.sort()
     return [e[0] for e in ents], ents
 
@@ -176,7 +180,9 @@ def resolve(pc, tvma, starts, ents):
     i = bisect.bisect_right(starts, addr) - 1
     if 0 <= i < len(ents):
         s, e, n = ents[i]
-        return n if addr < e else n + "_[tail]"
+        if e > s and addr >= e:      # known size and we're past it (padding/thunk)
+            return n + "_[tail]"
+        return n                     # within the symbol, or an un-sized asm label
     return f"[0x{addr:06x}]"
 
 # ---- .prof parse (layout per vscode-amiga-debug profile.ts) -------------------
