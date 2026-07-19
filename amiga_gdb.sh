@@ -44,6 +44,12 @@ set -u
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GDB_PROXY="${GDB_PROXY:-$SELF_DIR/gdb_proxy.py}"
 
+# Per-project config. Point AMIGASCOPE_ENV at a file that exports the vars below for
+# your target (DH0/DH1 hard drives, KICKSTART, the entry-symbol TRIGGER, ENTRY_PC,
+# FSUAE_BIN, ...). Sourced here so the values below act only as reference defaults.
+[ -n "${AMIGASCOPE_ENV:-}" ] && [ -f "$AMIGASCOPE_ENV" ] && . "$AMIGASCOPE_ENV"
+
+# --- reference defaults (the SWOS bring-up project); override via AMIGASCOPE_ENV ---
 FSUAE_DIR="${FSUAE_DIR:-/mnt/c/Users/headk/.vscode/extensions/bartmanabyss.amiga-debug-1.8.2/bin/linux/fs-uae}"
 FSUAE_BIN="${FSUAE_BIN:-$FSUAE_DIR/fs-uae}"
 DH0="${DH0:-/mnt/c/Users/headk/.vscode/extensions/bartmanabyss.amiga-debug-1.8.2/bin/dh0}"
