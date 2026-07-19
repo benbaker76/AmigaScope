@@ -1,0 +1,3 @@
+[submodule "third_party/FlameGraph"]
+	path = third_party/FlameGraph
+	url = git@github.com:benbaker76/FlameGraph.git

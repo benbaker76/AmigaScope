@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Profiler captures & generated output
+*.prof
+*.unwind
+*.folded
+
+# Generated artifacts (keep the curated examples in docs/)
+/*.svg
+/*.png
+!docs/**
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
