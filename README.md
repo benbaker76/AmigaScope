@@ -21,6 +21,7 @@ One command-line pipe — **no IDE, no GUI**:
 | **gdb harness** — `gdb_proxy.py` + `amiga_gdb.sh` | **The core.** Launch + attach gdb to a running Amiga (m68k via FS-UAE) *or* the SDL/x86 build, then drive it headlessly: read/write memory, breakpoints, watchpoints, registers, backtraces, `stepi`, `continue`. One command per call, async-halt aware — built for scripts and AI assistants. |
 | DMA raster map — `dma_profile.py` | Every colour-clock × scanline, colour-coded by DMA channel; *see* the blitter steal the beam or a fetch clobber a sprite slot. |
 | CPU flame graph — `cpu_flamegraph.py` | Where the 68k spends the frame — flat or hierarchical (DWARF unwind), via FlameGraph. |
+| Size profiler — `size_profile.py` | Where the *bytes* go — functions / data / references (relocations), with a size flame graph. Static (no running target). |
 | Copper disassembler — `copper_disasm.py` | A live copper list decoded (BPLCON0 planes, FMODE, DDF/DIW, fine-scroll, colours). |
 | Frontbuffer capture — `fb_capture.py` | The displayed bitmap decoded straight from chip RAM. |
 
@@ -53,6 +54,26 @@ The **same** harness with `--mode sdl` drives the native Linux/SDL build under `
 watchpoint, continue, read the faulting struct, correlate with source — with no human clicking
 in an IDE. That is the point of AmigaScope; the profilers below are a bonus built on the same pipe.
 
+## MCP server (AI-native frontend)
+
+Everything above is also exposed over the **Model Context Protocol**, so an MCP client
+(Claude Code, Claude Desktop, …) drives the debugger through **typed tools** instead of
+constructing shell commands — structured results, and DMA maps / frontbuffer captures come
+back as inline images. Same engine (the CLI); MCP is just the AI-facing face.
+
+```sh
+pip install mcp                 # one-time; only the MCP server needs it
+python3 amigascope_mcp.py       # stdio transport
+```
+
+Register it as a stdio server in your client (command `python3`, arg `amigascope_mcp.py`).
+It exposes ~24 tools — `read_memory` / `write_memory` / `read_symbol` / `write_symbol`,
+`set_breakpoint` / `set_watchpoint` / `continue_and_wait` / `step_instruction` /
+`backtrace` / `registers` / `disassemble` / `gdb_raw`, plus `dma_profile` / `dma_map` /
+`cpu_flamegraph` / `size_profile` / `disasm_copper` / `capture_frontbuffer` and
+`harness_up` / `harness_down`. Debugging tools need the harness up; profiling tools need
+the cycle-exact FS-UAE build.
+
 ## Instrumentation & profiling
 
 Once you can drive the target headlessly, the same pipe feeds cycle-exact instrumentation
@@ -79,6 +100,8 @@ function is eating the frame budget?* — with **measurement, not guesswork.**
 - FS-UAE source alone (if building it yourself):
   [`benbaker76/fs-uae` @ `remote_debugger_barto`](https://github.com/benbaker76/fs-uae/tree/remote_debugger_barto).
 - **Python 3.6+** with **Pillow** (`pip install pillow`) for the PNG raster maps.
+- **`mcp`** (`pip install mcp`) — only if you use the MCP server (`amigascope_mcp.py`);
+  the CLI needs nothing extra.
 - **FlameGraph** — bundled as a git **submodule** (`third_party/FlameGraph`, from
   [`benbaker76/FlameGraph`](https://github.com/benbaker76/FlameGraph)); no extra install if
   you clone recursively. Override the renderer with `$FLAMEGRAPH_PY` if you prefer.
