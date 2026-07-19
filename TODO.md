@@ -20,9 +20,9 @@ documented config is the main work to make AmigaScope truly general.
 
 - [ ] Decide a home for the scripts (flat root vs `bin/`) and a `pyproject.toml` /
       console-scripts entry so `pip install -e .` gives `amigascope-dma` etc.
-- [ ] Vendor or clearly reference the FlameGraph renderer (`$FLAMEGRAPH_PY`). It has its
-      own license — keep it external or in an isolated `third_party/` dir.
-- [ ] Add a `LICENSE` (MIT?) — README currently says TBD.
+- [x] FlameGraph renderer bundled as a submodule in `third_party/FlameGraph` (keeps its
+      own upstream license).
+- [x] `LICENSE` — MIT.
 
 ## Features
 

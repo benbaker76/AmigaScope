@@ -2,9 +2,9 @@
 
 **Headless, cycle-exact profiling & visualization for real Amiga code.**
 
-AmigaScope is a small suite of Python/shell tools that drive [Bartman's
-`amiga-debug`](https://github.com/BartmanAbyss/vscode-amiga-debug) fork of **FS-UAE**
-(the one with the WinUAE cycle-exact DMA recorder + CPU profiler) over its gdb stub —
+AmigaScope is a small suite of Python/shell tools that drive the cycle-exact **FS-UAE**
+build from [`benbaker76/vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)
+(the WinUAE cycle-exact DMA recorder + CPU profiler) over its gdb stub —
 **no IDE, no GUI**. They read live emulator state and turn it into pictures you can
 reason about:
 
@@ -31,11 +31,13 @@ with **measurement, not guesswork.**
 
 ## Requirements
 
-- **The cycle-exact FS-UAE fork** with the `monitor profile` command:
-  [`benbaker76/fs-uae` @ `remote_debugger_barto`](https://github.com/benbaker76/fs-uae/tree/remote_debugger_barto)
-  (Bartman/Abyss' WinUAE cycle-exact recorder ported to FS-UAE). A stock FS-UAE has no DMA
-  recorder. Point the harness at it with `FSUAE_BIN`.
-- **`m68k-amiga-elf` binutils** (`objdump`) — ships with the amiga-debug extension.
+- **The [`benbaker76/vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)
+  extension** — kept in sync with our custom FS-UAE. It bundles both the cycle-exact
+  **FS-UAE** build (the `monitor profile` DMA recorder AmigaScope drives) and the
+  **`m68k-amiga-elf` toolchain** (`objdump`, used for symbol/DWARF resolution). Point the
+  harness at the bundled FS-UAE with `FSUAE_BIN`; a stock FS-UAE has no DMA recorder.
+- FS-UAE source alone (if building it yourself):
+  [`benbaker76/fs-uae` @ `remote_debugger_barto`](https://github.com/benbaker76/fs-uae/tree/remote_debugger_barto).
 - **Python 3.6+** with **Pillow** (`pip install pillow`) for the PNG raster maps.
 - **FlameGraph** — bundled as a git **submodule** (`third_party/FlameGraph`, from
   [`benbaker76/FlameGraph`](https://github.com/benbaker76/FlameGraph)); no extra install if
@@ -77,8 +79,9 @@ python3 fb_capture.py out.png
 
 `monitor profile <N> <unwind> <out>` runs FS-UAE's cycle-exact recorder for N frames and
 writes a binary blob: a `227×313` DMA-record grid per frame **plus** the CPU sample
-stream. AmigaScope parses that blob (format reverse-engineered from the amiga-debug
-`profile.ts`) and renders it. Hierarchical stacks come from a DWARF `.debug_frame` unwind
+stream. AmigaScope parses that blob (format from
+[`vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)'s `profile.ts`)
+and renders it. Hierarchical stacks come from a DWARF `.debug_frame` unwind
 table that AmigaScope generates and hands back to FS-UAE.
 
 **Gotchas worth knowing** (documented in `docs/`):
@@ -99,10 +102,14 @@ window). Override via environment:
 
 ## Credits
 
-- **Bartman/Abyss** — the cycle-exact FS-UAE fork + amiga-debug extension this is built on.
+- **[benbaker76/vscode-amiga-debug](https://github.com/benbaker76/vscode-amiga-debug)** —
+  the maintained extension + custom cycle-exact FS-UAE this drives.
+- **Bartman/Abyss** — the original amiga-debug extension + WinUAE cycle-exact recorder port
+  it's based on.
 - **Brendan Gregg** — FlameGraph.
 - **FS-UAE** / **WinUAE** — the emulator and its DMA debugger.
 
 ## License
 
-TBD (the FlameGraph scripts are CDDL; keep them in their own dir or reference upstream).
+[MIT](LICENSE). The bundled **FlameGraph** submodule keeps its own upstream license
+(`third_party/FlameGraph`).
