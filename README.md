@@ -1,8 +1,9 @@
 # AmigaScope
 
-**Headless AI-assisted debugging, instrumentation and profiling for the Amiga.**
+**A headless, AI-friendly harness for debugging, instrumenting, and profiling real Amiga
+(and SDL) code.**
 
-One command-line pipe — **no IDE, no GUI** (also drives a native SDL/x86 build of the same code):
+One command-line pipe — **no IDE, no GUI**:
 
 1. **Debugging (the core).** AmigaScope drives **gdb** against a live Amiga (through the
    [`benbaker76/vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)
