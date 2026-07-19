@@ -56,59 +56,27 @@ def _count_blocks(path):
         c += 1; off = i + len(MARKER)
     return c
 
-def _gdb_pids():
-    try:
-        r = subprocess.run(["pgrep", "-f", "m68k-amiga-elf-gdb"],
-                           capture_output=True, text=True, timeout=10)
-        return [int(x) for x in r.stdout.split()]
-    except Exception:
-        return []
-
-def _interrupt():
-    import signal
-    for pid in _gdb_pids():
-        try: os.kill(pid, signal.SIGINT)
-        except (ProcessLookupError, PermissionError): pass
-
-def _proxy(*args, t=15):
-    try:
-        return subprocess.run(["python3", PROXY, *args],
-                              capture_output=True, text=True, timeout=t).stdout
-    except Exception:
-        return ""
-
-def do_profile(n, out, wait=None, attempts=8, per_frame=22):
+def do_profile(n, out, wait=None):
     """Capture N frames of cycle-exact DMA/CPU into `out`.
 
     `monitor profile` returns an INSTANT benign ack ("Protocol error with Rcmd: 01") and
     writes the file ASYNCHRONOUSLY — completion = N MARKER blocks present; never test
-    os.path.exists right after the ack (the historic always-FAILED bug).
+    os.path.exists right after the ack (the historic always-FAILED bug). Each cycle-exact
+    frame costs ~1-5 s (light steady frame) up to much longer (DMA-heavy frames), so poll.
 
-    The recorder's cost scales with DMA *volume*: a DMA-heavy frame (boot-time RNC
-    decompress, active HW sprites, a mega-blit frame) takes minutes — a stall — while a
-    light steady-render frame finishes in ~1-5 s. So each attempt is watchdogged; on a
-    stall we ABORT and advance the rig to a later (lighter) frame, then retry. That is what
-    makes profiling work right after a fresh `amiga_gdb.sh up`, while the rig is still
-    churning through boot, without hanging on the heavy frames."""
-    budget = wait if wait is not None else per_frame * n
-    for attempt in range(attempts):
-        if os.path.exists(out):
-            try: os.remove(out)
-            except OSError: pass
-        gdb(f'monitor profile {n} "" "{out}"', t=30)
-        deadline = time.time() + budget
-        while time.time() < deadline:
-            if _count_blocks(out) >= n:
-                time.sleep(1)               # let trailing resource/screenshot bytes flush
-                return True
-            time.sleep(2)
-        if attempt < attempts - 1:          # stalled on a heavy frame -> abort + advance
-            _interrupt(); time.sleep(2)
-            _proxy("waitstop", "8")
-            _proxy("cmd", "delete")
-            _proxy("cmd", "continue", "--timeout", "2", t=8)   # run a few frames past it
-            _interrupt(); time.sleep(1)
-            _proxy("waitstop", "8")
+    NOTE: the output path is QUOTED. An UNQUOTED path used to lose its leading char in
+    fs-uae's `monitor profile` parser (fopen then failed and froze the target) — fixed in
+    the fork, but quoting is correct regardless."""
+    if os.path.exists(out):
+        try: os.remove(out)
+        except OSError: pass
+    gdb(f'monitor profile {n} "" "{out}"', t=30)
+    deadline = time.time() + (wait if wait is not None else n * 90 + 60)
+    while time.time() < deadline:
+        if _count_blocks(out) >= n:
+            time.sleep(1)   # let trailing resource/screenshot bytes flush
+            return True
+        time.sleep(2)
     return _count_blocks(out) >= n
 
 def parse(path):
