@@ -1,0 +1,3 @@
+# AmigaScope Python dependencies.
+Pillow>=9        # CLI: PNG DMA raster maps (dma_profile.py map / compare)
+mcp>=1.0         # MCP server ONLY (amigascope_mcp.py); the CLI tools do not need it

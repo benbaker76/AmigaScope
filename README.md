@@ -1,33 +1,97 @@
 # AmigaScope
 
-**Headless, cycle-exact profiling & visualization for real Amiga code.**
+**A headless, AI-friendly harness for debugging, instrumenting, and profiling real Amiga
+(and SDL) code.**
 
-AmigaScope is a small suite of Python/shell tools that drive the cycle-exact **FS-UAE**
-build from [`benbaker76/vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)
-(the WinUAE cycle-exact DMA recorder + CPU profiler) over its gdb stub —
-**no IDE, no GUI**. They read live emulator state and turn it into pictures you can
-reason about:
+One command-line pipe — **no IDE, no GUI**:
 
-| Tool | What you see |
+1. **Debugging (the core).** AmigaScope drives **gdb** against a live Amiga (through the
+   [`benbaker76/vscode-amiga-debug`](https://github.com/benbaker76/vscode-amiga-debug)
+   cycle-exact **FS-UAE**'s remote stub) *or* a native **SDL/x86** build. The whole debugger
+   is **scriptable**, so an AI assistant (Claude Code, etc.) or any tool can read/write
+   memory, set breakpoints and watchpoints, inspect registers, single-step, and drive the
+   target one command at a time.
+2. **Instrumentation.** Observe the live machine, cycle-exact: **DMA raster maps** (which
+   channel owns every colour-clock), live **copper** disassembly, and **frontbuffer** capture.
+3. **Profiling.** Where the cycles go: **CPU flame graphs** (flat or hierarchical) and
+   DMA-contention analysis — what's eating the frame budget.
+
+| Tool | What it does |
 |------|--------------|
-| **DMA raster map** | Every colour-clock of every scanline, colour-coded by which DMA channel owned it (bitplane / sprite / blitter / copper / …). *See* the blitter stealing the beam, or a bitplane fetch clobbering a sprite slot. |
-| **CPU flame graph** | Where the 68k spends the frame's cycles — flat self-time or full hierarchical call stacks (via a DWARF-derived unwind table), rendered through Brendan Gregg's FlameGraph. |
-| **Copper disassembler** | A live copper list decoded to `MOVE`/`WAIT`/`SKIP` with register labels (BPLCON0 planes, FMODE, DDF/DIW, fine-scroll, colours). |
-| **Frontbuffer capture** | The displayed bitmap decoded straight from chip RAM. |
+| **gdb harness** — `gdb_proxy.py` + `amiga_gdb.sh` | **The core.** Launch + attach gdb to a running Amiga (m68k via FS-UAE) *or* the SDL/x86 build, then drive it headlessly: read/write memory, breakpoints, watchpoints, registers, backtraces, `stepi`, `continue`. One command per call, async-halt aware — built for scripts and AI assistants. |
+| DMA raster map — `dma_profile.py` | Every colour-clock × scanline, colour-coded by DMA channel; *see* the blitter steal the beam or a fetch clobber a sprite slot. Plus a per-channel **frame budget** (CPU Code/Data, Blitter, Bitplane, Copper Copper/Wait/Special, Sprite, Refresh, Audio). |
+| CPU flame graph — `cpu_flamegraph.py` | Where the 68k spends the frame — flat or hierarchical (DWARF unwind), via FlameGraph. |
+| Size profiler — `size_profile.py` | Where the *bytes* go — functions / data / references (relocations), with a size flame graph. Static (no running target). |
+| Copper disassembler — `copper_disasm.py` | A live copper list decoded (BPLCON0 planes, FMODE, DDF/DIW, fine-scroll, colours). |
+| Frontbuffer capture — `fb_capture.py` | The displayed bitmap decoded straight from chip RAM. |
 
-It was built to debug AGA rendering on a Sensible World of Soccer port, but the core is
-generic Amiga hardware profiling.
+It grew out of debugging AGA rendering on a Sensible World of Soccer port, but the harness
+is generic Amiga (+ SDL) debugging. **Works with C *and* assembler projects** (anything gdb
+can debug — e.g. vasm/vlink builds from vscode-amiga-assembly): symbol resolution matches
+the `.text` section, not a C function type. Hierarchical CPU stacks want DWARF
+`.debug_frame` (C toolchains emit it); without it the CPU profile is a flat self-time view.
 
-## Why
+## Debugging — the core
 
-Screenshots tell you *what* went wrong; they can't tell you *why* a sprite lost its
-colour or *which* blit corrupted a scanline. AmigaScope answers the cycle-exact
-questions — *is the blitter running on display lines? where does the bitplane fetch
-start relative to the sprite DMA slots? what function is eating the frame budget?* —
-with **measurement, not guesswork.**
+Bring the harness up, then talk to the target through `gdb_proxy.py cmd` (any gdb command works):
+
+```sh
+./amiga_gdb.sh up                                # launch FS-UAE, attach gdb, wait for entry
+gp() { python3 gdb_proxy.py "$@"; }
+
+gp health                                        # OK stopped PC=0x...
+gp cmd "print g_someGlobal"                       # read a symbol
+gp cmd "x/16xw 0x219b10"                          # read 16 words of memory
+gp cmd "set variable g_flag = 1"                  # write a variable
+gp cmd "set {int}0x2001a4 = 0xdead"               # write raw memory
+gp cmd "break SomeFunc"                           # breakpoint
+gp cmd "watch g_counter"                          # watchpoint
+gp cmd "continue"; gp waitstop                    # run, then block until the halt
+gp cmd "backtrace"; gp cmd "info registers"       # inspect on stop
+```
+
+The **same** harness with `--mode sdl` drives the native Linux/SDL build under `/usr/bin/gdb`
+(no FS-UAE), so the identical read/write-memory / breakpoint recipes work on the SDL port too.
+
+**Why headless matters:** an AI assistant can run the *whole* debug loop itself — set a
+watchpoint, continue, read the faulting struct, correlate with source — with no human clicking
+in an IDE. That is the point of AmigaScope; the profilers below are a bonus built on the same pipe.
+
+## MCP server (AI-native frontend)
+
+Everything above is also exposed over the **Model Context Protocol**, so an MCP client
+(Claude Code, Claude Desktop, …) drives the debugger through **typed tools** instead of
+constructing shell commands — structured results, and DMA maps / frontbuffer captures come
+back as inline images. Same engine (the CLI); MCP is just the AI-facing face.
+
+```sh
+pip install -r requirements.txt   # Pillow + mcp
+python3 amigascope_mcp.py         # stdio transport
+```
+
+**Registration:** see **[docs/MCP.md](docs/MCP.md)** for Claude Code / Claude Desktop setup
+(there's a ready-to-edit `.mcp.json.example`). It exposes ~24 tools — `read_memory` / `write_memory` / `read_symbol` / `write_symbol`,
+`set_breakpoint` / `set_watchpoint` / `continue_and_wait` / `step_instruction` /
+`backtrace` / `registers` / `disassemble` / `gdb_raw`, plus `dma_profile` / `dma_map` /
+`cpu_flamegraph` / `size_profile` / `disasm_copper` / `capture_frontbuffer` and
+`harness_up` / `harness_down`. Debugging tools need the harness up; profiling tools need
+the cycle-exact FS-UAE build.
+
+## Instrumentation & profiling
+
+Once you can drive the target headlessly, the same pipe feeds cycle-exact instrumentation
+and profiling. Screenshots tell you *what* went wrong; these tell you *why* — *is the blitter running on
+display lines? where does the bitplane fetch start relative to the sprite DMA slots? what
+function is eating the frame budget?* — with **measurement, not guesswork.**
 
 ![DMA raster map: bitplane fetch vs sprite slots](docs/dma_map_example.png)
 ![Hierarchical CPU flame graph](docs/flamegraph_example.svg)
+
+## Also in the box
+
+- `shot.sh` — settle + capture a composited screenshot at a target state.
+- `analyze_pc32.py` / `fix_hunk_relocs.py` — inspect and repair `R_68K_PC32` relocations
+  from `elf2hunk`, so the ELF you debug matches what actually runs on the Amiga.
 
 ## Requirements
 
@@ -39,6 +103,8 @@ with **measurement, not guesswork.**
 - FS-UAE source alone (if building it yourself):
   [`benbaker76/fs-uae` @ `remote_debugger_barto`](https://github.com/benbaker76/fs-uae/tree/remote_debugger_barto).
 - **Python 3.6+** with **Pillow** (`pip install pillow`) for the PNG raster maps.
+- **`mcp`** (`pip install mcp`) — only if you use the MCP server (`amigascope_mcp.py`);
+  the CLI needs nothing extra.
 - **FlameGraph** — bundled as a git **submodule** (`third_party/FlameGraph`, from
   [`benbaker76/FlameGraph`](https://github.com/benbaker76/FlameGraph)); no extra install if
   you clone recursively. Override the renderer with `$FLAMEGRAPH_PY` if you prefer.
@@ -51,7 +117,7 @@ with **measurement, not guesswork.**
 git clone --recursive git@github.com:benbaker76/AmigaScope.git   # pulls FlameGraph too
 # already cloned? grab the submodule:
 git submodule update --init --recursive
-pip install pillow
+pip install -r requirements.txt      # Pillow (CLI) + mcp (MCP server)
 ```
 
 ## Quick start
