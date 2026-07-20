@@ -51,19 +51,31 @@ def png(path, w, h, rgb):
 
 COP_BPLPTR_BLOCKA_OFF = 0x498   # AGA copper: block-A 8 plane-ptr MOVEs
 
-def plane0_display_ptr():
-    """Read the LIVE displayed plane-0 address straight from the copper block-A
-    (hi word at +2, lo word at +6 of the first MOVE pair). This is exactly what
-    the Amiga fetches for display line 0 — includes the live coarse X + Y offset.
-    Decoding from HERE (not _frontbufferBasePtr, the DRAW buffer) is the only way
-    to match the composited screenshot."""
-    base = val(f"(unsigned long)(&_copperListBuffer)") + COP_BPLPTR_BLOCKA_OFF
+def plane_ptr(p):
+    """Read the LIVE displayed plane-p address from the copper block-A. Each plane
+    is 2 MOVE pairs of 8 bytes: hi word at +2, lo word at +6 within the pair."""
+    base = val(f"(unsigned long)(&_copperListBuffer)") + COP_BPLPTR_BLOCKA_OFF + p*8
     hi = val(f"*(unsigned short *)({base}+2)")
     lo = val(f"*(unsigned short *)({base}+6)")
     return (hi << 16) | lo
 
+def plane0_display_ptr():
+    """plane-0 fetch pointer (coarse X + Y offset baked in)."""
+    return plane_ptr(0)
+
+def live_plane_stride():
+    """Derive PLANE_STRIDE from the copper itself (plane1 - plane0), so the decode
+    auto-adapts to the build's buffer geometry (44 OCS / 48 / 52 AGA-with-margin)
+    instead of a hard-coded constant that rots when display.h widens the stride."""
+    return plane_ptr(1) - plane_ptr(0)
+
 def main():
+    global PLANE_STRIDE, ROW_STRIDE, W
     out = sys.argv[1] if len(sys.argv) > 1 else f"{TMP}/fb.png"
+    # geometry from the LIVE copper (self-adapts to 44/48/52 stride builds)
+    PLANE_STRIDE = live_plane_stride()
+    ROW_STRIDE   = PLANE_STRIDE * NPLANES
+    W            = PLANE_STRIDE * 8
     p0 = plane0_display_ptr()   # DISPLAYED buffer plane-0 ptr, coarse+Y baked in
     # "other" arg → decode the OTHER (draw) buffer at the SAME offset, to expose a
     # double-buffer mismatch (one buffer clean, one with the strip → live flicker).
