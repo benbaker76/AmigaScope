@@ -36,10 +36,10 @@ Subcommands:
 
 Defaults:
   Amiga gdb : /mnt/c/Users/headk/.vscode/extensions/bartmanabyss.amiga-debug-1.8.2/bin/linux/opt/bin/m68k-amiga-elf-gdb
-  Amiga ELF : /mnt/c/Projects/AI/SWOS/SWOS_C/uae/dh0/data/SWOS2.elf
+  Amiga ELF : $AMIGASCOPE_ELF   (exported by the project's amigascope.env)
   Amiga port: 2345
   SDL gdb   : /usr/bin/gdb
-  SDL bin   : /mnt/c/cygwin64/home/headk/SWOS_C_SDL/bin/SWOS
+  SDL bin   : $AMIGASCOPE_BIN   (exported by the project's amigascope.env)
   Socket    : /tmp/swos_gdb.sock
 """
 
@@ -54,8 +54,14 @@ import time
 
 GDB_BIN_AMIGA = "/mnt/c/Users/headk/.vscode/extensions/bartmanabyss.amiga-debug-1.8.2/bin/linux/opt/bin/m68k-amiga-elf-gdb"
 GDB_BIN_SDL   = "/usr/bin/gdb"
-DEFAULT_ELF   = "/mnt/c/Projects/AI/SWOS/SWOS_C/uae/dh0/data/SWOS2.elf"
-DEFAULT_BIN   = "/mnt/c/cygwin64/home/headk/SWOS_C_SDL/bin/SWOS"
+# Target paths belong to the TARGET, not to AmigaScope — take them from the
+# environment (the per-project amigascope.env exports these) and keep the
+# literals only as a last-resort fallback. Without this the daemon silently
+# spawned gdb against a hard-coded path from a tree that no longer exists, and
+# the only symptom was "DEGRADED no readable PC" — the ELF never being found is
+# not reported by gdb itself.
+DEFAULT_ELF   = os.environ.get("AMIGASCOPE_ELF") or "/mnt/c/Projects/AI/SWOS/SWOS_C/uae/dh0/data/SWOS2.elf"
+DEFAULT_BIN   = os.environ.get("AMIGASCOPE_BIN") or "/mnt/c/cygwin64/home/headk/SWOS_C_SDL/bin/SWOS"
 DEFAULT_PORT  = 2345
 SOCK_PATH     = "/tmp/swos_gdb.sock"
 
@@ -331,7 +337,19 @@ def daemon_main(args):
     mode = args.mode
     if mode == "amiga":
         gdb_bin = GDB_BIN_AMIGA
-        target_path = args.elf
+        target_path = os.path.abspath(args.elf)
+        # Fail LOUDLY on a missing ELF. gdb starts happily with no executable
+        # loaded, the FS-UAE stub still accepts the connection, and the ONLY
+        # downstream symptom is "DEGRADED no readable PC" — which reads like an
+        # attach/timing problem and sends you hunting the emulator instead of
+        # the path. (Hit 2026-08-12: the built-in default still pointed into the
+        # pre-merge SWOS_C tree, so every attach went DEGRADED.)
+        if not os.path.exists(target_path):
+            print(f"[daemon] FATAL: Amiga ELF not found: {target_path}",
+                  file=sys.stderr)
+            print("[daemon] point AMIGASCOPE_ELF (or --elf) at the built "
+                  "SWOS2.elf", file=sys.stderr)
+            sys.exit(2)
         host = args.host or detect_windows_host()
         cwd = None
         print(f"[daemon] mode=amiga gdb={gdb_bin}", file=sys.stderr)
