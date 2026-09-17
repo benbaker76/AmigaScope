@@ -1,0 +1,5 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-6	-$6	AddICRVector	resource=A6, iCRBit=D0, interrupt=A1	struct Interrupt *	struct Interrupt * AddICRVector(struct Library *resource, LONG iCRBit, struct Interrupt *interrupt)		public
+-12	-$C	RemICRVector	resource=A6, iCRBit=D0, interrupt=A1	VOID	VOID RemICRVector(struct Library *resource, LONG iCRBit, struct Interrupt *interrupt)		public
+-18	-$12	AbleICR	resource=A6, mask=D0	WORD	WORD AbleICR(struct Library *resource, LONG mask)		public
+-24	-$18	SetICR	resource=A6, mask=D0	WORD	WORD SetICR(struct Library *resource, LONG mask)		public

@@ -1,0 +1,155 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	Open	name=D1, accessMode=D2	BPTR	BPTR Open(CONST_STRPTR name, LONG accessMode)		public
+-36	-$24	Close	file=D1	LONG	LONG Close(BPTR file)		public
+-42	-$2A	Read	file=D1, buffer=D2, length=D3	LONG	LONG Read(BPTR file, APTR buffer, LONG length)		public
+-48	-$30	Write	file=D1, buffer=D2, length=D3	LONG	LONG Write(BPTR file, CONST APTR buffer, LONG length)		public
+-54	-$36	Input	none	BPTR	BPTR Input(VOID)		public
+-60	-$3C	Output	none	BPTR	BPTR Output(VOID)		public
+-66	-$42	Seek	file=D1, position=D2, offset=D3	LONG	LONG Seek(BPTR file, LONG position, LONG offset)		public
+-72	-$48	DeleteFile	name=D1	LONG	LONG DeleteFile(CONST_STRPTR name)		public
+-78	-$4E	Rename	oldName=D1, newName=D2	LONG	LONG Rename(CONST_STRPTR oldName, CONST_STRPTR newName)		public
+-84	-$54	Lock	name=D1, type=D2	BPTR	BPTR Lock(CONST_STRPTR name, LONG type)		public
+-90	-$5A	UnLock	lock=D1	VOID	VOID UnLock(BPTR lock)		public
+-96	-$60	DupLock	lock=D1	BPTR	BPTR DupLock(BPTR lock)		public
+-102	-$66	Examine	lock=D1, fileInfoBlock=D2	LONG	LONG Examine(BPTR lock, struct FileInfoBlock *fileInfoBlock)		public
+-108	-$6C	ExNext	lock=D1, fileInfoBlock=D2	LONG	LONG ExNext(BPTR lock, struct FileInfoBlock *fileInfoBlock)		public
+-114	-$72	Info	lock=D1, parameterBlock=D2	LONG	LONG Info(BPTR lock, struct InfoData *parameterBlock)		public
+-120	-$78	CreateDir	name=D1	BPTR	BPTR CreateDir(CONST_STRPTR name)		public
+-126	-$7E	CurrentDir	lock=D1	BPTR	BPTR CurrentDir(BPTR lock)		public
+-132	-$84	IoErr	none	LONG	LONG IoErr(VOID)		public
+-138	-$8A	CreateProc	name=D1, pri=D2, segList=D3, stackSize=D4	struct MsgPort *	struct MsgPort * CreateProc(CONST_STRPTR name, LONG pri, BPTR segList, LONG stackSize)		public
+-144	-$90	Exit	returnCode=D1	VOID	VOID Exit(LONG returnCode)		public
+-150	-$96	LoadSeg	name=D1	BPTR	BPTR LoadSeg(CONST_STRPTR name)		public
+-156	-$9C	UnLoadSeg	seglist=D1	VOID	VOID UnLoadSeg(BPTR seglist)		public
+-174	-$AE	DeviceProc	name=D1	struct MsgPort *	struct MsgPort * DeviceProc(CONST_STRPTR name)		public
+-180	-$B4	SetComment	name=D1, comment=D2	LONG	LONG SetComment(CONST_STRPTR name, CONST_STRPTR comment)		public
+-186	-$BA	SetProtection	name=D1, protect=D2	LONG	LONG SetProtection(CONST_STRPTR name, LONG protect)		public
+-192	-$C0	DateStamp	date=D1	struct DateStamp *	struct DateStamp * DateStamp(struct DateStamp *date)		public
+-198	-$C6	Delay	timeout=D1	VOID	VOID Delay(LONG timeout)		public
+-204	-$CC	WaitForChar	file=D1, timeout=D2	LONG	LONG WaitForChar(BPTR file, LONG timeout)		public
+-210	-$D2	ParentDir	lock=D1	BPTR	BPTR ParentDir(BPTR lock)		public
+-216	-$D8	IsInteractive	file=D1	LONG	LONG IsInteractive(BPTR file)		public
+-222	-$DE	Execute	string=D1, file=D2, file2=D3	LONG	LONG Execute(CONST_STRPTR string, BPTR file, BPTR file2)		public
+-228	-$E4	AllocDosObject	type=D1, tags=D2	APTR	APTR AllocDosObject(ULONG type, CONST struct TagItem *tags)	AllocDosObjectTagList,AllocDosObjectTags	public
+-234	-$EA	FreeDosObject	type=D1, ptr=D2	VOID	VOID FreeDosObject(ULONG type, APTR ptr)		public
+-240	-$F0	DoPkt	port=D1, action=D2, arg1=D3, arg2=D4, arg3=D5, arg4=D6, arg5=D7	LONG	LONG DoPkt(struct MsgPort *port, LONG action, LONG arg1, LONG arg2, LONG arg3, LONG arg4, LONG arg5)	DoPkt0,DoPkt1,DoPkt2,DoPkt3,DoPkt4	public
+-246	-$F6	SendPkt	dp=D1, port=D2, replyport=D3	VOID	VOID SendPkt(struct DosPacket *dp, struct MsgPort *port, struct MsgPort *replyport)		public
+-252	-$FC	WaitPkt	none	struct DosPacket *	struct DosPacket * WaitPkt(VOID)		public
+-258	-$102	ReplyPkt	dp=D1, res1=D2, res2=D3	VOID	VOID ReplyPkt(struct DosPacket *dp, LONG res1, LONG res2)		public
+-264	-$108	AbortPkt	port=D1, pkt=D2	VOID	VOID AbortPkt(struct MsgPort *port, struct DosPacket *pkt)		public
+-270	-$10E	LockRecord	fh=D1, offset=D2, length=D3, mode=D4, timeout=D5	BOOL	BOOL LockRecord(BPTR fh, ULONG offset, ULONG length, ULONG mode, ULONG timeout)		public
+-276	-$114	LockRecords	recArray=D1, timeout=D2	BOOL	BOOL LockRecords(struct RecordLock *recArray, ULONG timeout)		public
+-282	-$11A	UnLockRecord	fh=D1, offset=D2, length=D3	BOOL	BOOL UnLockRecord(BPTR fh, ULONG offset, ULONG length)		public
+-288	-$120	UnLockRecords	recArray=D1	BOOL	BOOL UnLockRecords(struct RecordLock *recArray)		public
+-294	-$126	SelectInput	fh=D1	BPTR	BPTR SelectInput(BPTR fh)		public
+-300	-$12C	SelectOutput	fh=D1	BPTR	BPTR SelectOutput(BPTR fh)		public
+-306	-$132	FGetC	fh=D1	LONG	LONG FGetC(BPTR fh)		public
+-312	-$138	FPutC	fh=D1, ch=D2	LONG	LONG FPutC(BPTR fh, LONG ch)		public
+-318	-$13E	UnGetC	fh=D1, character=D2	LONG	LONG UnGetC(BPTR fh, LONG character)		public
+-324	-$144	FRead	fh=D1, block=D2, blocklen=D3, number=D4	LONG	LONG FRead(BPTR fh, APTR block, ULONG blocklen, ULONG number)		public
+-330	-$14A	FWrite	fh=D1, block=D2, blocklen=D3, number=D4	LONG	LONG FWrite(BPTR fh, CONST APTR block, ULONG blocklen, ULONG number)		public
+-336	-$150	FGets	fh=D1, buf=D2, buflen=D3	STRPTR	STRPTR FGets(BPTR fh, STRPTR buf, ULONG buflen)		public
+-342	-$156	FPuts	fh=D1, str=D2	LONG	LONG FPuts(BPTR fh, CONST_STRPTR str)		public
+-348	-$15C	VFWritef	fh=D1, format=D2, argarray=D3	VOID	VOID VFWritef(BPTR fh, CONST_STRPTR format, CONST LONG *argarray)	FWritef	public
+-354	-$162	VFPrintf	fh=D1, format=D2, argarray=D3	LONG	LONG VFPrintf(BPTR fh, CONST_STRPTR format, CONST APTR argarray)	FPrintf	public
+-360	-$168	Flush	fh=D1	LONG	LONG Flush(BPTR fh)		public
+-366	-$16E	SetVBuf	fh=D1, buff=D2, type=D3, size=D4	LONG	LONG SetVBuf(BPTR fh, STRPTR buff, LONG type, LONG size)		public
+-372	-$174	DupLockFromFH	fh=D1	BPTR	BPTR DupLockFromFH(BPTR fh)		public
+-378	-$17A	OpenFromLock	lock=D1	BPTR	BPTR OpenFromLock(BPTR lock)		public
+-384	-$180	ParentOfFH	fh=D1	BPTR	BPTR ParentOfFH(BPTR fh)		public
+-390	-$186	ExamineFH	fh=D1, fib=D2	BOOL	BOOL ExamineFH(BPTR fh, struct FileInfoBlock *fib)		public
+-396	-$18C	SetFileDate	name=D1, date=D2	LONG	LONG SetFileDate(CONST_STRPTR name, CONST struct DateStamp *date)		public
+-402	-$192	NameFromLock	lock=D1, buffer=D2, len=D3	LONG	LONG NameFromLock(BPTR lock, STRPTR buffer, LONG len)		public
+-408	-$198	NameFromFH	fh=D1, buffer=D2, len=D3	LONG	LONG NameFromFH(BPTR fh, STRPTR buffer, LONG len)		public
+-414	-$19E	SplitName	name=D1, separator=D2, buf=D3, oldpos=D4, size=D5	WORD	WORD SplitName(CONST_STRPTR name, ULONG separator, STRPTR buf, LONG oldpos, LONG size)		public
+-420	-$1A4	SameLock	lock1=D1, lock2=D2	LONG	LONG SameLock(BPTR lock1, BPTR lock2)		public
+-426	-$1AA	SetMode	fh=D1, mode=D2	LONG	LONG SetMode(BPTR fh, LONG mode)		public
+-432	-$1B0	ExAll	lock=D1, buffer=D2, size=D3, data=D4, control=D5	LONG	LONG ExAll(BPTR lock, struct ExAllData *buffer, LONG size, LONG data, struct ExAllControl *control)		public
+-438	-$1B6	ReadLink	port=D1, lock=D2, path=D3, buffer=D4, size=D5	LONG	LONG ReadLink(struct MsgPort *port, BPTR lock, CONST_STRPTR path, STRPTR buffer, ULONG size)		public
+-444	-$1BC	MakeLink	name=D1, dest=D2, soft=D3	LONG	LONG MakeLink(CONST_STRPTR name, LONG dest, LONG soft)		public
+-450	-$1C2	ChangeMode	type=D1, fh=D2, newmode=D3	LONG	LONG ChangeMode(LONG type, BPTR fh, LONG newmode)		public
+-456	-$1C8	SetFileSize	fh=D1, pos=D2, mode=D3	LONG	LONG SetFileSize(BPTR fh, LONG pos, LONG mode)		public
+-462	-$1CE	SetIoErr	result=D1	LONG	LONG SetIoErr(LONG result)		public
+-468	-$1D4	Fault	code=D1, header=D2, buffer=D3, len=D4	BOOL	BOOL Fault(LONG code, STRPTR header, STRPTR buffer, LONG len)		public
+-474	-$1DA	PrintFault	code=D1, header=D2	BOOL	BOOL PrintFault(LONG code, CONST_STRPTR header)		public
+-480	-$1E0	ErrorReport	code=D1, type=D2, arg1=D3, device=D4	LONG	LONG ErrorReport(LONG code, LONG type, ULONG arg1, struct MsgPort *device)		public
+-492	-$1EC	Cli	none	struct CommandLineInterface *	struct CommandLineInterface * Cli(VOID)		public
+-498	-$1F2	CreateNewProc	tags=D1	struct Process *	struct Process * CreateNewProc(CONST struct TagItem *tags)	CreateNewProcTagList,CreateNewProcTags	public
+-504	-$1F8	RunCommand	seg=D1, stack=D2, paramptr=D3, paramlen=D4	LONG	LONG RunCommand(BPTR seg, LONG stack, CONST_STRPTR paramptr, LONG paramlen)		public
+-510	-$1FE	GetConsoleTask	none	struct MsgPort *	struct MsgPort * GetConsoleTask(VOID)		public
+-516	-$204	SetConsoleTask	task=D1	struct MsgPort *	struct MsgPort * SetConsoleTask(CONST struct MsgPort *task)		public
+-522	-$20A	GetFileSysTask	none	struct MsgPort *	struct MsgPort * GetFileSysTask(VOID)		public
+-528	-$210	SetFileSysTask	task=D1	struct MsgPort *	struct MsgPort * SetFileSysTask(CONST struct MsgPort *task)		public
+-534	-$216	GetArgStr	none	STRPTR	STRPTR GetArgStr(VOID)		public
+-540	-$21C	SetArgStr	string=D1	BOOL	BOOL SetArgStr(CONST_STRPTR string)		public
+-546	-$222	FindCliProc	num=D1	struct Process *	struct Process * FindCliProc(ULONG num)		public
+-552	-$228	MaxCli	none	ULONG	ULONG MaxCli(VOID)		public
+-558	-$22E	SetCurrentDirName	name=D1	BOOL	BOOL SetCurrentDirName(CONST_STRPTR name)		public
+-564	-$234	GetCurrentDirName	buf=D1, len=D2	BOOL	BOOL GetCurrentDirName(STRPTR buf, LONG len)		public
+-570	-$23A	SetProgramName	name=D1	BOOL	BOOL SetProgramName(CONST_STRPTR name)		public
+-576	-$240	GetProgramName	buf=D1, len=D2	BOOL	BOOL GetProgramName(STRPTR buf, LONG len)		public
+-582	-$246	SetPrompt	name=D1	BOOL	BOOL SetPrompt(CONST_STRPTR name)		public
+-588	-$24C	GetPrompt	buf=D1, len=D2	BOOL	BOOL GetPrompt(STRPTR buf, LONG len)		public
+-594	-$252	SetProgramDir	lock=D1	BPTR	BPTR SetProgramDir(BPTR lock)		public
+-600	-$258	GetProgramDir	none	BPTR	BPTR GetProgramDir(VOID)		public
+-606	-$25E	SystemTagList	command=D1, tags=D2	LONG	LONG SystemTagList(CONST_STRPTR command, CONST struct TagItem *tags)	System,SystemTags	public
+-612	-$264	AssignLock	name=D1, lock=D2	LONG	LONG AssignLock(CONST_STRPTR name, BPTR lock)		public
+-618	-$26A	AssignLate	name=D1, path=D2	BOOL	BOOL AssignLate(CONST_STRPTR name, CONST_STRPTR path)		public
+-624	-$270	AssignPath	name=D1, path=D2	BOOL	BOOL AssignPath(CONST_STRPTR name, CONST_STRPTR path)		public
+-630	-$276	AssignAdd	name=D1, lock=D2	BOOL	BOOL AssignAdd(CONST_STRPTR name, BPTR lock)		public
+-636	-$27C	RemAssignList	name=D1, lock=D2	LONG	LONG RemAssignList(CONST_STRPTR name, BPTR lock)		public
+-642	-$282	GetDeviceProc	name=D1, dp=D2	struct DevProc *	struct DevProc * GetDeviceProc(CONST_STRPTR name, struct DevProc *dp)		public
+-648	-$288	FreeDeviceProc	dp=D1	VOID	VOID FreeDeviceProc(struct DevProc *dp)		public
+-654	-$28E	LockDosList	flags=D1	struct DosList *	struct DosList * LockDosList(ULONG flags)		public
+-660	-$294	UnLockDosList	flags=D1	VOID	VOID UnLockDosList(ULONG flags)		public
+-666	-$29A	AttemptLockDosList	flags=D1	struct DosList *	struct DosList * AttemptLockDosList(ULONG flags)		public
+-672	-$2A0	RemDosEntry	dlist=D1	BOOL	BOOL RemDosEntry(struct DosList *dlist)		public
+-678	-$2A6	AddDosEntry	dlist=D1	LONG	LONG AddDosEntry(struct DosList *dlist)		public
+-684	-$2AC	FindDosEntry	dlist=D1, name=D2, flags=D3	struct DosList *	struct DosList * FindDosEntry(CONST struct DosList *dlist, CONST_STRPTR name, ULONG flags)		public
+-690	-$2B2	NextDosEntry	dlist=D1, flags=D2	struct DosList *	struct DosList * NextDosEntry(CONST struct DosList *dlist, ULONG flags)		public
+-696	-$2B8	MakeDosEntry	name=D1, type=D2	struct DosList *	struct DosList * MakeDosEntry(CONST_STRPTR name, LONG type)		public
+-702	-$2BE	FreeDosEntry	dlist=D1	VOID	VOID FreeDosEntry(struct DosList *dlist)		public
+-708	-$2C4	IsFileSystem	name=D1	BOOL	BOOL IsFileSystem(CONST_STRPTR name)		public
+-714	-$2CA	Format	filesystem=D1, volumename=D2, dostype=D3	BOOL	BOOL Format(CONST_STRPTR filesystem, CONST_STRPTR volumename, ULONG dostype)		public
+-720	-$2D0	Relabel	drive=D1, newname=D2	LONG	LONG Relabel(CONST_STRPTR drive, CONST_STRPTR newname)		public
+-726	-$2D6	Inhibit	name=D1, onoff=D2	LONG	LONG Inhibit(CONST_STRPTR name, LONG onoff)		public
+-732	-$2DC	AddBuffers	name=D1, number=D2	LONG	LONG AddBuffers(CONST_STRPTR name, LONG number)		public
+-738	-$2E2	CompareDates	date1=D1, date2=D2	LONG	LONG CompareDates(CONST struct DateStamp *date1, CONST struct DateStamp *date2)		public
+-744	-$2E8	DateToStr	datetime=D1	LONG	LONG DateToStr(struct DateTime *datetime)		public
+-750	-$2EE	StrToDate	datetime=D1	LONG	LONG StrToDate(struct DateTime *datetime)		public
+-756	-$2F4	InternalLoadSeg	fh=D0, table=A0, funcarray=A1, stack=A2	BPTR	BPTR InternalLoadSeg(BPTR fh, BPTR table, CONST LONG *funcarray, LONG *stack)		public
+-762	-$2FA	InternalUnLoadSeg	seglist=D1, freefunc=A1	BOOL	BOOL InternalUnLoadSeg(BPTR seglist, VOID (*CONST freefunc)())		public
+-768	-$300	NewLoadSeg	file=D1, tags=D2	BPTR	BPTR NewLoadSeg(CONST_STRPTR file, CONST struct TagItem *tags)	NewLoadSegTagList,NewLoadSegTags	public
+-774	-$306	AddSegment	name=D1, seg=D2, system=D3	LONG	LONG AddSegment(CONST_STRPTR name, BPTR seg, LONG system)		public
+-780	-$30C	FindSegment	name=D1, seg=D2, system=D3	struct Segment *	struct Segment * FindSegment(CONST_STRPTR name, CONST struct Segment *seg, LONG system)		public
+-786	-$312	RemSegment	seg=D1	LONG	LONG RemSegment(struct Segment *seg)		public
+-792	-$318	CheckSignal	mask=D1	LONG	LONG CheckSignal(LONG mask)		public
+-798	-$31E	ReadArgs	arg_template=D1, array=D2, args=D3	struct RDArgs *	struct RDArgs * ReadArgs(CONST_STRPTR arg_template, LONG *array, struct RDArgs *args)		public
+-804	-$324	FindArg	keyword=D1, arg_template=D2	LONG	LONG FindArg(CONST_STRPTR keyword, CONST_STRPTR arg_template)		public
+-810	-$32A	ReadItem	name=D1, maxchars=D2, cSource=D3	LONG	LONG ReadItem(CONST_STRPTR name, LONG maxchars, struct CSource *cSource)		public
+-816	-$330	StrToLong	string=D1, value=D2	LONG	LONG StrToLong(CONST_STRPTR string, LONG *value)		public
+-822	-$336	MatchFirst	pat=D1, anchor=D2	LONG	LONG MatchFirst(CONST_STRPTR pat, struct AnchorPath *anchor)		public
+-828	-$33C	MatchNext	anchor=D1	LONG	LONG MatchNext(struct AnchorPath *anchor)		public
+-834	-$342	MatchEnd	anchor=D1	VOID	VOID MatchEnd(struct AnchorPath *anchor)		public
+-840	-$348	ParsePattern	pat=D1, buf=D2, buflen=D3	LONG	LONG ParsePattern(CONST_STRPTR pat, STRPTR buf, LONG buflen)		public
+-846	-$34E	MatchPattern	pat=D1, str=D2	BOOL	BOOL MatchPattern(CONST_STRPTR pat, STRPTR str)		public
+-858	-$35A	FreeArgs	args=D1	VOID	VOID FreeArgs(struct RDArgs *args)		public
+-870	-$366	FilePart	path=D1	STRPTR	STRPTR FilePart(CONST_STRPTR path)		public
+-876	-$36C	PathPart	path=D1	STRPTR	STRPTR PathPart(CONST_STRPTR path)		public
+-882	-$372	AddPart	dirname=D1, filename=D2, size=D3	BOOL	BOOL AddPart(STRPTR dirname, CONST_STRPTR filename, ULONG size)		public
+-888	-$378	StartNotify	notify=D1	BOOL	BOOL StartNotify(struct NotifyRequest *notify)		public
+-894	-$37E	EndNotify	notify=D1	VOID	VOID EndNotify(struct NotifyRequest *notify)		public
+-900	-$384	SetVar	name=D1, buffer=D2, size=D3, flags=D4	BOOL	BOOL SetVar(CONST_STRPTR name, CONST_STRPTR buffer, LONG size, LONG flags)		public
+-906	-$38A	GetVar	name=D1, buffer=D2, size=D3, flags=D4	LONG	LONG GetVar(CONST_STRPTR name, STRPTR buffer, LONG size, LONG flags)		public
+-912	-$390	DeleteVar	name=D1, flags=D2	LONG	LONG DeleteVar(CONST_STRPTR name, ULONG flags)		public
+-918	-$396	FindVar	name=D1, type=D2	struct LocalVar *	struct LocalVar * FindVar(CONST_STRPTR name, ULONG type)		public
+-930	-$3A2	CliInitNewcli	dp=A0	LONG	LONG CliInitNewcli(struct DosPacket *dp)		public
+-936	-$3A8	CliInitRun	dp=A0	LONG	LONG CliInitRun(struct DosPacket *dp)		public
+-942	-$3AE	WriteChars	buf=D1, buflen=D2	LONG	LONG WriteChars(CONST_STRPTR buf, ULONG buflen)		public
+-948	-$3B4	PutStr	str=D1	LONG	LONG PutStr(CONST_STRPTR str)		public
+-954	-$3BA	VPrintf	format=D1, argarray=D2	LONG	LONG VPrintf(CONST_STRPTR format, CONST APTR argarray)	Printf	public
+-966	-$3C6	ParsePatternNoCase	pat=D1, buf=D2, buflen=D3	LONG	LONG ParsePatternNoCase(CONST_STRPTR pat, UBYTE *buf, LONG buflen)		public
+-972	-$3CC	MatchPatternNoCase	pat=D1, str=D2	BOOL	BOOL MatchPatternNoCase(CONST_STRPTR pat, STRPTR str)		public
+-984	-$3D8	SameDevice	lock1=D1, lock2=D2	BOOL	BOOL SameDevice(BPTR lock1, BPTR lock2)		public
+-990	-$3DE	ExAllEnd	lock=D1, buffer=D2, size=D3, data=D4, control=D5	VOID	VOID ExAllEnd(BPTR lock, struct ExAllData *buffer, LONG size, LONG data, struct ExAllControl *control)		public
+-996	-$3E4	SetOwner	name=D1, owner_info=D2	BOOL	BOOL SetOwner(CONST_STRPTR name, LONG owner_info)		public

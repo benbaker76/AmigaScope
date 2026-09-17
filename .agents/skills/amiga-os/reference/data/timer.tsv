@@ -1,0 +1,6 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-42	-$2A	AddTime	dest=A0, src=A1	VOID	VOID AddTime(struct timeval *dest, CONST struct timeval *src)		public
+-48	-$30	SubTime	dest=A0, src=A1	VOID	VOID SubTime(struct timeval *dest, CONST struct timeval *src)		public
+-54	-$36	CmpTime	dest=A0, src=A1	LONG	LONG CmpTime(CONST struct timeval *dest, CONST struct timeval *src)		public
+-60	-$3C	ReadEClock	dest=A0	ULONG	ULONG ReadEClock(struct EClockVal *dest)		public
+-66	-$42	GetSysTime	dest=A0	VOID	VOID GetSysTime(struct timeval *dest)		public

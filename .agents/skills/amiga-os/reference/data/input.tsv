@@ -1,0 +1,2 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-42	-$2A	PeekQualifier	none	UWORD	UWORD PeekQualifier(VOID)		public

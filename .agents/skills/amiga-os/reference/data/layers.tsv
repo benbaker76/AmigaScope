@@ -1,0 +1,33 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	InitLayers	li=A0	VOID	VOID InitLayers(struct Layer_Info *li)		public
+-36	-$24	CreateUpfrontLayer	li=A0, bm=A1, x0=D0, y0=D1, x1=D2, y1=D3, flags=D4, bm2=A2	struct Layer *	struct Layer * CreateUpfrontLayer(struct Layer_Info *li, struct BitMap *bm, LONG x0, LONG y0, LONG x1, LONG y1, LONG flags, struct BitMap *bm2)		public
+-42	-$2A	CreateBehindLayer	li=A0, bm=A1, x0=D0, y0=D1, x1=D2, y1=D3, flags=D4, bm2=A2	struct Layer *	struct Layer * CreateBehindLayer(struct Layer_Info *li, struct BitMap *bm, LONG x0, LONG y0, LONG x1, LONG y1, LONG flags, struct BitMap *bm2)		public
+-48	-$30	UpfrontLayer	dummy=A0, layer=A1	LONG	LONG UpfrontLayer(LONG dummy, struct Layer *layer)		public
+-54	-$36	BehindLayer	dummy=A0, layer=A1	LONG	LONG BehindLayer(LONG dummy, struct Layer *layer)		public
+-60	-$3C	MoveLayer	dummy=A0, layer=A1, dx=D0, dy=D1	LONG	LONG MoveLayer(LONG dummy, struct Layer *layer, LONG dx, LONG dy)		public
+-66	-$42	SizeLayer	dummy=A0, layer=A1, dx=D0, dy=D1	LONG	LONG SizeLayer(LONG dummy, struct Layer *layer, LONG dx, LONG dy)		public
+-72	-$48	ScrollLayer	dummy=A0, layer=A1, dx=D0, dy=D1	VOID	VOID ScrollLayer(LONG dummy, struct Layer *layer, LONG dx, LONG dy)		public
+-78	-$4E	BeginUpdate	l=A0	LONG	LONG BeginUpdate(struct Layer *l)		public
+-84	-$54	EndUpdate	layer=A0, flag=D0	VOID	VOID EndUpdate(struct Layer *layer, ULONG flag)		public
+-90	-$5A	DeleteLayer	dummy=A0, layer=A1	LONG	LONG DeleteLayer(LONG dummy, struct Layer *layer)		public
+-96	-$60	LockLayer	dummy=A0, layer=A1	VOID	VOID LockLayer(LONG dummy, struct Layer *layer)		public
+-102	-$66	UnlockLayer	layer=A0	VOID	VOID UnlockLayer(struct Layer *layer)		public
+-108	-$6C	LockLayers	li=A0	VOID	VOID LockLayers(struct Layer_Info *li)		public
+-114	-$72	UnlockLayers	li=A0	VOID	VOID UnlockLayers(struct Layer_Info *li)		public
+-120	-$78	LockLayerInfo	li=A0	VOID	VOID LockLayerInfo(struct Layer_Info *li)		public
+-126	-$7E	SwapBitsRastPortClipRect	rp=A0, cr=A1	VOID	VOID SwapBitsRastPortClipRect(struct RastPort *rp, struct ClipRect *cr)		public
+-132	-$84	WhichLayer	li=A0, x=D0, y=D1	struct Layer *	struct Layer * WhichLayer(struct Layer_Info *li, LONG x, LONG y)		public
+-138	-$8A	UnlockLayerInfo	li=A0	VOID	VOID UnlockLayerInfo(struct Layer_Info *li)		public
+-144	-$90	NewLayerInfo	none	struct Layer_Info *	struct Layer_Info * NewLayerInfo(VOID)		public
+-150	-$96	DisposeLayerInfo	li=A0	VOID	VOID DisposeLayerInfo(struct Layer_Info *li)		public
+-156	-$9C	FattenLayerInfo	li=A0	LONG	LONG FattenLayerInfo(struct Layer_Info *li)		public
+-162	-$A2	ThinLayerInfo	li=A0	VOID	VOID ThinLayerInfo(struct Layer_Info *li)		public
+-168	-$A8	MoveLayerInFrontOf	layer_to_move=A0, other_layer=A1	LONG	LONG MoveLayerInFrontOf(struct Layer *layer_to_move, struct Layer *other_layer)		public
+-174	-$AE	InstallClipRegion	layer=A0, region=A1	struct Region *	struct Region * InstallClipRegion(struct Layer *layer, CONST struct Region *region)		public
+-180	-$B4	MoveSizeLayer	layer=A0, dx=D0, dy=D1, dw=D2, dh=D3	LONG	LONG MoveSizeLayer(struct Layer *layer, LONG dx, LONG dy, LONG dw, LONG dh)		public
+-186	-$BA	CreateUpfrontHookLayer	li=A0, bm=A1, x0=D0, y0=D1, x1=D2, y1=D3, flags=D4, hook=A3, bm2=A2	struct Layer *	struct Layer * CreateUpfrontHookLayer(struct Layer_Info *li, struct BitMap *bm, LONG x0, LONG y0, LONG x1, LONG y1, LONG flags, struct Hook *hook, struct BitMap *bm2)		public
+-192	-$C0	CreateBehindHookLayer	li=A0, bm=A1, x0=D0, y0=D1, x1=D2, y1=D3, flags=D4, hook=A3, bm2=A2	struct Layer *	struct Layer * CreateBehindHookLayer(struct Layer_Info *li, struct BitMap *bm, LONG x0, LONG y0, LONG x1, LONG y1, LONG flags, struct Hook *hook, struct BitMap *bm2)		public
+-198	-$C6	InstallLayerHook	layer=A0, hook=A1	struct Hook *	struct Hook * InstallLayerHook(struct Layer *layer, struct Hook *hook)		public
+-204	-$CC	InstallLayerInfoHook	li=A0, hook=A1	struct Hook *	struct Hook * InstallLayerInfoHook(struct Layer_Info *li, CONST struct Hook *hook)		public
+-210	-$D2	SortLayerCR	layer=A0, dx=D0, dy=D1	VOID	VOID SortLayerCR(struct Layer *layer, LONG dx, LONG dy)		public
+-216	-$D8	DoHookClipRects	hook=A0, rport=A1, rect=A2	VOID	VOID DoHookClipRects(struct Hook *hook, struct RastPort *rport, CONST struct Rectangle *rect)		public

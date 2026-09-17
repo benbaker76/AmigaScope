@@ -77,6 +77,32 @@ python3 amigascope_mcp.py         # stdio transport
 `harness_up` / `harness_down`. Debugging tools need the harness up; profiling tools need
 the cycle-exact FS-UAE build.
 
+## AI agent skills
+
+`.agents/skills/` ships six skills that give an AI assistant verified Amiga knowledge, so it
+writes and debugs Amiga code from reference material instead of memory. Each skill is a
+short `SKILL.md` (rules + where to look) plus a `reference/` knowledge base with an index,
+sources and errata. If your assistant doesn't auto-discover `.agents/skills/`, point it at
+**[docs/ai-instructions.md](docs/ai-instructions.md)**.
+
+| Skill | What it covers |
+|---|---|
+| **amigascope-workflow** | This repo's loop: harness up, gdb_proxy, MCP tools, profiling gotchas, recipes. |
+| **amiga-hardware** | OCS/ECS custom chips and 8520 CIAs: 108 register entries with bit tables, a register table by address, and guides for copper, playfields, sprites, blitter, audio, interrupts/DMA, CIAs/input, memory map and system takeover. |
+| **amiga-aga** | AGA (A1200/A4000/CD32) only: BPLCON3/4, FMODE, 24-bit palettes, 8 planes/HAM8, AGA sprites, detection, fixing OCS software. |
+| **m68k-asm** | Every 68000 instruction plus 68010-68060/FPU extensions, addressing modes, condition codes, vasm directives, vasm/vlink options, hunk program structure, library calls. |
+| **amiga-os** | Every public function of exec, dos, graphics, intuition, diskfont, utility, layers and lowlevel plus the timer/input devices and cia/potgo resources (669) with LVO, registers, prototype, version and pitfalls; timer/input/audio device commands; guides for calling conventions, tag lists, structures, memory, timing and sample playback. |
+| **amiga-ahi** | AHI retargetable audio: all library calls, the device interface, tags/structures, playback, recording, effects, modes, driver basics. Only for programs that target AHI. |
+
+The reference material was distilled (rewritten, not copied) from the Amiga Hardware
+Reference Manual, the NDK 3.9 autodocs and includes, the Motorola 68000 family manual, the
+vasm/vlink manuals, AGA chipset documents and the AHI 6 developer kit - see each skill's
+`reference/SOURCE.md`. LVOs and register assignments are generated from the NDK SFD files
+and validated by `tools/skills/amiga_skill_data.py check`; most examples were
+assembled with vasm or compiled with m68k-amiga-elf-gcc (the AHI examples were not). Source disagreements and anything
+that could not be verified are recorded in each skill's `reference/errata.md`.
+Maintenance: [tools/skills/README.md](tools/skills/README.md).
+
 ## Instrumentation & profiling
 
 Once you can drive the target headlessly, the same pipe feeds cycle-exact instrumentation

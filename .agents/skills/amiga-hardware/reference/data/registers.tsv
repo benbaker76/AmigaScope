@@ -1,0 +1,296 @@
+address	name	width	ndk_label	chipset	access	description	entry
+$BFD000	PRA	B		OCS	read/write (direction per DDRA)	Serial port handshake lines and printer status inputs.	amiga-hardware:registers/cia.md#ciab-pra
+$BFD100	PRB	B		OCS	read/write (all outputs, DDRB = `$FF`)	Floppy drive control: motor, drive selects, side, step direction and step pulse.	amiga-hardware:registers/cia.md#ciab-prb
+$BFD200	DDRA	B		OCS	read/write	Data direction for port A: 1 = output, 0 = input, one bit per PRA bit.	amiga-hardware:registers/cia.md#ddra
+$BFD300	DDRB	B		OCS	read/write	Data direction for port B: 1 = output, 0 = input.	amiga-hardware:registers/cia.md#ddrb
+$BFD400	TALO	B		OCS	read = counter, write = latch	Timer A: 16-bit down counter clocked by the E clock (or CNT); underflow sets ICR TA.	amiga-hardware:registers/cia.md#talo-tahi
+$BFD500	TAHI	B		OCS	read = counter, write = latch	Timer A: 16-bit down counter clocked by the E clock (or CNT); underflow sets ICR TA.	amiga-hardware:registers/cia.md#talo-tahi
+$BFD600	TBLO	B		OCS	read = counter, write = latch	Timer B: 16-bit down counter; can also count timer A underflows for long delays.	amiga-hardware:registers/cia.md#tblo-tbhi
+$BFD700	TBHI	B		OCS	read = counter, write = latch	Timer B: 16-bit down counter; can also count timer A underflows for long delays.	amiga-hardware:registers/cia.md#tblo-tbhi
+$BFD800	TODLOW	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFD900	TODMID	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFDA00	TODHI	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFDC00	SDR	B		OCS	read/write	8-bit synchronous serial shift register: CIA-A receives the keyboard; CIA-B's is unused.	amiga-hardware:registers/cia.md#sdr
+$BFDD00	ICR	B		OCS	read = flags (clears), write = mask (set/clear)	Interrupt flags (read, cleared by the read) and interrupt enable mask (set/clear write).	amiga-hardware:registers/cia.md#icr
+$BFDE00	CRA	B		OCS	read/write	Control register A: timer A mode and the serial port direction.	amiga-hardware:registers/cia.md#cra
+$BFDF00	CRB	B		OCS	read/write	Control register B: timer B mode, timer B input and TOD alarm write select.	amiga-hardware:registers/cia.md#crb
+$BFE001	PRA	B		OCS	read/write (direction per DDRA)	Fire buttons and floppy status inputs; power LED and ROM overlay outputs.	amiga-hardware:registers/cia.md#ciaa-pra
+$BFE101	PRB	B		OCS	read/write (direction per DDRB)	Centronics parallel port data lines D7-D0.	amiga-hardware:registers/cia.md#ciaa-prb
+$BFE201	DDRA	B		OCS	read/write	Data direction for port A: 1 = output, 0 = input, one bit per PRA bit.	amiga-hardware:registers/cia.md#ddra
+$BFE301	DDRB	B		OCS	read/write	Data direction for port B: 1 = output, 0 = input.	amiga-hardware:registers/cia.md#ddrb
+$BFE401	TALO	B		OCS	read = counter, write = latch	Timer A: 16-bit down counter clocked by the E clock (or CNT); underflow sets ICR TA.	amiga-hardware:registers/cia.md#talo-tahi
+$BFE501	TAHI	B		OCS	read = counter, write = latch	Timer A: 16-bit down counter clocked by the E clock (or CNT); underflow sets ICR TA.	amiga-hardware:registers/cia.md#talo-tahi
+$BFE601	TBLO	B		OCS	read = counter, write = latch	Timer B: 16-bit down counter; can also count timer A underflows for long delays.	amiga-hardware:registers/cia.md#tblo-tbhi
+$BFE701	TBHI	B		OCS	read = counter, write = latch	Timer B: 16-bit down counter; can also count timer A underflows for long delays.	amiga-hardware:registers/cia.md#tblo-tbhi
+$BFE801	TODLOW	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFE901	TODMID	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFEA01	TODHI	B		OCS	read/write	24-bit event counter (TOD) and alarm: CIA-A counts 50/60 Hz ticks, CIA-B counts HSYNC.	amiga-hardware:registers/cia.md#todlow-todmid-todhi
+$BFEC01	SDR	B		OCS	read/write	8-bit synchronous serial shift register: CIA-A receives the keyboard; CIA-B's is unused.	amiga-hardware:registers/cia.md#sdr
+$BFED01	ICR	B		OCS	read = flags (clears), write = mask (set/clear)	Interrupt flags (read, cleared by the read) and interrupt enable mask (set/clear write).	amiga-hardware:registers/cia.md#icr
+$BFEE01	CRA	B		OCS	read/write	Control register A: timer A mode and the serial port direction.	amiga-hardware:registers/cia.md#cra
+$BFEF01	CRB	B		OCS	read/write	Control register B: timer B mode, timer B input and TOD alarm write select.	amiga-hardware:registers/cia.md#crb
+$DFF000	BLTDDAT	W	bltddat	OCS	DMA-only (early read)	Holds each result word until the blitter writes it to destination D.	amiga-hardware:registers/blitter.md#bltddat
+$DFF002	DMACONR	W	dmaconr	OCS	read	Read the DMA enable bits plus the blitter busy and blitter zero flags.	amiga-hardware:registers/dma-beam.md#dmaconr
+$DFF004	VPOSR	W	vposr	OCS	read	Read the long-frame flag, the Agnus chip ID and the top vertical beam position bit(s).	amiga-hardware:registers/dma-beam.md#vposr
+$DFF006	VHPOSR	W	vhposr	OCS	read	Read the low 8 bits of the vertical beam position and the horizontal position.	amiga-hardware:registers/dma-beam.md#vhposr
+$DFF008	DSKDATR	W	dskdatr	OCS	DMA-only (early read)	Disk DMA data buffer for reads (early-read dummy address used by the DMA).	amiga-hardware:registers/disk.md#dskdatr
+$DFF00A	JOY0DAT	W	joy0dat	OCS	read	Mouse counters or joystick switch bits of the left controller port (port 1, mouse).	amiga-hardware:registers/input-serial.md#joy0dat
+$DFF00C	JOY1DAT	W	joy1dat	OCS	read	Mouse counters or joystick switch bits of the right controller port (port 2, joystick).	amiga-hardware:registers/input-serial.md#joy1dat
+$DFF00E	CLXDAT	W	clxdat	OCS	read (clears on read)	Collision flags since the last read; reading clears the register.	amiga-hardware:registers/sprites.md#clxdat
+$DFF010	ADKCONR	W	adkconr	OCS	read	Read the current audio modulation, disk mode and UART break bits.	amiga-hardware:registers/audio.md#adkconr
+$DFF012	POT0DAT	W	pot0dat	OCS	read	Pot (paddle / analogue) counters of the left port: Y on pin 9, X on pin 5.	amiga-hardware:registers/input-serial.md#pot0dat
+$DFF014	POT1DAT	W	pot1dat	OCS	read	Pot counters of the right port: Y (pin 9) in bits 15-8, X (pin 5) in bits 7-0.	amiga-hardware:registers/input-serial.md#pot1dat
+$DFF016	POTINP	W	potinp	OCS	read	Read the level of the four pot pins (right / middle mouse buttons, second fire buttons).	amiga-hardware:registers/input-serial.md#potgor
+$DFF018	SERDATR	W	serdatr	OCS	read	Serial receive buffer and UART status.	amiga-hardware:registers/input-serial.md#serdatr
+$DFF01A	DSKBYTR	W	dskbytr	OCS	read	Disk byte buffer and status: one byte of the input stream at a time, plus DMA state.	amiga-hardware:registers/disk.md#dskbytr
+$DFF01C	INTENAR	W	intenar	OCS	read	Read which interrupt sources and the master enable are currently on.	amiga-hardware:registers/interrupts.md#intenar
+$DFF01E	INTREQR	W	intreqr	OCS	read	Read which interrupt requests are pending, whether or not they are enabled.	amiga-hardware:registers/interrupts.md#intreqr
+$DFF020	DSKPT	L	dskpt	OCS	write	Chip-RAM buffer address for the next disk DMA read or write.	amiga-hardware:registers/disk.md#dskpth-dskptl
+$DFF020	DSKPTH	W	dskpt	OCS	write	Chip-RAM buffer address for the next disk DMA read or write.	amiga-hardware:registers/disk.md#dskpth-dskptl
+$DFF022	DSKPTL	W		OCS	write	Chip-RAM buffer address for the next disk DMA read or write.	amiga-hardware:registers/disk.md#dskpth-dskptl
+$DFF024	DSKLEN	W	dsklen	OCS	write	Disk DMA enable, direction and length; DMA starts only on the second enabling write.	amiga-hardware:registers/disk.md#dsklen
+$DFF026	DSKDAT	W	dskdat	OCS	write	Disk DMA data buffer for writes: two bytes on their way from RAM to the disk.	amiga-hardware:registers/disk.md#dskdat
+$DFF028	REFPTR	W	refptr	OCS	write	Dynamic RAM refresh address generator, writable only for chip testing.	amiga-hardware:registers/dma-beam.md#refptr
+$DFF02A	VPOSW	W	vposw	OCS	write	Write the long-frame flip-flop (bit 15) and V8, same layout as VPOSR.	amiga-hardware:registers/dma-beam.md#vposw
+$DFF02C	VHPOSW	W	vhposw	OCS	write	Write the beam counter (V7-V0, H8-H1); meant for chip test synchronisation only.	amiga-hardware:registers/dma-beam.md#vhposw
+$DFF02E	COPCON	W	copcon	OCS	write	Copper danger bit: lets the Copper write the protected low register range.	amiga-hardware:registers/copper.md#copcon
+$DFF030	SERDAT	W	serdat	OCS	write	Serial transmit buffer: data bits plus the stop bit(s) that define the word length.	amiga-hardware:registers/input-serial.md#serdat
+$DFF032	SERPER	W	serper	OCS	write	Serial baud rate divisor and 8/9-bit receive length.	amiga-hardware:registers/input-serial.md#serper
+$DFF034	POTGO	W	potgo	OCS	write	Direction and output data of the four pot pins (pins 5 and 9 of both ports) and pot start.	amiga-hardware:registers/input-serial.md#potgo
+$DFF036	JOYTEST	W	joytest	OCS	write	Write the same value into all four mouse counters at once.	amiga-hardware:registers/input-serial.md#joytest
+$DFF038	STREQU	W	strequ	OCS	strobe (chip bus only)	Strobe for horizontal sync with vertical blank and equalisation pulses (Agnus to Denise).	amiga-hardware:registers/dma-beam.md#strequ
+$DFF03A	STRVBL	W	strvbl	OCS	strobe (chip bus only)	Strobe for horizontal sync during vertical blank (Agnus to Denise).	amiga-hardware:registers/dma-beam.md#strvbl
+$DFF03C	STRHOR	W	strhor	OCS	strobe (chip bus only)	Strobe for horizontal sync on ordinary lines (Agnus to Denise and Paula).	amiga-hardware:registers/dma-beam.md#strhor
+$DFF03E	STRLONG	W	strlong	OCS	strobe (chip bus only)	Strobe marking long horizontal lines (228 colour clocks NTSC), sent on alternate lines.	amiga-hardware:registers/dma-beam.md#strlong
+$DFF040	BLTCON0	W	bltcon0	OCS	write	Channel enables, A shift value and the minterm logic function of the blit.	amiga-hardware:registers/blitter.md#bltcon0
+$DFF042	BLTCON1	W	bltcon1	OCS	write	Area/line mode select, B shift, fill modes and direction; in line mode, octant and flags.	amiga-hardware:registers/blitter.md#bltcon1
+$DFF044	BLTAFWM	W	bltafwm	OCS	write	Mask ANDed with the first word of every row of source A (a 0 bit blocks A's data).	amiga-hardware:registers/blitter.md#bltafwm
+$DFF046	BLTALWM	W	bltalwm	OCS	write	Mask ANDed with the last word of every row of source A.	amiga-hardware:registers/blitter.md#bltalwm
+$DFF048	BLTCPT	L	bltcpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF048	BLTCPTH	W	bltcpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF04A	BLTCPTL	W		OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF04C	BLTBPT	L	bltbpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF04C	BLTBPTH	W	bltbpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF04E	BLTBPTL	W		OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF050	BLTAPT	L	bltapt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF050	BLTAPTH	W	bltapt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF052	BLTAPTL	W		OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF054	BLTDPT	L	bltdpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF054	BLTDPTH	W	bltdpt	OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF056	BLTDPTL	W		OCS	write	Chip-RAM address of the next word for source A, B, C or destination D.	amiga-hardware:registers/blitter.md#bltxpth-bltxptl
+$DFF058	BLTSIZE	W	bltsize	OCS	write	Blit height (lines) and width (words); the write starts the blitter.	amiga-hardware:registers/blitter.md#bltsize
+$DFF05A	BLTCON0L	W		ECS	write	ECS shortcut that writes only BLTCON0 bits 7-0 (the minterms).	amiga-hardware:registers/blitter.md#bltcon0l
+$DFF05C	BLTSIZV	W	bltsizv	ECS	write	ECS blit height, 15 bits (up to 32768 lines); written before BLTSIZH.	amiga-hardware:registers/blitter.md#bltsizv
+$DFF05E	BLTSIZH	W	bltsizh	ECS	write	ECS blit width, 11 bits (up to 32768 pixels); the write starts the blit.	amiga-hardware:registers/blitter.md#bltsizh
+$DFF060	BLTCMOD	W	bltcmod	OCS	write	Signed modulo added to channel x's pointer at the end of each row.	amiga-hardware:registers/blitter.md#bltxmod
+$DFF062	BLTBMOD	W	bltbmod	OCS	write	Signed modulo added to channel x's pointer at the end of each row.	amiga-hardware:registers/blitter.md#bltxmod
+$DFF064	BLTAMOD	W	bltamod	OCS	write	Signed modulo added to channel x's pointer at the end of each row.	amiga-hardware:registers/blitter.md#bltxmod
+$DFF066	BLTDMOD	W	bltdmod	OCS	write	Signed modulo added to channel x's pointer at the end of each row.	amiga-hardware:registers/blitter.md#bltxmod
+$DFF070	BLTCDAT	W	bltcdat	OCS	write	Source data register: filled by DMA when the channel is enabled, otherwise a constant.	amiga-hardware:registers/blitter.md#bltxdat
+$DFF072	BLTBDAT	W	bltbdat	OCS	write	Source data register: filled by DMA when the channel is enabled, otherwise a constant.	amiga-hardware:registers/blitter.md#bltxdat
+$DFF074	BLTADAT	W	bltadat	OCS	write	Source data register: filled by DMA when the channel is enabled, otherwise a constant.	amiga-hardware:registers/blitter.md#bltxdat
+$DFF078	SPRHDAT	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF07A	BPLHDAT	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF07C	DENISEID	W	deniseid	OCS	read	Video chip revision: identifies OCS Denise, ECS Denise or AGA Lisa.	amiga-hardware:registers/ecs.md#deniseid
+$DFF07E	DSKSYNC	W	dsksync	OCS	write	Sync word compared with the disk input stream (`$4489` for Amiga MFM).	amiga-hardware:registers/disk.md#dsksync
+$DFF080	COP1LC	L	cop1lc	OCS	write	Address of the first Copper list; reloaded into the Copper PC at every vertical blank.	amiga-hardware:registers/copper.md#cop1lch-cop1lcl
+$DFF080	COP1LCH	W	cop1lc	OCS	write	Address of the first Copper list; reloaded into the Copper PC at every vertical blank.	amiga-hardware:registers/copper.md#cop1lch-cop1lcl
+$DFF082	COP1LCL	W		OCS	write	Address of the first Copper list; reloaded into the Copper PC at every vertical blank.	amiga-hardware:registers/copper.md#cop1lch-cop1lcl
+$DFF084	COP2LC	L	cop2lc	OCS	write	Address of the second Copper list; used only when COPJMP2 is strobed.	amiga-hardware:registers/copper.md#cop2lch-cop2lcl
+$DFF084	COP2LCH	W	cop2lc	OCS	write	Address of the second Copper list; used only when COPJMP2 is strobed.	amiga-hardware:registers/copper.md#cop2lch-cop2lcl
+$DFF086	COP2LCL	W		OCS	write	Address of the second Copper list; used only when COPJMP2 is strobed.	amiga-hardware:registers/copper.md#cop2lch-cop2lcl
+$DFF088	COPJMP1	W	copjmp1	OCS	strobe	Strobe: restart the Copper at the address held in COP1LC.	amiga-hardware:registers/copper.md#copjmp1
+$DFF08A	COPJMP2	W	copjmp2	OCS	strobe	Strobe: restart the Copper at the address held in COP2LC.	amiga-hardware:registers/copper.md#copjmp2
+$DFF08C	COPINS	W	copins	OCS	DMA-only (Copper internal)	Copper instruction fetch identifier; also documents the MOVE/WAIT/SKIP encoding.	amiga-hardware:registers/copper.md#copins
+$DFF08E	DIWSTRT	W	diwstrt	OCS	write	Upper-left corner of the display window (VSTART, HSTART).	amiga-hardware:registers/playfield.md#diwstrt
+$DFF090	DIWSTOP	W	diwstop	OCS	write	Lower-right corner of the display window (VSTOP, HSTOP), exclusive.	amiga-hardware:registers/playfield.md#diwstop
+$DFF092	DDFSTRT	W	ddfstrt	OCS	write	Horizontal beam position where bitplane data fetch starts (left edge of fetched data).	amiga-hardware:registers/playfield.md#ddfstrt
+$DFF094	DDFSTOP	W	ddfstop	OCS	write	Horizontal beam position of the last bitplane data fetch (right edge).	amiga-hardware:registers/playfield.md#ddfstop
+$DFF096	DMACON	W	dmacon	OCS	write (set/clear)	Enable or disable DMA channels, the DMA master switch and blitter priority.	amiga-hardware:registers/dma-beam.md#dmacon
+$DFF098	CLXCON	W	clxcon	OCS	write	Select the bitplanes, match values and odd sprites used for collision detection.	amiga-hardware:registers/sprites.md#clxcon
+$DFF09A	INTENA	W	intena	OCS	write (set/clear)	Enable or disable individual interrupt sources and the master interrupt enable.	amiga-hardware:registers/interrupts.md#intena
+$DFF09C	INTREQ	W	intreq	OCS	write (set/clear)	Clear serviced interrupt requests, or set a request to trigger an interrupt from software.	amiga-hardware:registers/interrupts.md#intreq
+$DFF09E	ADKCON	W	adkcon	OCS	write (set/clear)	Audio modulation, disk read/write mode and UART break control (set/clear write).	amiga-hardware:registers/audio.md#adkcon
+$DFF0A0	AUD0LC	L	aud,aud0	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0A0	AUD0LCH	W	aud,aud0	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0A2	AUD0LCL	W		OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0A4	AUD0LEN	W		OCS	write	Length of channel x's sample block in words.	amiga-hardware:registers/audio.md#audxlen
+$DFF0A6	AUD0PER	W		OCS	write	Sample period in colour clocks per sample; a smaller value plays faster (higher pitch).	amiga-hardware:registers/audio.md#audxper
+$DFF0A8	AUD0VOL	W		OCS	write	Channel x volume, 0 (silent) to 64 (full), linear.	amiga-hardware:registers/audio.md#audxvol
+$DFF0AA	AUD0DAT	W		OCS	write	Output buffer of channel x: two signed 8-bit samples played one after the other.	amiga-hardware:registers/audio.md#audxdat
+$DFF0B0	AUD1LC	L	aud1	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0B0	AUD1LCH	W	aud1	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0B2	AUD1LCL	W		OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0B4	AUD1LEN	W		OCS	write	Length of channel x's sample block in words.	amiga-hardware:registers/audio.md#audxlen
+$DFF0B6	AUD1PER	W		OCS	write	Sample period in colour clocks per sample; a smaller value plays faster (higher pitch).	amiga-hardware:registers/audio.md#audxper
+$DFF0B8	AUD1VOL	W		OCS	write	Channel x volume, 0 (silent) to 64 (full), linear.	amiga-hardware:registers/audio.md#audxvol
+$DFF0BA	AUD1DAT	W		OCS	write	Output buffer of channel x: two signed 8-bit samples played one after the other.	amiga-hardware:registers/audio.md#audxdat
+$DFF0C0	AUD2LC	L	aud2	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0C0	AUD2LCH	W	aud2	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0C2	AUD2LCL	W		OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0C4	AUD2LEN	W		OCS	write	Length of channel x's sample block in words.	amiga-hardware:registers/audio.md#audxlen
+$DFF0C6	AUD2PER	W		OCS	write	Sample period in colour clocks per sample; a smaller value plays faster (higher pitch).	amiga-hardware:registers/audio.md#audxper
+$DFF0C8	AUD2VOL	W		OCS	write	Channel x volume, 0 (silent) to 64 (full), linear.	amiga-hardware:registers/audio.md#audxvol
+$DFF0CA	AUD2DAT	W		OCS	write	Output buffer of channel x: two signed 8-bit samples played one after the other.	amiga-hardware:registers/audio.md#audxdat
+$DFF0D0	AUD3LC	L	aud3	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0D0	AUD3LCH	W	aud3	OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0D2	AUD3LCL	W		OCS	write	Start address of channel x's sample; copied to the playback pointer at each block start.	amiga-hardware:registers/audio.md#audxlch-audxlcl
+$DFF0D4	AUD3LEN	W		OCS	write	Length of channel x's sample block in words.	amiga-hardware:registers/audio.md#audxlen
+$DFF0D6	AUD3PER	W		OCS	write	Sample period in colour clocks per sample; a smaller value plays faster (higher pitch).	amiga-hardware:registers/audio.md#audxper
+$DFF0D8	AUD3VOL	W		OCS	write	Channel x volume, 0 (silent) to 64 (full), linear.	amiga-hardware:registers/audio.md#audxvol
+$DFF0DA	AUD3DAT	W		OCS	write	Output buffer of channel x: two signed 8-bit samples played one after the other.	amiga-hardware:registers/audio.md#audxdat
+$DFF0E0	BPL1PT	L	bplpt	OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E0	BPL1PTH	W	bplpt	OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E2	BPL1PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E4	BPL2PT	L		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E4	BPL2PTH	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E6	BPL2PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E8	BPL3PT	L		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0E8	BPL3PTH	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0EA	BPL3PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0EC	BPL4PT	L		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0EC	BPL4PTH	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0EE	BPL4PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F0	BPL5PT	L		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F0	BPL5PTH	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F2	BPL5PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F4	BPL6PT	L		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F4	BPL6PTH	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F6	BPL6PTL	W		OCS	write	Chip-RAM address of bitplane x; it advances during display, so reload it every frame.	amiga-hardware:registers/playfield.md#bplxpth-bplxptl
+$DFF0F8	BPL7PT	L		AGA	write	Chip RAM address of bitplane 7 data, reloaded every frame like the OCS plane pointers.	amiga-aga:registers/aga.md#bpl7pth-bpl7ptl
+$DFF0F8	BPL7PTH	W		AGA	write	Chip RAM address of bitplane 7 data, reloaded every frame like the OCS plane pointers.	amiga-aga:registers/aga.md#bpl7pth-bpl7ptl
+$DFF0FA	BPL7PTL	W		AGA	write	Chip RAM address of bitplane 7 data, reloaded every frame like the OCS plane pointers.	amiga-aga:registers/aga.md#bpl7pth-bpl7ptl
+$DFF0FC	BPL8PT	L		AGA	write	Chip RAM address of bitplane 8 data, reloaded every frame.	amiga-aga:registers/aga.md#bpl8pth-bpl8ptl
+$DFF0FC	BPL8PTH	W		AGA	write	Chip RAM address of bitplane 8 data, reloaded every frame.	amiga-aga:registers/aga.md#bpl8pth-bpl8ptl
+$DFF0FE	BPL8PTL	W		AGA	write	Chip RAM address of bitplane 8 data, reloaded every frame.	amiga-aga:registers/aga.md#bpl8pth-bpl8ptl
+$DFF100	BPLCON0	W	bplcon0	OCS	write	Display mode: bitplane count, hires, HAM, dual playfield, interlace and genlock bits.	amiga-hardware:registers/playfield.md#bplcon0
+$DFF102	BPLCON1	W	bplcon1	OCS	write	Horizontal scroll delay (0-15 lores pixels) for playfield 1 and playfield 2.	amiga-hardware:registers/playfield.md#bplcon1
+$DFF104	BPLCON2	W	bplcon2	OCS	write	Playfield priority against sprites and each other, plus ECS genlock keying.	amiga-hardware:registers/playfield.md#bplcon2
+$DFF106	BPLCON3	W	bplcon3	ECS	write	ECS enhanced display features: border blanking and border genlock transparency.	amiga-hardware:registers/playfield.md#bplcon3
+$DFF108	BPL1MOD	W	bpl1mod	OCS	write	Signed modulo added to the odd bitplane pointers (1, 3, 5) at the end of each line.	amiga-hardware:registers/playfield.md#bpl1mod
+$DFF10A	BPL2MOD	W	bpl2mod	OCS	write	Signed modulo added to the even bitplane pointers (2, 4, 6) at the end of each line.	amiga-hardware:registers/playfield.md#bpl2mod
+$DFF10C	BPLCON4	W	bplcon4	AGA	write	Bitplane colour-index XOR mask and the colour bases of even and odd sprites.	amiga-aga:registers/aga.md#bplcon4
+$DFF10E	CLXCON2	W	clxcon2	AGA	write	Adds bitplanes 7 and 8 to collision detection.	amiga-aga:registers/aga.md#clxcon2
+$DFF110	BPL1DAT	W	bpldat	OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF112	BPL2DAT	W		OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF114	BPL3DAT	W		OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF116	BPL4DAT	W		OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF118	BPL5DAT	W		OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF11A	BPL6DAT	W		OCS	write	Bitplane serialiser input words, filled by bitplane DMA and not needed by software.	amiga-hardware:registers/playfield.md#bplxdat
+$DFF11C	BPL7DAT	W		AGA	write	Parallel-to-serial data buffers for planes 7 and 8 (16/32/64 bits per fetch).	amiga-aga:registers/aga.md#bpl7dat-bpl8dat
+$DFF11E	BPL8DAT	W		AGA	write	Parallel-to-serial data buffers for planes 7 and 8 (16/32/64 bits per fetch).	amiga-aga:registers/aga.md#bpl7dat-bpl8dat
+$DFF120	SPR0PT	L	sprpt	OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF120	SPR0PTH	W	sprpt	OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF122	SPR0PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF124	SPR1PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF124	SPR1PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF126	SPR1PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF128	SPR2PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF128	SPR2PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF12A	SPR2PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF12C	SPR3PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF12C	SPR3PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF12E	SPR3PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF130	SPR4PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF130	SPR4PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF132	SPR4PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF134	SPR5PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF134	SPR5PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF136	SPR5PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF138	SPR6PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF138	SPR6PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF13A	SPR6PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF13C	SPR7PT	L		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF13C	SPR7PTH	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF13E	SPR7PTL	W		OCS	write	Chip-RAM address of sprite x's data list; reload it every vertical blank.	amiga-hardware:registers/sprites.md#sprxpth-sprxptl
+$DFF140	SPR0POS	W	spr	OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF142	SPR0CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF144	SPR0DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF146	SPR0DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF148	SPR1POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF14A	SPR1CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF14C	SPR1DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF14E	SPR1DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF150	SPR2POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF152	SPR2CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF154	SPR2DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF156	SPR2DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF158	SPR3POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF15A	SPR3CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF15C	SPR3DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF15E	SPR3DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF160	SPR4POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF162	SPR4CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF164	SPR4DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF166	SPR4DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF168	SPR5POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF16A	SPR5CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF16C	SPR5DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF16E	SPR5DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF170	SPR6POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF172	SPR6CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF174	SPR6DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF176	SPR6DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF178	SPR7POS	W		OCS	write	Sprite x vertical start (low 8 bits) and horizontal start (high 8 bits).	amiga-hardware:registers/sprites.md#sprxpos
+$DFF17A	SPR7CTL	W		OCS	write	Sprite x vertical stop, attach flag and the high/low position bits.	amiga-hardware:registers/sprites.md#sprxctl
+$DFF17C	SPR7DATA	W		OCS	write	Low-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdata
+$DFF17E	SPR7DATB	W		OCS	write	High-order colour bit of the 16 pixels of the current sprite line (MSB = leftmost).	amiga-hardware:registers/sprites.md#sprxdatb
+$DFF180	COLOR00	W	color	OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF182	COLOR01	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF184	COLOR02	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF186	COLOR03	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF188	COLOR04	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF18A	COLOR05	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF18C	COLOR06	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF18E	COLOR07	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF190	COLOR08	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF192	COLOR09	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF194	COLOR10	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF196	COLOR11	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF198	COLOR12	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF19A	COLOR13	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF19C	COLOR14	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF19E	COLOR15	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1A0	COLOR16	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1A2	COLOR17	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1A4	COLOR18	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1A6	COLOR19	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1A8	COLOR20	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1AA	COLOR21	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1AC	COLOR22	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1AE	COLOR23	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1B0	COLOR24	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1B2	COLOR25	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1B4	COLOR26	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1B6	COLOR27	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1B8	COLOR28	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1BA	COLOR29	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1BC	COLOR30	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1BE	COLOR31	W		OCS	write	12-bit RGB palette entry `$0RGB`; COLOR00 is the background and border colour.	amiga-hardware:registers/playfield.md#colorxx
+$DFF1C0	HTOTAL	W	htotal	ECS	write	Highest horizontal colour-clock count: a line lasts HTOTAL+1 colour clocks.	amiga-hardware:registers/ecs.md#htotal
+$DFF1C2	HSSTOP	W	hsstop	ECS	write	Horizontal position (colour clocks) where HSYNC ends.	amiga-hardware:registers/ecs.md#hsstop
+$DFF1C4	HBSTRT	W	hbstrt	ECS	write	Horizontal position (colour clocks) where horizontal blanking starts.	amiga-hardware:registers/ecs.md#hbstrt
+$DFF1C6	HBSTOP	W	hbstop	ECS	write	Horizontal position (colour clocks) where horizontal blanking ends.	amiga-hardware:registers/ecs.md#hbstop
+$DFF1C8	VTOTAL	W	vtotal	ECS	write	Highest line number: the vertical counter resets after it (VTOTAL+1 lines per field).	amiga-hardware:registers/ecs.md#vtotal
+$DFF1CA	VSSTOP	W	vsstop	ECS	write	Line number where vertical sync ends.	amiga-hardware:registers/ecs.md#vsstop
+$DFF1CC	VBSTRT	W	vbstrt	ECS	write	Line number where vertical blanking starts.	amiga-hardware:registers/ecs.md#vbstrt
+$DFF1CE	VBSTOP	W	vbstop	ECS	write	Line number where vertical blanking ends (bits 10-0).	amiga-hardware:registers/ecs.md#vbstop
+$DFF1D0	SPRHSTRT	W	sprhstrt	ECS	write	First and last line of the UHRES sprite pointer fetch.	amiga-hardware:registers/ecs.md#sprhstrt-sprhstop
+$DFF1D2	SPRHSTOP	W	sprhstop	ECS	write	First and last line of the UHRES sprite pointer fetch.	amiga-hardware:registers/ecs.md#sprhstrt-sprhstop
+$DFF1D4	BPLHSTRT	W	bplhstrt	ECS	write	First and last line of the UHRES bitplane pointer fetch.	amiga-hardware:registers/ecs.md#bplhstrt-bplhstop
+$DFF1D6	BPLHSTOP	W	bplhstop	ECS	write	First and last line of the UHRES bitplane pointer fetch.	amiga-hardware:registers/ecs.md#bplhstrt-bplhstop
+$DFF1D8	HHPOSW	W	hhposw	ECS	write	Write the secondary (DUAL mode) horizontal beam counter.	amiga-hardware:registers/ecs.md#hhposw
+$DFF1DA	HHPOSR	W	hhposr	ECS	read	Read the secondary (DUAL mode) horizontal beam counter.	amiga-hardware:registers/ecs.md#hhposr
+$DFF1DC	BEAMCON0	W	beamcon0	ECS	write	Beam counter control: variable sync/blank, PAL/NTSC decodes and sync polarities.	amiga-hardware:registers/ecs.md#beamcon0
+$DFF1DE	HSSTRT	W	hsstrt	ECS	write	Horizontal position (colour clocks) where HSYNC starts.	amiga-hardware:registers/ecs.md#hsstrt
+$DFF1E0	VSSTRT	W	vsstrt	ECS	write	Line number where vertical sync starts.	amiga-hardware:registers/ecs.md#vsstrt
+$DFF1E2	HCENTER	W	hcenter	ECS	write	Horizontal position (colour clocks) of VSYNC on long (interlace) fields.	amiga-hardware:registers/ecs.md#hcenter
+$DFF1E4	DIWHIGH	W	diwhigh	ECS	write	Upper bits of the display window start and stop positions (removes the OCS limits).	amiga-hardware:registers/ecs.md#diwhigh
+$DFF1E6	BPLHMOD	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1E8	SPRHPT	L		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1E8	SPRHPTH	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1EA	SPRHPTL	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1EC	BPLHPT	L		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1EC	BPLHPTH	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1EE	BPLHPTL	W		ECS	write	UHRES (external VRAM) bitplane and sprite pointers, modulo and bus identifiers.	amiga-hardware:registers/ecs.md#bplhpth-bplhptl-bplhmod-sprhpth-sprhptl-bplhdat-sprhdat
+$DFF1FC	FMODE	W	fmode	AGA	write	Chip RAM fetch width for bitplanes and sprites, plus scan-doubling enables.	amiga-aga:registers/aga.md#fmode

@@ -1,0 +1,126 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	Supervisor	userFunction=A5	ULONG	ULONG Supervisor(ULONG (*CONST userFunction)())		public
+-72	-$48	InitCode	startClass=D0, version=D1	VOID	VOID InitCode(ULONG startClass, ULONG version)		public
+-78	-$4E	InitStruct	initTable=A1, memory=A2, size=D0	VOID	VOID InitStruct(CONST APTR initTable, APTR memory, ULONG size)		public
+-84	-$54	MakeLibrary	funcInit=A0, structInit=A1, libInit=A2, dataSize=D0, segList=D1	struct Library *	struct Library * MakeLibrary(CONST APTR funcInit, CONST APTR structInit, ULONG (*CONST libInit)(), ULONG dataSize, ULONG segList)		public
+-90	-$5A	MakeFunctions	target=A0, functionArray=A1, funcDispBase=A2	VOID	VOID MakeFunctions(APTR target, CONST APTR functionArray, CONST APTR funcDispBase)		public
+-96	-$60	FindResident	name=A1	struct Resident *	struct Resident * FindResident(CONST_STRPTR name)		public
+-102	-$66	InitResident	resident=A1, segList=D1	APTR	APTR InitResident(CONST struct Resident *resident, ULONG segList)		public
+-108	-$6C	Alert	alertNum=D7	VOID	VOID Alert(ULONG alertNum)		public
+-114	-$72	Debug	flags=D0	VOID	VOID Debug(ULONG flags)		public
+-120	-$78	Disable	none	VOID	VOID Disable(VOID)		public
+-126	-$7E	Enable	none	VOID	VOID Enable(VOID)		public
+-132	-$84	Forbid	none	VOID	VOID Forbid(VOID)		public
+-138	-$8A	Permit	none	VOID	VOID Permit(VOID)		public
+-144	-$90	SetSR	newSR=D0, mask=D1	ULONG	ULONG SetSR(ULONG newSR, ULONG mask)		public
+-150	-$96	SuperState	none	APTR	APTR SuperState(VOID)		public
+-156	-$9C	UserState	sysStack=D0	VOID	VOID UserState(APTR sysStack)		public
+-162	-$A2	SetIntVector	intNumber=D0, interrupt=A1	struct Interrupt *	struct Interrupt * SetIntVector(LONG intNumber, CONST struct Interrupt *interrupt)		public
+-168	-$A8	AddIntServer	intNumber=D0, interrupt=A1	VOID	VOID AddIntServer(LONG intNumber, struct Interrupt *interrupt)		public
+-174	-$AE	RemIntServer	intNumber=D0, interrupt=A1	VOID	VOID RemIntServer(LONG intNumber, struct Interrupt *interrupt)		public
+-180	-$B4	Cause	interrupt=A1	VOID	VOID Cause(struct Interrupt *interrupt)		public
+-186	-$BA	Allocate	freeList=A0, byteSize=D0	APTR	APTR Allocate(struct MemHeader *freeList, ULONG byteSize)		public
+-192	-$C0	Deallocate	freeList=A0, memoryBlock=A1, byteSize=D0	VOID	VOID Deallocate(struct MemHeader *freeList, APTR memoryBlock, ULONG byteSize)		public
+-198	-$C6	AllocMem	byteSize=D0, requirements=D1	APTR	APTR AllocMem(ULONG byteSize, ULONG requirements)		public
+-204	-$CC	AllocAbs	byteSize=D0, location=A1	APTR	APTR AllocAbs(ULONG byteSize, APTR location)		public
+-210	-$D2	FreeMem	memoryBlock=A1, byteSize=D0	VOID	VOID FreeMem(APTR memoryBlock, ULONG byteSize)		public
+-216	-$D8	AvailMem	requirements=D1	ULONG	ULONG AvailMem(ULONG requirements)		public
+-222	-$DE	AllocEntry	entry=A0	struct MemList *	struct MemList * AllocEntry(struct MemList *entry)		public
+-228	-$E4	FreeEntry	entry=A0	VOID	VOID FreeEntry(struct MemList *entry)		public
+-234	-$EA	Insert	list=A0, node=A1, pred=A2	VOID	VOID Insert(struct List *list, struct Node *node, struct Node *pred)		public
+-240	-$F0	AddHead	list=A0, node=A1	VOID	VOID AddHead(struct List *list, struct Node *node)		public
+-246	-$F6	AddTail	list=A0, node=A1	VOID	VOID AddTail(struct List *list, struct Node *node)		public
+-252	-$FC	Remove	node=A1	VOID	VOID Remove(struct Node *node)		public
+-258	-$102	RemHead	list=A0	struct Node *	struct Node * RemHead(struct List *list)		public
+-264	-$108	RemTail	list=A0	struct Node *	struct Node * RemTail(struct List *list)		public
+-270	-$10E	Enqueue	list=A0, node=A1	VOID	VOID Enqueue(struct List *list, struct Node *node)		public
+-276	-$114	FindName	list=A0, name=A1	struct Node *	struct Node * FindName(struct List *list, CONST_STRPTR name)		public
+-282	-$11A	AddTask	task=A1, initPC=A2, finalPC=A3	APTR	APTR AddTask(struct Task *task, CONST APTR initPC, CONST APTR finalPC)		public
+-288	-$120	RemTask	task=A1	VOID	VOID RemTask(struct Task *task)		public
+-294	-$126	FindTask	name=A1	struct Task *	struct Task * FindTask(CONST_STRPTR name)		public
+-300	-$12C	SetTaskPri	task=A1, priority=D0	BYTE	BYTE SetTaskPri(struct Task *task, LONG priority)		public
+-306	-$132	SetSignal	newSignals=D0, signalSet=D1	ULONG	ULONG SetSignal(ULONG newSignals, ULONG signalSet)		public
+-312	-$138	SetExcept	newSignals=D0, signalSet=D1	ULONG	ULONG SetExcept(ULONG newSignals, ULONG signalSet)		public
+-318	-$13E	Wait	signalSet=D0	ULONG	ULONG Wait(ULONG signalSet)		public
+-324	-$144	Signal	task=A1, signalSet=D0	VOID	VOID Signal(struct Task *task, ULONG signalSet)		public
+-330	-$14A	AllocSignal	signalNum=D0	BYTE	BYTE AllocSignal(LONG signalNum)		public
+-336	-$150	FreeSignal	signalNum=D0	VOID	VOID FreeSignal(LONG signalNum)		public
+-342	-$156	AllocTrap	trapNum=D0	LONG	LONG AllocTrap(LONG trapNum)		public
+-348	-$15C	FreeTrap	trapNum=D0	VOID	VOID FreeTrap(LONG trapNum)		public
+-354	-$162	AddPort	port=A1	VOID	VOID AddPort(struct MsgPort *port)		public
+-360	-$168	RemPort	port=A1	VOID	VOID RemPort(struct MsgPort *port)		public
+-366	-$16E	PutMsg	port=A0, message=A1	VOID	VOID PutMsg(struct MsgPort *port, struct Message *message)		public
+-372	-$174	GetMsg	port=A0	struct Message *	struct Message * GetMsg(struct MsgPort *port)		public
+-378	-$17A	ReplyMsg	message=A1	VOID	VOID ReplyMsg(struct Message *message)		public
+-384	-$180	WaitPort	port=A0	struct Message *	struct Message * WaitPort(struct MsgPort *port)		public
+-390	-$186	FindPort	name=A1	struct MsgPort *	struct MsgPort * FindPort(CONST_STRPTR name)		public
+-396	-$18C	AddLibrary	library=A1	VOID	VOID AddLibrary(struct Library *library)		public
+-402	-$192	RemLibrary	library=A1	VOID	VOID RemLibrary(struct Library *library)		public
+-408	-$198	OldOpenLibrary	libName=A1	struct Library *	struct Library * OldOpenLibrary(CONST_STRPTR libName)		public
+-414	-$19E	CloseLibrary	library=A1	VOID	VOID CloseLibrary(struct Library *library)		public
+-420	-$1A4	SetFunction	library=A1, funcOffset=A0, newFunction=D0	APTR	APTR SetFunction(struct Library *library, LONG funcOffset, ULONG (*CONST newFunction)())		public
+-426	-$1AA	SumLibrary	library=A1	VOID	VOID SumLibrary(struct Library *library)		public
+-432	-$1B0	AddDevice	device=A1	VOID	VOID AddDevice(struct Device *device)		public
+-438	-$1B6	RemDevice	device=A1	VOID	VOID RemDevice(struct Device *device)		public
+-444	-$1BC	OpenDevice	devName=A0, unit=D0, ioRequest=A1, flags=D1	BYTE	BYTE OpenDevice(CONST_STRPTR devName, ULONG unit, struct IORequest *ioRequest, ULONG flags)		public
+-450	-$1C2	CloseDevice	ioRequest=A1	VOID	VOID CloseDevice(struct IORequest *ioRequest)		public
+-456	-$1C8	DoIO	ioRequest=A1	BYTE	BYTE DoIO(struct IORequest *ioRequest)		public
+-462	-$1CE	SendIO	ioRequest=A1	VOID	VOID SendIO(struct IORequest *ioRequest)		public
+-468	-$1D4	CheckIO	ioRequest=A1	struct IORequest *	struct IORequest * CheckIO(struct IORequest *ioRequest)		public
+-474	-$1DA	WaitIO	ioRequest=A1	BYTE	BYTE WaitIO(struct IORequest *ioRequest)		public
+-480	-$1E0	AbortIO	ioRequest=A1	VOID	VOID AbortIO(struct IORequest *ioRequest)		public
+-486	-$1E6	AddResource	resource=A1	VOID	VOID AddResource(APTR resource)		public
+-492	-$1EC	RemResource	resource=A1	VOID	VOID RemResource(APTR resource)		public
+-498	-$1F2	OpenResource	resName=A1	APTR	APTR OpenResource(CONST_STRPTR resName)		public
+-522	-$20A	RawDoFmt	formatString=A0, dataStream=A1, putChProc=A2, putChData=A3	APTR	APTR RawDoFmt(CONST_STRPTR formatString, CONST APTR dataStream, VOID (*CONST putChProc)(), APTR putChData)		public
+-528	-$210	GetCC	none	ULONG	ULONG GetCC(VOID)		public
+-534	-$216	TypeOfMem	address=A1	ULONG	ULONG TypeOfMem(CONST APTR address)		public
+-540	-$21C	Procure	sigSem=A0, bidMsg=A1	ULONG	ULONG Procure(struct SignalSemaphore *sigSem, struct SemaphoreMessage *bidMsg)		public
+-546	-$222	Vacate	sigSem=A0, bidMsg=A1	VOID	VOID Vacate(struct SignalSemaphore *sigSem, struct SemaphoreMessage *bidMsg)		public
+-552	-$228	OpenLibrary	libName=A1, version=D0	struct Library *	struct Library * OpenLibrary(CONST_STRPTR libName, ULONG version)		public
+-558	-$22E	InitSemaphore	sigSem=A0	VOID	VOID InitSemaphore(struct SignalSemaphore *sigSem)		public
+-564	-$234	ObtainSemaphore	sigSem=A0	VOID	VOID ObtainSemaphore(struct SignalSemaphore *sigSem)		public
+-570	-$23A	ReleaseSemaphore	sigSem=A0	VOID	VOID ReleaseSemaphore(struct SignalSemaphore *sigSem)		public
+-576	-$240	AttemptSemaphore	sigSem=A0	ULONG	ULONG AttemptSemaphore(struct SignalSemaphore *sigSem)		public
+-582	-$246	ObtainSemaphoreList	sigSem=A0	VOID	VOID ObtainSemaphoreList(struct List *sigSem)		public
+-588	-$24C	ReleaseSemaphoreList	sigSem=A0	VOID	VOID ReleaseSemaphoreList(struct List *sigSem)		public
+-594	-$252	FindSemaphore	name=A1	struct SignalSemaphore *	struct SignalSemaphore * FindSemaphore(STRPTR name)		public
+-600	-$258	AddSemaphore	sigSem=A1	VOID	VOID AddSemaphore(struct SignalSemaphore *sigSem)		public
+-606	-$25E	RemSemaphore	sigSem=A1	VOID	VOID RemSemaphore(struct SignalSemaphore *sigSem)		public
+-612	-$264	SumKickData	none	ULONG	ULONG SumKickData(VOID)		public
+-618	-$26A	AddMemList	size=D0, attributes=D1, pri=D2, base=A0, name=A1	VOID	VOID AddMemList(ULONG size, ULONG attributes, LONG pri, APTR base, CONST_STRPTR name)		public
+-624	-$270	CopyMem	source=A0, dest=A1, size=D0	VOID	VOID CopyMem(CONST APTR source, APTR dest, ULONG size)		public
+-630	-$276	CopyMemQuick	source=A0, dest=A1, size=D0	VOID	VOID CopyMemQuick(CONST APTR source, APTR dest, ULONG size)		public
+-636	-$27C	CacheClearU	none	VOID	VOID CacheClearU(VOID)		public
+-642	-$282	CacheClearE	address=A0, length=D0, caches=D1	VOID	VOID CacheClearE(APTR address, ULONG length, ULONG caches)		public
+-648	-$288	CacheControl	cacheBits=D0, cacheMask=D1	ULONG	ULONG CacheControl(ULONG cacheBits, ULONG cacheMask)		public
+-654	-$28E	CreateIORequest	port=A0, size=D0	APTR	APTR CreateIORequest(CONST struct MsgPort *port, ULONG size)		public
+-660	-$294	DeleteIORequest	iorequest=A0	VOID	VOID DeleteIORequest(APTR iorequest)		public
+-666	-$29A	CreateMsgPort	none	struct MsgPort *	struct MsgPort * CreateMsgPort(VOID)		public
+-672	-$2A0	DeleteMsgPort	port=A0	VOID	VOID DeleteMsgPort(struct MsgPort *port)		public
+-678	-$2A6	ObtainSemaphoreShared	sigSem=A0	VOID	VOID ObtainSemaphoreShared(struct SignalSemaphore *sigSem)		public
+-684	-$2AC	AllocVec	byteSize=D0, requirements=D1	APTR	APTR AllocVec(ULONG byteSize, ULONG requirements)		public
+-690	-$2B2	FreeVec	memoryBlock=A1	VOID	VOID FreeVec(APTR memoryBlock)		public
+-696	-$2B8	CreatePool	requirements=D0, puddleSize=D1, threshSize=D2	APTR	APTR CreatePool(ULONG requirements, ULONG puddleSize, ULONG threshSize)		public
+-702	-$2BE	DeletePool	poolHeader=A0	VOID	VOID DeletePool(APTR poolHeader)		public
+-708	-$2C4	AllocPooled	poolHeader=A0, memSize=D0	APTR	APTR AllocPooled(APTR poolHeader, ULONG memSize)		public
+-714	-$2CA	FreePooled	poolHeader=A0, memory=A1, memSize=D0	VOID	VOID FreePooled(APTR poolHeader, APTR memory, ULONG memSize)		public
+-720	-$2D0	AttemptSemaphoreShared	sigSem=A0	ULONG	ULONG AttemptSemaphoreShared(struct SignalSemaphore *sigSem)		public
+-726	-$2D6	ColdReboot	none	VOID	VOID ColdReboot(VOID)		public
+-732	-$2DC	StackSwap	newStack=A0	VOID	VOID StackSwap(struct StackSwapStruct *newStack)		public
+-762	-$2FA	CachePreDMA	address=A0, length=A1, flags=D0	APTR	APTR CachePreDMA(CONST APTR address, ULONG *length, ULONG flags)		public
+-768	-$300	CachePostDMA	address=A0, length=A1, flags=D0	VOID	VOID CachePostDMA(CONST APTR address, ULONG *length, ULONG flags)		public
+-774	-$306	AddMemHandler	memhand=A1	VOID	VOID AddMemHandler(struct Interrupt *memhand)		public
+-780	-$30C	RemMemHandler	memhand=A1	VOID	VOID RemMemHandler(struct Interrupt *memhand)		public
+-786	-$312	ObtainQuickVector	interruptCode=A0	ULONG	ULONG ObtainQuickVector(APTR interruptCode)		public
+-828	-$33C	NewMinList	minlist=A0	VOID	VOID NewMinList(struct MinList *minlist)		public
+-852	-$354	AVL_AddNode	root=A0, node=A1, func=A2	struct AVLNode *	struct AVLNode * AVL_AddNode(struct AVLNode **root, struct AVLNode *node, APTR func)		public
+-858	-$35A	AVL_RemNodeByAddress	root=A0, node=A1	struct AVLNode *	struct AVLNode * AVL_RemNodeByAddress(struct AVLNode **root, struct AVLNode *node)		public
+-864	-$360	AVL_RemNodeByKey	root=A0, key=A1, func=A2	struct AVLNode *	struct AVLNode * AVL_RemNodeByKey(struct AVLNode **root, AVLKey key, APTR func)		public
+-870	-$366	AVL_FindNode	root=A0, key=A1, func=A2	struct AVLNode *	struct AVLNode * AVL_FindNode(CONST struct AVLNode *root, AVLKey key, APTR func)		public
+-876	-$36C	AVL_FindPrevNodeByAddress	node=A0	struct AVLNode *	struct AVLNode * AVL_FindPrevNodeByAddress(CONST struct AVLNode *node)		public
+-882	-$372	AVL_FindPrevNodeByKey	root=A0, key=A1, func=A2	struct AVLNode *	struct AVLNode * AVL_FindPrevNodeByKey(CONST struct AVLNode *root, AVLKey key, APTR func)		public
+-888	-$378	AVL_FindNextNodeByAddress	node=A0	struct AVLNode *	struct AVLNode * AVL_FindNextNodeByAddress(CONST struct AVLNode *node)		public
+-894	-$37E	AVL_FindNextNodeByKey	root=A0, key=A1, func=A2	struct AVLNode *	struct AVLNode * AVL_FindNextNodeByKey(CONST struct AVLNode *root, AVLKey key, APTR func)		public
+-900	-$384	AVL_FindFirstNode	root=A0	struct AVLNode *	struct AVLNode * AVL_FindFirstNode(CONST struct AVLNode *root)		public
+-906	-$38A	AVL_FindLastNode	root=A0	struct AVLNode *	struct AVLNode * AVL_FindLastNode(CONST struct AVLNode *root)		public

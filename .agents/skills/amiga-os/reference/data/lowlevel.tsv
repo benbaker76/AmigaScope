@@ -1,0 +1,16 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	ReadJoyPort	port=D0	ULONG	ULONG ReadJoyPort(ULONG port)		public
+-36	-$24	GetLanguageSelection	none	UBYTE	UBYTE GetLanguageSelection(VOID)		public
+-48	-$30	GetKey	none	ULONG	ULONG GetKey(VOID)		public
+-54	-$36	QueryKeys	queryArray=A0, arraySize=D1	VOID	VOID QueryKeys(struct KeyQuery *queryArray, ULONG arraySize)		public
+-60	-$3C	AddKBInt	intRoutine=A0, intData=A1	APTR	APTR AddKBInt(CONST APTR intRoutine, CONST APTR intData)		public
+-66	-$42	RemKBInt	intHandle=A1	VOID	VOID RemKBInt(APTR intHandle)		public
+-72	-$48	SystemControlA	tagList=A1	ULONG	ULONG SystemControlA(CONST struct TagItem *tagList)	SystemControl	public
+-78	-$4E	AddTimerInt	intRoutine=A0, intData=A1	APTR	APTR AddTimerInt(CONST APTR intRoutine, CONST APTR intData)		public
+-84	-$54	RemTimerInt	intHandle=A1	VOID	VOID RemTimerInt(APTR intHandle)		public
+-90	-$5A	StopTimerInt	intHandle=A1	VOID	VOID StopTimerInt(APTR intHandle)		public
+-96	-$60	StartTimerInt	intHandle=A1, timeInterval=D0, continuous=D1	VOID	VOID StartTimerInt(APTR intHandle, ULONG timeInterval, LONG continuous)		public
+-102	-$66	ElapsedTime	context=A0	ULONG	ULONG ElapsedTime(struct EClockVal *context)		public
+-108	-$6C	AddVBlankInt	intRoutine=A0, intData=A1	APTR	APTR AddVBlankInt(CONST APTR intRoutine, CONST APTR intData)		public
+-114	-$72	RemVBlankInt	intHandle=A1	VOID	VOID RemVBlankInt(APTR intHandle)		public
+-132	-$84	SetJoyPortAttrsA	portNumber=D0, tagList=A1	BOOL	BOOL SetJoyPortAttrsA(ULONG portNumber, CONST struct TagItem *tagList)	SetJoyPortAttrs	public

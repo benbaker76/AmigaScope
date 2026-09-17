@@ -1,0 +1,39 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	FindTagItem	tagVal=D0, tagList=A0	struct TagItem *	struct TagItem * FindTagItem(Tag tagVal, CONST struct TagItem *tagList)		public
+-36	-$24	GetTagData	tagValue=D0, defaultVal=D1, tagList=A0	ULONG	ULONG GetTagData(Tag tagValue, ULONG defaultVal, CONST struct TagItem *tagList)		public
+-42	-$2A	PackBoolTags	initialFlags=D0, tagList=A0, boolMap=A1	ULONG	ULONG PackBoolTags(ULONG initialFlags, CONST struct TagItem *tagList, CONST struct TagItem *boolMap)		public
+-48	-$30	NextTagItem	tagListPtr=A0	struct TagItem *	struct TagItem * NextTagItem(struct TagItem **tagListPtr)		public
+-54	-$36	FilterTagChanges	changeList=A0, originalList=A1, apply=D0	VOID	VOID FilterTagChanges(struct TagItem *changeList, struct TagItem *originalList, ULONG apply)		public
+-60	-$3C	MapTags	tagList=A0, mapList=A1, mapType=D0	VOID	VOID MapTags(struct TagItem *tagList, CONST struct TagItem *mapList, ULONG mapType)		public
+-66	-$42	AllocateTagItems	numTags=D0	struct TagItem *	struct TagItem * AllocateTagItems(ULONG numTags)		public
+-72	-$48	CloneTagItems	tagList=A0	struct TagItem *	struct TagItem * CloneTagItems(CONST struct TagItem *tagList)		public
+-78	-$4E	FreeTagItems	tagList=A0	VOID	VOID FreeTagItems(struct TagItem *tagList)		public
+-84	-$54	RefreshTagItemClones	clone=A0, original=A1	VOID	VOID RefreshTagItemClones(struct TagItem *clone, CONST struct TagItem *original)		public
+-90	-$5A	TagInArray	tagValue=D0, tagArray=A0	BOOL	BOOL TagInArray(Tag tagValue, CONST Tag *tagArray)		public
+-96	-$60	FilterTagItems	tagList=A0, filterArray=A1, logic=D0	ULONG	ULONG FilterTagItems(struct TagItem *tagList, CONST Tag *filterArray, ULONG logic)		public
+-102	-$66	CallHookPkt	hook=A0, object=A2, paramPacket=A1	ULONG	ULONG CallHookPkt(struct Hook *hook, APTR object, APTR paramPacket)		public
+-120	-$78	Amiga2Date	seconds=D0, result=A0	VOID	VOID Amiga2Date(ULONG seconds, struct ClockData *result)		public
+-126	-$7E	Date2Amiga	date=A0	ULONG	ULONG Date2Amiga(CONST struct ClockData *date)		public
+-132	-$84	CheckDate	date=A0	ULONG	ULONG CheckDate(CONST struct ClockData *date)		public
+-138	-$8A	SMult32	arg1=D0, arg2=D1	LONG	LONG SMult32(LONG arg1, LONG arg2)		public
+-144	-$90	UMult32	arg1=D0, arg2=D1	ULONG	ULONG UMult32(ULONG arg1, ULONG arg2)		public
+-150	-$96	SDivMod32	dividend=D0, divisor=D1	LONG	LONG SDivMod32(LONG dividend, LONG divisor)		public
+-156	-$9C	UDivMod32	dividend=D0, divisor=D1	ULONG	ULONG UDivMod32(ULONG dividend, ULONG divisor)		public
+-162	-$A2	Stricmp	string1=A0, string2=A1	LONG	LONG Stricmp(CONST_STRPTR string1, CONST_STRPTR string2)		public
+-168	-$A8	Strnicmp	string1=A0, string2=A1, length=D0	LONG	LONG Strnicmp(CONST_STRPTR string1, CONST_STRPTR string2, LONG length)		public
+-174	-$AE	ToUpper	character=D0	UBYTE	UBYTE ToUpper(ULONG character)		public
+-180	-$B4	ToLower	character=D0	UBYTE	UBYTE ToLower(ULONG character)		public
+-186	-$BA	ApplyTagChanges	list=A0, changeList=A1	VOID	VOID ApplyTagChanges(struct TagItem *list, CONST struct TagItem *changeList)		public
+-198	-$C6	SMult64	arg1=D0, arg2=D1	LONG	LONG SMult64(LONG arg1, LONG arg2)		public
+-204	-$CC	UMult64	arg1=D0, arg2=D1	ULONG	ULONG UMult64(ULONG arg1, ULONG arg2)		public
+-210	-$D2	PackStructureTags	pack=A0, packTable=A1, tagList=A2	ULONG	ULONG PackStructureTags(APTR pack, CONST ULONG *packTable, CONST struct TagItem *tagList)		public
+-216	-$D8	UnpackStructureTags	pack=A0, packTable=A1, tagList=A2	ULONG	ULONG UnpackStructureTags(CONST APTR pack, CONST ULONG *packTable, struct TagItem *tagList)		public
+-222	-$DE	AddNamedObject	nameSpace=A0, object=A1	BOOL	BOOL AddNamedObject(struct NamedObject *nameSpace, struct NamedObject *object)		public
+-228	-$E4	AllocNamedObjectA	name=A0, tagList=A1	struct NamedObject *	struct NamedObject * AllocNamedObjectA(CONST_STRPTR name, CONST struct TagItem *tagList)	AllocNamedObject	public
+-234	-$EA	AttemptRemNamedObject	object=A0	LONG	LONG AttemptRemNamedObject(struct NamedObject *object)		public
+-240	-$F0	FindNamedObject	nameSpace=A0, name=A1, lastObject=A2	struct NamedObject *	struct NamedObject * FindNamedObject(struct NamedObject *nameSpace, CONST_STRPTR name, struct NamedObject *lastObject)		public
+-246	-$F6	FreeNamedObject	object=A0	VOID	VOID FreeNamedObject(struct NamedObject *object)		public
+-252	-$FC	NamedObjectName	object=A0	STRPTR	STRPTR NamedObjectName(struct NamedObject *object)		public
+-258	-$102	ReleaseNamedObject	object=A0	VOID	VOID ReleaseNamedObject(struct NamedObject *object)		public
+-264	-$108	RemNamedObject	object=A0, message=A1	VOID	VOID RemNamedObject(struct NamedObject *object, struct Message *message)		public
+-270	-$10E	GetUniqueID	none	ULONG	ULONG GetUniqueID(VOID)		public

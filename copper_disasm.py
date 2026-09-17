@@ -85,32 +85,80 @@ REG = build_regmap()
 def reg_name(off):
     return REG.get(off, "$%03X" % off)
 
-def decode_value(off, v):
-    """Human-readable decode of notable MOVE targets."""
+def _lores_px(steps):
+    """AGA scroll steps are 35ns = 1/4 lores pixel; print whole pixels when exact."""
+    return "%d" % (steps // 4) if steps % 4 == 0 else "%.2f" % (steps / 4.0)
+
+def _scroll_steps(v, pf):
+    """One playfield's 8-bit BPLCON1 scroll value (AA layout, 35ns steps).
+
+    Bits are split: H5-H2 in the OCS nibble (3-0 PF1 / 7-4 PF2), H1-H0 in 9-8 / 13-12,
+    H7-H6 in 11-10 / 15-14. An OCS value (bits 15-8 zero) is H5-H2 only, i.e. whole
+    lores pixels, so the same decode is right on every chipset."""
+    sh = 0 if pf == 1 else 4
+    return (((v >> (10 + sh)) & 3) << 6) | (((v >> sh) & 0xF) << 2) | ((v >> (8 + sh)) & 3)
+
+FETCH_STEP = {0: "1x 16-bit fetch", 1: "2x BPL32", 2: "2x BPAGEM", 3: "4x BPL32+BPAGEM"}
+SPRES = {0: "ECS-default", 1: "lores", 2: "hires", 3: "shres"}
+
+def decode_value(off, v, state):
+    """Human-readable decode of notable MOVE targets.
+
+    `state` carries register values seen earlier in the same list (BPLCON3 bank/LOCT
+    select which of the 256 AGA colours a COLORxx MOVE loads)."""
     name = REG.get(off, "")
     if name == "BPLCON0":
-        bpu = ((v>>12)&7) | (((v>>4)&1)<<3)   # AGA: BPU3 = bit4
-        hires = (v>>15)&1
-        return "BPU=%d %s%s" % (bpu, "hires" if hires else "lores",
-                                " HAM" if (v>>11)&1 else "")
+        bpu = ((v>>12)&7) | (((v>>4)&1)<<3)   # AGA: BPU3 = bit4 (8 planes = $x010)
+        res = "shres" if (v>>6)&1 else "hires" if (v>>15)&1 else "lores"
+        flags = [f for bit, f in ((11,"HAM"),(10,"DPF"),(2,"LACE"),(0,"ECSENA")) if (v>>bit)&1]
+        return "BPU=%d %s%s" % (bpu, res, "".join(" "+f for f in flags))
     if name == "BPLCON1":
-        return "PF1H=%d PF2H=%d (fine scroll)" % (v & 0x3F, (v>>4)&0x3F)
+        p1, p2 = _scroll_steps(v, 1), _scroll_steps(v, 2)
+        return "PF1=%s PF2=%s lores px (%d/%d x 35ns)" % (_lores_px(p1), _lores_px(p2), p1, p2)
+    if name == "BPLCON2":
+        out = "PF1P=%d PF2P=%d" % (v&7, (v>>3)&7)
+        if (v>>6)&1: out += " PF2PRI"
+        if (v>>9)&1: out += " KILLEHB"
+        return out
+    if name == "BPLCON3":
+        state["bplcon3"] = v
+        pf2of = (0, 2, 4, 8, 16, 32, 64, 128)[(v>>10)&7]
+        out = "BANK=%d PF2OF=%d LOCT=%d SPRES=%s" % ((v>>13)&7, pf2of, (v>>9)&1, SPRES[(v>>6)&3])
+        border = [f for bit, f in ((5,"BRDRBLNK"),(4,"BRDNTRAN"),(1,"BRDSPRT")) if (v>>bit)&1]
+        return out + "".join(" "+f for f in border)
+    if name == "BPLCON4":
+        return "BPLAM=$%02X ESPRM=%d OSPRM=%d (sprite colours %d+/%d+)" % (
+            v>>8, (v>>4)&0xF, v&0xF, ((v>>4)&0xF)*16, (v&0xF)*16)
     if name == "FMODE":
-        bpl = v & 3; spr=(v>>2)&3
-        return "BPL32=%d SPR=%d %s" % (bpl, spr, "(2x/4x fetch)" if bpl else "")
+        out = "bitplanes %s, sprites %s" % (FETCH_STEP[v&3], FETCH_STEP[(v>>2)&3].replace("BPL","SPR").replace("BPAGEM","SPAGEM"))
+        if (v>>14)&1: out += " BSCAN2"
+        if (v>>15)&1: out += " SSCAN2"
+        return out
     if name in ("DDFSTRT","DDFSTOP"):
-        return "hpos=%d" % (v*2)
-    if name in ("DIWSTRT",):
+        # colour clocks; lores DIW x = 2*DDF + 17, hires = 2*DDF + 9 (HRM formulas)
+        return "cck=$%02X (lores DIW x=%d)" % (v & 0xFF, 2*(v & 0xFF) + 17)
+    if name == "DIWSTRT":
         return "V=%d H=%d" % (v>>8, v&0xFF)
-    if name in ("DIWSTOP",):
-        return "V=%d H=%d" % ((v>>8)|0x100, (v&0xFF)|0x100)
+    if name == "DIWSTOP":
+        vstop = v >> 8
+        if not vstop & 0x80: vstop |= 0x100      # OCS: V8 = NOT V7
+        return "V=%d H=%d" % (vstop, (v&0xFF)|0x100)
+    if name == "DIWHIGH":
+        return "start V8-10=%d H10/H1/H0=%d%d%d  stop V8-10=%d H10/H1/H0=%d%d%d" % (
+            v&7, (v>>5)&1, (v>>4)&1, (v>>3)&1, (v>>8)&7, (v>>13)&1, (v>>12)&1, (v>>11)&1)
     if name.startswith("COLOR"):
-        return "#%X%X%X" % ((v>>8)&0xF,(v>>4)&0xF,v&0xF)
+        rgb = "#%X%X%X" % ((v>>8)&0xF,(v>>4)&0xF,v&0xF)
+        b3 = state.get("bplcon3")
+        if b3 is None or (b3 & 0xE200) == 0:
+            return rgb                             # OCS/ECS, or AGA bank 0 high nibbles
+        entry = ((b3>>13)&7)*32 + int(name[5:])
+        return "%s -> colour %d %s nibbles" % (rgb, entry, "low" if (b3>>9)&1 else "high")
     return ""
 
 def disasm(mem, base_addr):
     out = []
     off = 0
+    state = {}
     while off + 4 <= len(mem):
         first  = (mem[off] << 8) | mem[off+1]
         second = (mem[off+2] << 8) | mem[off+3]
@@ -133,7 +181,7 @@ def disasm(mem, base_addr):
                 out.append("%08X: %04X %04X   WAIT  %s" % (a,first,second," & ".join(cond)))
         else:
             da=first & 0x1FE
-            nm=reg_name(da); dec=decode_value(da, second)
+            nm=reg_name(da); dec=decode_value(da, second, state)
             out.append("%08X: %04X %04X   MOVE  %-9s = $%04X%s" %
                        (a,first,second,nm,second, ("  ; "+dec) if dec else ""))
         off += 4
@@ -156,4 +204,5 @@ def main():
     print("; copper list @ 0x%X (%d bytes)\n" % (addr, len(mem)))
     print(disasm(mem, addr))
 
-main()
+if __name__ == "__main__":
+    main()

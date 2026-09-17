@@ -1,0 +1,8 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	OpenDiskFont	textAttr=A0	struct TextFont *	struct TextFont * OpenDiskFont(struct TextAttr *textAttr)		public
+-36	-$24	AvailFonts	buffer=A0, bufBytes=D0, flags=D1	LONG	LONG AvailFonts(STRPTR buffer, LONG bufBytes, LONG flags)		public
+-42	-$2A	NewFontContents	fontsLock=A0, fontName=A1	struct FontContentsHeader *	struct FontContentsHeader * NewFontContents(BPTR fontsLock, STRPTR fontName)		public
+-48	-$30	DisposeFontContents	fontContentsHeader=A1	VOID	VOID DisposeFontContents(struct FontContentsHeader *fontContentsHeader)		public
+-54	-$36	NewScaledDiskFont	sourceFont=A0, destTextAttr=A1	struct DiskFont *	struct DiskFont * NewScaledDiskFont(struct TextFont *sourceFont, struct TextAttr *destTextAttr)		public
+-60	-$3C	GetDiskFontCtrl	tagid=D0	LONG	LONG GetDiskFontCtrl(LONG tagid)		public
+-66	-$42	SetDiskFontCtrlA	taglist=A0	VOID	VOID SetDiskFontCtrlA(struct TagItem *taglist)	SetDiskFontCtrl	public

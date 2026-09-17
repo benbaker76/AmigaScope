@@ -556,7 +556,9 @@ def main():
     ws.add_argument("seconds", nargs="?", default="300")
 
     r = sub.add_parser("raw", help="Send raw bytes to gdb stdin (no newline added).")
-    r.add_argument("data", help="Raw payload (use $'\\x03' from bash to send Ctrl-C)")
+    r.add_argument("data", help="Raw payload. NOTE: a $'\\x03' byte does NOT interrupt the "
+                                "target (gdb has no tty here); use "
+                                "`pkill -INT -f '[m]68k-amiga-elf-gdb'` then `waitstop`.")
 
     sub.add_parser("stop", help="Shut the daemon down.")
     sub.add_parser("status", help="Check whether the daemon is reachable.")

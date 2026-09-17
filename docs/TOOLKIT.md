@@ -7,12 +7,12 @@ exactly what the hardware is doing on any given frame.
 
 This document covers the **inspection** layer. Two sibling docs cover the rest:
 
-- **`GDB.md`** — the low-level gdb workflow (boot FS-UAE, attach, `gdb_proxy.py`, read
-  memory, breakpoints, watchpoints).
-- **`HARNESS.md`** — the higher-level *control* layer (drive the game: load careers,
-  open menus, step seasons).
+- **[GDB.md](GDB.md)** — the low-level gdb workflow (boot FS-UAE, attach, `gdb_proxy.py`,
+  read memory, breakpoints, watchpoints).
+- **[HARNESS.md](HARNESS.md)** — the higher-level *control* layer (drive a program from gdb:
+  inject input, call its functions, capture the screen).
 
-All tools live in **`scripts/amiga/`** and talk to the target via `gdb_proxy.py`, so a
+All tools live in the repository root and talk to the target via `gdb_proxy.py`, so a
 healthy attached session (`amiga_gdb.sh up --fresh`) is the only prerequisite.
 
 > These tools are game-agnostic. Nothing here is SWOS-specific except the default
@@ -93,7 +93,9 @@ the 8 fixed sprite slots (an early DDFSTRT disables the sprites whose slots fall
 
 `map`/`compare` render the DMA grid to a PNG (bitplane=green, sprite=yellow, blitter=red,
 copper=blue, conflict=magenta) so the steal is *visible*: the red bitplane-fetch-start line
-against the yellow sprite-slot ticks. See docs/AGA.md "Hardware sprite DMA steal (DDFSTRT)".
+against the yellow sprite-slot ticks. The measured slot positions, the DDFSTRT table and the
+FMODE findings are in the amiga-aga skill
+(`.agents/skills/amiga-aga/reference/topics/fmode-and-fetch.md`).
 
 Contention summary flags **blitter DMA landing on display lines** (a blit running while
 the bitplanes are being fetched — the thing that corrupts the picture):
@@ -161,9 +163,9 @@ copper_disasm.py --sym _copperListBuffer
 
 ```
 00121934: 0100 0210   MOVE  BPLCON0   = $0210  ; BPU=8 lores
-00121938: 0102 8822   MOVE  BPLCON1   = $8822  ; PF1H=34 PF2H=2 (fine scroll)
-00121940: 01FC 0001   MOVE  FMODE     = $0001  ; BPL32=1 SPR=0 (2x/4x fetch)
-00121950: 0092 0030   MOVE  DDFSTRT   = $0030  ; hpos=96
+00121938: 0102 8822   MOVE  BPLCON1   = $8822  ; PF1=34 PF2=34 lores px (136/136 x 35ns)
+00121940: 01FC 0001   MOVE  FMODE     = $0001  ; bitplanes 2x BPL32, sprites 1x 16-bit fetch
+00121950: 0092 0030   MOVE  DDFSTRT   = $0030  ; cck=$30 (lores DIW x=113)
 00121958: 008E 2471   MOVE  DIWSTRT   = $2471  ; V=36 H=113
 ```
 
@@ -222,7 +224,8 @@ session. The chain of evidence — a template for any "it only happens while it 
 
 Result: root cause proven **cycle-exact** (not guessed), with the exact offending blits
 identified — and an *objective* success test for the eventual fix: `dma_profile.py` must
-show **no blitter cell at vpos ≥ 36**. Full write-up in `AGA.md` §11a.
+show **no blitter cell at vpos ≥ 36**. The general lessons (blanking budget, why BLTPRI is
+not a fix) are in the amiga-aga skill's `fmode-and-fetch.md`.
 
 Lesson: when an artifact vanishes on halt, stop screenshotting the buffer and reach for
 the **live capture + DMA profiler**. `fb_capture`/frozen-shot *clean* + `capture_now`
@@ -244,5 +247,6 @@ the **live capture + DMA profiler**. `fb_capture`/frozen-shot *clean* + `capture
   conventions consistent (`vpos 0..312`, `hpos 0..226`; the SWOS pitch display window is
   `vpos 36..307`).
 
-See also: `GDB.md` (gdb harness), `HARNESS.md` (driving the game), `AGA.md` (the AGA
-rendering pipeline these tools were built to debug).
+See also: [GDB.md](GDB.md) (gdb harness), [HARNESS.md](HARNESS.md) (driving a program),
+and the amiga-aga skill (`.agents/skills/amiga-aga/`) for the AGA display behaviour these
+tools were built to debug.

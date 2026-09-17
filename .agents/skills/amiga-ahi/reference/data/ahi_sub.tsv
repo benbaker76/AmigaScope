@@ -1,0 +1,16 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	AHIsub_AllocAudio	tagList=A1, AudioCtrl=A2	ULONG	ULONG AHIsub_AllocAudio(struct TagItem * tagList, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-36	-$24	AHIsub_FreeAudio	AudioCtrl=A2	void	void AHIsub_FreeAudio(struct AHIAudioCtrlDrv * AudioCtrl)		public
+-42	-$2A	AHIsub_Disable	AudioCtrl=A2	void	void AHIsub_Disable(struct AHIAudioCtrlDrv * AudioCtrl)		public
+-48	-$30	AHIsub_Enable	AudioCtrl=A2	void	void AHIsub_Enable(struct AHIAudioCtrlDrv * AudioCtrl)		public
+-54	-$36	AHIsub_Start	Flags=D0, AudioCtrl=A2	ULONG	ULONG AHIsub_Start(ULONG Flags, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-60	-$3C	AHIsub_Update	Flags=D0, AudioCtrl=A2	ULONG	ULONG AHIsub_Update(ULONG Flags, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-66	-$42	AHIsub_Stop	Flags=D0, AudioCtrl=A2	ULONG	ULONG AHIsub_Stop(ULONG Flags, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-72	-$48	AHIsub_SetVol	Channel=D0, Volume=D1, Pan=D2, AudioCtrl=A2, Flags=D3	ULONG	ULONG AHIsub_SetVol(UWORD Channel, Fixed Volume, sposition Pan, struct AHIAudioCtrlDrv * AudioCtrl, ULONG Flags)		public
+-78	-$4E	AHIsub_SetFreq	Channel=D0, Freq=D1, AudioCtrl=A2, Flags=D2	ULONG	ULONG AHIsub_SetFreq(UWORD Channel, ULONG Freq, struct AHIAudioCtrlDrv * AudioCtrl, ULONG Flags)		public
+-84	-$54	AHIsub_SetSound	Channel=D0, Sound=D1, Offset=D2, Length=D3, AudioCtrl=A2, Flags=D4	ULONG	ULONG AHIsub_SetSound(UWORD Channel, UWORD Sound, ULONG Offset, LONG Length, struct AHIAudioCtrlDrv * AudioCtrl, ULONG Flags)		public
+-90	-$5A	AHIsub_SetEffect	Effect=A0, AudioCtrl=A2	ULONG	ULONG AHIsub_SetEffect(APTR Effect, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-96	-$60	AHIsub_LoadSound	Sound=D0, Type=D1, Info=A0, AudioCtrl=A2	ULONG	ULONG AHIsub_LoadSound(UWORD Sound, ULONG Type, APTR Info, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-102	-$66	AHIsub_UnloadSound	Sound=D0, Audioctrl=A2	ULONG	ULONG AHIsub_UnloadSound(UWORD Sound, struct AHIAudioCtrlDrv * Audioctrl)		public
+-108	-$6C	AHIsub_GetAttr	Attribute=D0, Argument=D1, DefValue=D2, tagList=A1, AudioCtrl=A2	LONG	LONG AHIsub_GetAttr(ULONG Attribute, LONG Argument, LONG DefValue, struct TagItem * tagList, struct AHIAudioCtrlDrv * AudioCtrl)		public
+-114	-$72	AHIsub_HardwareControl	Attribute=D0, Argument=D1, AudioCtrl=A2	LONG	LONG AHIsub_HardwareControl(ULONG Attribute, LONG Argument, struct AHIAudioCtrlDrv * AudioCtrl)		public

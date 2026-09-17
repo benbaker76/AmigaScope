@@ -1,0 +1,163 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	BltBitMap	srcBitMap=A0, xSrc=D0, ySrc=D1, destBitMap=A1, xDest=D2, yDest=D3, xSize=D4, ySize=D5, minterm=D6, mask=D7, tempA=A2	LONG	LONG BltBitMap(CONST struct BitMap *srcBitMap, LONG xSrc, LONG ySrc, struct BitMap *destBitMap, LONG xDest, LONG yDest, LONG xSize, LONG ySize, ULONG minterm, ULONG mask, PLANEPTR tempA)		public
+-36	-$24	BltTemplate	source=A0, xSrc=D0, srcMod=D1, destRP=A1, xDest=D2, yDest=D3, xSize=D4, ySize=D5	VOID	VOID BltTemplate(CONST PLANEPTR source, LONG xSrc, LONG srcMod, struct RastPort *destRP, LONG xDest, LONG yDest, LONG xSize, LONG ySize)		public
+-42	-$2A	ClearEOL	rp=A1	VOID	VOID ClearEOL(struct RastPort *rp)		public
+-48	-$30	ClearScreen	rp=A1	VOID	VOID ClearScreen(struct RastPort *rp)		public
+-54	-$36	TextLength	rp=A1, string=A0, count=D0	WORD	WORD TextLength(struct RastPort *rp, CONST_STRPTR string, ULONG count)		public
+-60	-$3C	Text	rp=A1, string=A0, count=D0	LONG	LONG Text(struct RastPort *rp, CONST_STRPTR string, ULONG count)		public
+-66	-$42	SetFont	rp=A1, textFont=A0	LONG	LONG SetFont(struct RastPort *rp, CONST struct TextFont *textFont)		public
+-72	-$48	OpenFont	textAttr=A0	struct TextFont *	struct TextFont * OpenFont(struct TextAttr *textAttr)		public
+-78	-$4E	CloseFont	textFont=A1	VOID	VOID CloseFont(struct TextFont *textFont)		public
+-84	-$54	AskSoftStyle	rp=A1	ULONG	ULONG AskSoftStyle(struct RastPort *rp)		public
+-90	-$5A	SetSoftStyle	rp=A1, style=D0, enable=D1	ULONG	ULONG SetSoftStyle(struct RastPort *rp, ULONG style, ULONG enable)		public
+-96	-$60	AddBob	bob=A0, rp=A1	VOID	VOID AddBob(struct Bob *bob, struct RastPort *rp)		public
+-102	-$66	AddVSprite	vSprite=A0, rp=A1	VOID	VOID AddVSprite(struct VSprite *vSprite, struct RastPort *rp)		public
+-108	-$6C	DoCollision	rp=A1	VOID	VOID DoCollision(struct RastPort *rp)		public
+-114	-$72	DrawGList	rp=A1, vp=A0	VOID	VOID DrawGList(struct RastPort *rp, struct ViewPort *vp)		public
+-120	-$78	InitGels	head=A0, tail=A1, gelsInfo=A2	VOID	VOID InitGels(struct VSprite *head, struct VSprite *tail, struct GelsInfo *gelsInfo)		public
+-126	-$7E	InitMasks	vSprite=A0	VOID	VOID InitMasks(struct VSprite *vSprite)		public
+-132	-$84	RemIBob	bob=A0, rp=A1, vp=A2	VOID	VOID RemIBob(struct Bob *bob, struct RastPort *rp, struct ViewPort *vp)		public
+-138	-$8A	RemVSprite	vSprite=A0	VOID	VOID RemVSprite(struct VSprite *vSprite)		public
+-144	-$90	SetCollision	num=D0, routine=A0, gelsInfo=A1	VOID	VOID SetCollision(ULONG num, VOID (*routine)(struct VSprite *gelA, struct VSprite *gelB), struct GelsInfo *gelsInfo)		public
+-150	-$96	SortGList	rp=A1	VOID	VOID SortGList(struct RastPort *rp)		public
+-156	-$9C	AddAnimOb	anOb=A0, anKey=A1, rp=A2	VOID	VOID AddAnimOb(struct AnimOb *anOb, struct AnimOb **anKey, struct RastPort *rp)		public
+-162	-$A2	Animate	anKey=A0, rp=A1	VOID	VOID Animate(struct AnimOb **anKey, struct RastPort *rp)		public
+-168	-$A8	GetGBuffers	anOb=A0, rp=A1, flag=D0	BOOL	BOOL GetGBuffers(struct AnimOb *anOb, struct RastPort *rp, LONG flag)		public
+-174	-$AE	InitGMasks	anOb=A0	VOID	VOID InitGMasks(struct AnimOb *anOb)		public
+-180	-$B4	DrawEllipse	rp=A1, xCenter=D0, yCenter=D1, a=D2, b=D3	VOID	VOID DrawEllipse(struct RastPort *rp, LONG xCenter, LONG yCenter, LONG a, LONG b)		public
+-186	-$BA	AreaEllipse	rp=A1, xCenter=D0, yCenter=D1, a=D2, b=D3	LONG	LONG AreaEllipse(struct RastPort *rp, LONG xCenter, LONG yCenter, LONG a, LONG b)		public
+-192	-$C0	LoadRGB4	vp=A0, colors=A1, count=D0	VOID	VOID LoadRGB4(struct ViewPort *vp, CONST UWORD *colors, LONG count)		public
+-198	-$C6	InitRastPort	rp=A1	VOID	VOID InitRastPort(struct RastPort *rp)		public
+-204	-$CC	InitVPort	vp=A0	VOID	VOID InitVPort(struct ViewPort *vp)		public
+-210	-$D2	MrgCop	view=A1	ULONG	ULONG MrgCop(struct View *view)		public
+-216	-$D8	MakeVPort	view=A0, vp=A1	ULONG	ULONG MakeVPort(struct View *view, struct ViewPort *vp)		public
+-222	-$DE	LoadView	view=A1	VOID	VOID LoadView(struct View *view)		public
+-228	-$E4	WaitBlit	none	VOID	VOID WaitBlit(VOID)		public
+-234	-$EA	SetRast	rp=A1, pen=D0	VOID	VOID SetRast(struct RastPort *rp, ULONG pen)		public
+-240	-$F0	Move	rp=A1, x=D0, y=D1	VOID	VOID Move(struct RastPort *rp, LONG x, LONG y)		public
+-246	-$F6	Draw	rp=A1, x=D0, y=D1	VOID	VOID Draw(struct RastPort *rp, LONG x, LONG y)		public
+-252	-$FC	AreaMove	rp=A1, x=D0, y=D1	LONG	LONG AreaMove(struct RastPort *rp, LONG x, LONG y)		public
+-258	-$102	AreaDraw	rp=A1, x=D0, y=D1	LONG	LONG AreaDraw(struct RastPort *rp, LONG x, LONG y)		public
+-264	-$108	AreaEnd	rp=A1	LONG	LONG AreaEnd(struct RastPort *rp)		public
+-270	-$10E	WaitTOF	none	VOID	VOID WaitTOF(VOID)		public
+-276	-$114	QBlit	blit=A1	VOID	VOID QBlit(struct bltnode *blit)		public
+-282	-$11A	InitArea	areaInfo=A0, vectorBuffer=A1, maxVectors=D0	VOID	VOID InitArea(struct AreaInfo *areaInfo, APTR vectorBuffer, LONG maxVectors)		public
+-288	-$120	SetRGB4	vp=A0, index=D0, red=D1, green=D2, blue=D3	VOID	VOID SetRGB4(struct ViewPort *vp, LONG index, ULONG red, ULONG green, ULONG blue)		public
+-294	-$126	QBSBlit	blit=A1	VOID	VOID QBSBlit(struct bltnode *blit)		public
+-300	-$12C	BltClear	memBlock=A1, byteCount=D0, flags=D1	VOID	VOID BltClear(PLANEPTR memBlock, ULONG byteCount, ULONG flags)		public
+-306	-$132	RectFill	rp=A1, xMin=D0, yMin=D1, xMax=D2, yMax=D3	VOID	VOID RectFill(struct RastPort *rp, LONG xMin, LONG yMin, LONG xMax, LONG yMax)		public
+-312	-$138	BltPattern	rp=A1, mask=A0, xMin=D0, yMin=D1, xMax=D2, yMax=D3, maskBPR=D4	VOID	VOID BltPattern(struct RastPort *rp, CONST PLANEPTR mask, LONG xMin, LONG yMin, LONG xMax, LONG yMax, ULONG maskBPR)		public
+-318	-$13E	ReadPixel	rp=A1, x=D0, y=D1	ULONG	ULONG ReadPixel(struct RastPort *rp, LONG x, LONG y)		public
+-324	-$144	WritePixel	rp=A1, x=D0, y=D1	LONG	LONG WritePixel(struct RastPort *rp, LONG x, LONG y)		public
+-330	-$14A	Flood	rp=A1, mode=D2, x=D0, y=D1	BOOL	BOOL Flood(struct RastPort *rp, ULONG mode, LONG x, LONG y)		public
+-336	-$150	PolyDraw	rp=A1, count=D0, polyTable=A0	VOID	VOID PolyDraw(struct RastPort *rp, LONG count, CONST WORD *polyTable)		public
+-342	-$156	SetAPen	rp=A1, pen=D0	VOID	VOID SetAPen(struct RastPort *rp, ULONG pen)		public
+-348	-$15C	SetBPen	rp=A1, pen=D0	VOID	VOID SetBPen(struct RastPort *rp, ULONG pen)		public
+-354	-$162	SetDrMd	rp=A1, drawMode=D0	VOID	VOID SetDrMd(struct RastPort *rp, ULONG drawMode)		public
+-360	-$168	InitView	view=A1	VOID	VOID InitView(struct View *view)		public
+-366	-$16E	CBump	copList=A1	VOID	VOID CBump(struct UCopList *copList)		public
+-372	-$174	CMove	copList=A1, destination=D0, data=D1	VOID	VOID CMove(struct UCopList *copList, APTR destination, LONG data)		public
+-378	-$17A	CWait	copList=A1, v=D0, h=D1	VOID	VOID CWait(struct UCopList *copList, LONG v, LONG h)		public
+-384	-$180	VBeamPos	none	LONG	LONG VBeamPos(VOID)		public
+-390	-$186	InitBitMap	bitMap=A0, depth=D0, width=D1, height=D2	VOID	VOID InitBitMap(struct BitMap *bitMap, LONG depth, LONG width, LONG height)		public
+-396	-$18C	ScrollRaster	rp=A1, dx=D0, dy=D1, xMin=D2, yMin=D3, xMax=D4, yMax=D5	VOID	VOID ScrollRaster(struct RastPort *rp, LONG dx, LONG dy, LONG xMin, LONG yMin, LONG xMax, LONG yMax)		public
+-402	-$192	WaitBOVP	vp=A0	VOID	VOID WaitBOVP(struct ViewPort *vp)		public
+-408	-$198	GetSprite	sprite=A0, num=D0	WORD	WORD GetSprite(struct SimpleSprite *sprite, LONG num)		public
+-414	-$19E	FreeSprite	num=D0	VOID	VOID FreeSprite(LONG num)		public
+-420	-$1A4	ChangeSprite	vp=A0, sprite=A1, newData=A2	VOID	VOID ChangeSprite(struct ViewPort *vp, struct SimpleSprite *sprite, UWORD *newData)		public
+-426	-$1AA	MoveSprite	vp=A0, sprite=A1, x=D0, y=D1	VOID	VOID MoveSprite(struct ViewPort *vp, struct SimpleSprite *sprite, LONG x, LONG y)		public
+-432	-$1B0	LockLayerRom	layer=A5	VOID	VOID LockLayerRom(struct Layer *layer)		public
+-438	-$1B6	UnlockLayerRom	layer=A5	VOID	VOID UnlockLayerRom(struct Layer *layer)		public
+-444	-$1BC	SyncSBitMap	layer=A0	VOID	VOID SyncSBitMap(struct Layer *layer)		public
+-450	-$1C2	CopySBitMap	layer=A0	VOID	VOID CopySBitMap(struct Layer *layer)		public
+-456	-$1C8	OwnBlitter	none	VOID	VOID OwnBlitter(VOID)		public
+-462	-$1CE	DisownBlitter	none	VOID	VOID DisownBlitter(VOID)		public
+-468	-$1D4	InitTmpRas	tmpRas=A0, buffer=A1, size=D0	struct TmpRas *	struct TmpRas * InitTmpRas(struct TmpRas *tmpRas, PLANEPTR buffer, LONG size)		public
+-474	-$1DA	AskFont	rp=A1, textAttr=A0	VOID	VOID AskFont(struct RastPort *rp, struct TextAttr *textAttr)		public
+-480	-$1E0	AddFont	textFont=A1	VOID	VOID AddFont(struct TextFont *textFont)		public
+-486	-$1E6	RemFont	textFont=A1	VOID	VOID RemFont(struct TextFont *textFont)		public
+-492	-$1EC	AllocRaster	width=D0, height=D1	PLANEPTR	PLANEPTR AllocRaster(ULONG width, ULONG height)		public
+-498	-$1F2	FreeRaster	p=A0, width=D0, height=D1	VOID	VOID FreeRaster(PLANEPTR p, ULONG width, ULONG height)		public
+-504	-$1F8	AndRectRegion	region=A0, rectangle=A1	VOID	VOID AndRectRegion(struct Region *region, CONST struct Rectangle *rectangle)		public
+-510	-$1FE	OrRectRegion	region=A0, rectangle=A1	BOOL	BOOL OrRectRegion(struct Region *region, CONST struct Rectangle *rectangle)		public
+-516	-$204	NewRegion	none	struct Region *	struct Region * NewRegion(VOID)		public
+-522	-$20A	ClearRectRegion	region=A0, rectangle=A1	BOOL	BOOL ClearRectRegion(struct Region *region, CONST struct Rectangle *rectangle)		public
+-528	-$210	ClearRegion	region=A0	VOID	VOID ClearRegion(struct Region *region)		public
+-534	-$216	DisposeRegion	region=A0	VOID	VOID DisposeRegion(struct Region *region)		public
+-540	-$21C	FreeVPortCopLists	vp=A0	VOID	VOID FreeVPortCopLists(struct ViewPort *vp)		public
+-546	-$222	FreeCopList	copList=A0	VOID	VOID FreeCopList(struct CopList *copList)		public
+-552	-$228	ClipBlit	srcRP=A0, xSrc=D0, ySrc=D1, destRP=A1, xDest=D2, yDest=D3, xSize=D4, ySize=D5, minterm=D6	VOID	VOID ClipBlit(struct RastPort *srcRP, LONG xSrc, LONG ySrc, struct RastPort *destRP, LONG xDest, LONG yDest, LONG xSize, LONG ySize, ULONG minterm)		public
+-558	-$22E	XorRectRegion	region=A0, rectangle=A1	BOOL	BOOL XorRectRegion(struct Region *region, CONST struct Rectangle *rectangle)		public
+-564	-$234	FreeCprList	cprList=A0	VOID	VOID FreeCprList(struct cprlist *cprList)		public
+-570	-$23A	GetColorMap	entries=D0	struct ColorMap *	struct ColorMap * GetColorMap(LONG entries)		public
+-576	-$240	FreeColorMap	colorMap=A0	VOID	VOID FreeColorMap(struct ColorMap *colorMap)		public
+-582	-$246	GetRGB4	colorMap=A0, entry=D0	ULONG	ULONG GetRGB4(struct ColorMap *colorMap, LONG entry)		public
+-588	-$24C	ScrollVPort	vp=A0	VOID	VOID ScrollVPort(struct ViewPort *vp)		public
+-594	-$252	UCopperListInit	uCopList=A0, n=D0	struct CopList *	struct CopList * UCopperListInit(struct UCopList *uCopList, LONG n)		public
+-600	-$258	FreeGBuffers	anOb=A0, rp=A1, flag=D0	VOID	VOID FreeGBuffers(struct AnimOb *anOb, struct RastPort *rp, LONG flag)		public
+-606	-$25E	BltBitMapRastPort	srcBitMap=A0, xSrc=D0, ySrc=D1, destRP=A1, xDest=D2, yDest=D3, xSize=D4, ySize=D5, minterm=D6	VOID	VOID BltBitMapRastPort(CONST struct BitMap *srcBitMap, LONG xSrc, LONG ySrc, struct RastPort *destRP, LONG xDest, LONG yDest, LONG xSize, LONG ySize, ULONG minterm)		public
+-612	-$264	OrRegionRegion	srcRegion=A0, destRegion=A1	BOOL	BOOL OrRegionRegion(CONST struct Region *srcRegion, struct Region *destRegion)		public
+-618	-$26A	XorRegionRegion	srcRegion=A0, destRegion=A1	BOOL	BOOL XorRegionRegion(CONST struct Region *srcRegion, struct Region *destRegion)		public
+-624	-$270	AndRegionRegion	srcRegion=A0, destRegion=A1	BOOL	BOOL AndRegionRegion(CONST struct Region *srcRegion, struct Region *destRegion)		public
+-630	-$276	SetRGB4CM	colorMap=A0, index=D0, red=D1, green=D2, blue=D3	VOID	VOID SetRGB4CM(struct ColorMap *colorMap, LONG index, ULONG red, ULONG green, ULONG blue)		public
+-636	-$27C	BltMaskBitMapRastPort	srcBitMap=A0, xSrc=D0, ySrc=D1, destRP=A1, xDest=D2, yDest=D3, xSize=D4, ySize=D5, minterm=D6, bltMask=A2	VOID	VOID BltMaskBitMapRastPort(CONST struct BitMap *srcBitMap, LONG xSrc, LONG ySrc, struct RastPort *destRP, LONG xDest, LONG yDest, LONG xSize, LONG ySize, ULONG minterm, CONST PLANEPTR bltMask)		public
+-654	-$28E	AttemptLockLayerRom	layer=A5	BOOL	BOOL AttemptLockLayerRom(struct Layer *layer)		public
+-660	-$294	GfxNew	gfxNodeType=D0	APTR	APTR GfxNew(ULONG gfxNodeType)		public
+-666	-$29A	GfxFree	gfxNodePtr=A0	VOID	VOID GfxFree(APTR gfxNodePtr)		public
+-672	-$2A0	GfxAssociate	associateNode=A0, gfxNodePtr=A1	VOID	VOID GfxAssociate(CONST APTR associateNode, APTR gfxNodePtr)		public
+-678	-$2A6	BitMapScale	bitScaleArgs=A0	VOID	VOID BitMapScale(struct BitScaleArgs *bitScaleArgs)		public
+-684	-$2AC	ScalerDiv	factor=D0, numerator=D1, denominator=D2	UWORD	UWORD ScalerDiv(ULONG factor, ULONG numerator, ULONG denominator)		public
+-690	-$2B2	TextExtent	rp=A1, string=A0, count=D0, textExtent=A2	WORD	WORD TextExtent(struct RastPort *rp, CONST_STRPTR string, LONG count, struct TextExtent *textExtent)		public
+-696	-$2B8	TextFit	rp=A1, string=A0, strLen=D0, textExtent=A2, constrainingExtent=A3, strDirection=D1, constrainingBitWidth=D2, constrainingBitHeight=D3	ULONG	ULONG TextFit(struct RastPort *rp, CONST_STRPTR string, ULONG strLen, CONST struct TextExtent *textExtent, CONST struct TextExtent *constrainingExtent, LONG strDirection, ULONG constrainingBitWidth, ULONG constrainingBitHeight)		public
+-702	-$2BE	GfxLookUp	associateNode=A0	APTR	APTR GfxLookUp(CONST APTR associateNode)		public
+-708	-$2C4	VideoControl	colorMap=A0, tagarray=A1	BOOL	BOOL VideoControl(struct ColorMap *colorMap, struct TagItem *tagarray)	VideoControlTags	public
+-714	-$2CA	OpenMonitor	monitorName=A1, displayID=D0	struct MonitorSpec *	struct MonitorSpec * OpenMonitor(CONST_STRPTR monitorName, ULONG displayID)		public
+-720	-$2D0	CloseMonitor	monitorSpec=A0	BOOL	BOOL CloseMonitor(struct MonitorSpec *monitorSpec)		public
+-726	-$2D6	FindDisplayInfo	displayID=D0	DisplayInfoHandle	DisplayInfoHandle FindDisplayInfo(ULONG displayID)		public
+-732	-$2DC	NextDisplayInfo	displayID=D0	ULONG	ULONG NextDisplayInfo(ULONG displayID)		public
+-756	-$2F4	GetDisplayInfoData	handle=A0, buf=A1, size=D0, tagID=D1, displayID=D2	ULONG	ULONG GetDisplayInfoData(CONST DisplayInfoHandle handle, APTR buf, ULONG size, ULONG tagID, ULONG displayID)		public
+-762	-$2FA	FontExtent	font=A0, fontExtent=A1	VOID	VOID FontExtent(CONST struct TextFont *font, struct TextExtent *fontExtent)		public
+-768	-$300	ReadPixelLine8	rp=A0, xstart=D0, ystart=D1, width=D2, array=A2, tempRP=A1	LONG	LONG ReadPixelLine8(struct RastPort *rp, ULONG xstart, ULONG ystart, ULONG width, UBYTE *array, struct RastPort *tempRP)		public
+-774	-$306	WritePixelLine8	rp=A0, xstart=D0, ystart=D1, width=D2, array=A2, tempRP=A1	LONG	LONG WritePixelLine8(struct RastPort *rp, ULONG xstart, ULONG ystart, ULONG width, UBYTE *array, struct RastPort *tempRP)		public
+-780	-$30C	ReadPixelArray8	rp=A0, xstart=D0, ystart=D1, xstop=D2, ystop=D3, array=A2, temprp=A1	LONG	LONG ReadPixelArray8(struct RastPort *rp, ULONG xstart, ULONG ystart, ULONG xstop, ULONG ystop, UBYTE *array, struct RastPort *temprp)		public
+-786	-$312	WritePixelArray8	rp=A0, xstart=D0, ystart=D1, xstop=D2, ystop=D3, array=A2, temprp=A1	LONG	LONG WritePixelArray8(struct RastPort *rp, ULONG xstart, ULONG ystart, ULONG xstop, ULONG ystop, UBYTE *array, struct RastPort *temprp)		public
+-792	-$318	GetVPModeID	vp=A0	LONG	LONG GetVPModeID(CONST struct ViewPort *vp)		public
+-798	-$31E	ModeNotAvailable	modeID=D0	LONG	LONG ModeNotAvailable(ULONG modeID)		public
+-810	-$32A	EraseRect	rp=A1, xMin=D0, yMin=D1, xMax=D2, yMax=D3	VOID	VOID EraseRect(struct RastPort *rp, LONG xMin, LONG yMin, LONG xMax, LONG yMax)		public
+-816	-$330	ExtendFont	font=A0, fontTags=A1	ULONG	ULONG ExtendFont(struct TextFont *font, CONST struct TagItem *fontTags)	ExtendFontTags	public
+-822	-$336	StripFont	font=A0	VOID	VOID StripFont(struct TextFont *font)		public
+-828	-$33C	CalcIVG	v=A0, vp=A1	UWORD	UWORD CalcIVG(struct View *v, struct ViewPort *vp)		public
+-834	-$342	AttachPalExtra	cm=A0, vp=A1	LONG	LONG AttachPalExtra(struct ColorMap *cm, struct ViewPort *vp)		public
+-840	-$348	ObtainBestPenA	cm=A0, r=D1, g=D2, b=D3, tags=A1	LONG	LONG ObtainBestPenA(struct ColorMap *cm, ULONG r, ULONG g, ULONG b, CONST struct TagItem *tags)	ObtainBestPen	public
+-852	-$354	SetRGB32	vp=A0, n=D0, r=D1, g=D2, b=D3	VOID	VOID SetRGB32(struct ViewPort *vp, ULONG n, ULONG r, ULONG g, ULONG b)		public
+-858	-$35A	GetAPen	rp=A0	ULONG	ULONG GetAPen(struct RastPort *rp)		public
+-864	-$360	GetBPen	rp=A0	ULONG	ULONG GetBPen(struct RastPort *rp)		public
+-870	-$366	GetDrMd	rp=A0	ULONG	ULONG GetDrMd(struct RastPort *rp)		public
+-876	-$36C	GetOutlinePen	rp=A0	ULONG	ULONG GetOutlinePen(struct RastPort *rp)		public
+-882	-$372	LoadRGB32	vp=A0, table=A1	VOID	VOID LoadRGB32(struct ViewPort *vp, CONST ULONG *table)		public
+-888	-$378	SetChipRev	want=D0	ULONG	ULONG SetChipRev(ULONG want)		public
+-894	-$37E	SetABPenDrMd	rp=A1, apen=D0, bpen=D1, drawmode=D2	VOID	VOID SetABPenDrMd(struct RastPort *rp, ULONG apen, ULONG bpen, ULONG drawmode)		public
+-900	-$384	GetRGB32	cm=A0, firstcolor=D0, ncolors=D1, table=A1	VOID	VOID GetRGB32(CONST struct ColorMap *cm, ULONG firstcolor, ULONG ncolors, ULONG *table)		public
+-918	-$396	AllocBitMap	sizex=D0, sizey=D1, depth=D2, flags=D3, friend_bitmap=A0	struct BitMap *	struct BitMap * AllocBitMap(ULONG sizex, ULONG sizey, ULONG depth, ULONG flags, CONST struct BitMap *friend_bitmap)		public
+-924	-$39C	FreeBitMap	bm=A0	VOID	VOID FreeBitMap(struct BitMap *bm)		public
+-930	-$3A2	GetExtSpriteA	ss=A2, tags=A1	LONG	LONG GetExtSpriteA(struct ExtSprite *ss, CONST struct TagItem *tags)	GetExtSprite	public
+-936	-$3A8	CoerceMode	vp=A0, monitorid=D0, flags=D1	ULONG	ULONG CoerceMode(struct ViewPort *vp, ULONG monitorid, ULONG flags)		public
+-942	-$3AE	ChangeVPBitMap	vp=A0, bm=A1, db=A2	VOID	VOID ChangeVPBitMap(struct ViewPort *vp, struct BitMap *bm, struct DBufInfo *db)		public
+-948	-$3B4	ReleasePen	cm=A0, n=D0	VOID	VOID ReleasePen(struct ColorMap *cm, ULONG n)		public
+-954	-$3BA	ObtainPen	cm=A0, n=D0, r=D1, g=D2, b=D3, f=D4	ULONG	ULONG ObtainPen(struct ColorMap *cm, ULONG n, ULONG r, ULONG g, ULONG b, LONG f)		public
+-960	-$3C0	GetBitMapAttr	bm=A0, attrnum=D1	ULONG	ULONG GetBitMapAttr(CONST struct BitMap *bm, ULONG attrnum)		public
+-966	-$3C6	AllocDBufInfo	vp=A0	struct DBufInfo *	struct DBufInfo * AllocDBufInfo(struct ViewPort *vp)		public
+-972	-$3CC	FreeDBufInfo	dbi=A1	VOID	VOID FreeDBufInfo(struct DBufInfo *dbi)		public
+-978	-$3D2	SetOutlinePen	rp=A0, pen=D0	ULONG	ULONG SetOutlinePen(struct RastPort *rp, ULONG pen)		public
+-984	-$3D8	SetWriteMask	rp=A0, msk=D0	ULONG	ULONG SetWriteMask(struct RastPort *rp, ULONG msk)		public
+-990	-$3DE	SetMaxPen	rp=A0, maxpen=D0	VOID	VOID SetMaxPen(struct RastPort *rp, ULONG maxpen)		public
+-996	-$3E4	SetRGB32CM	cm=A0, n=D0, r=D1, g=D2, b=D3	VOID	VOID SetRGB32CM(struct ColorMap *cm, ULONG n, ULONG r, ULONG g, ULONG b)		public
+-1002	-$3EA	ScrollRasterBF	rp=A1, dx=D0, dy=D1, xMin=D2, yMin=D3, xMax=D4, yMax=D5	VOID	VOID ScrollRasterBF(struct RastPort *rp, LONG dx, LONG dy, LONG xMin, LONG yMin, LONG xMax, LONG yMax)		public
+-1008	-$3F0	FindColor	cm=A3, r=D1, g=D2, b=D3, maxcolor=D4	LONG	LONG FindColor(struct ColorMap *cm, ULONG r, ULONG g, ULONG b, LONG maxcolor)		public
+-1020	-$3FC	AllocSpriteDataA	bm=A2, tags=A1	struct ExtSprite *	struct ExtSprite * AllocSpriteDataA(CONST struct BitMap *bm, CONST struct TagItem *tags)	AllocSpriteData	public
+-1026	-$402	ChangeExtSpriteA	vp=A0, oldsprite=A1, newsprite=A2, tags=A3	LONG	LONG ChangeExtSpriteA(struct ViewPort *vp, struct ExtSprite *oldsprite, struct ExtSprite *newsprite, CONST struct TagItem *tags)	ChangeExtSprite	public
+-1032	-$408	FreeSpriteData	sp=A2	VOID	VOID FreeSpriteData(struct ExtSprite *sp)		public
+-1038	-$40E	SetRPAttrsA	rp=A0, tags=A1	VOID	VOID SetRPAttrsA(struct RastPort *rp, CONST struct TagItem *tags)	SetRPAttrs	public
+-1044	-$414	GetRPAttrsA	rp=A0, tags=A1	VOID	VOID GetRPAttrsA(CONST struct RastPort *rp, CONST struct TagItem *tags)	GetRPAttrs	public
+-1050	-$41A	BestModeIDA	tags=A0	ULONG	ULONG BestModeIDA(CONST struct TagItem *tags)	BestModeID	public
+-1056	-$420	WriteChunkyPixels	rp=A0, xstart=D0, ystart=D1, xstop=D2, ystop=D3, array=A2, bytesperrow=D4	VOID	VOID WriteChunkyPixels(struct RastPort *rp, ULONG xstart, ULONG ystart, ULONG xstop, ULONG ystop, CONST UBYTE *array, LONG bytesperrow)		public

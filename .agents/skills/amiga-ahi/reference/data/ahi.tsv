@@ -1,0 +1,21 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-42	-$2A	AHI_AllocAudioA	tagList=A1	struct AHIAudioCtrl *	struct AHIAudioCtrl * AHI_AllocAudioA(struct TagItem * tagList)	AHI_AllocAudio	public
+-48	-$30	AHI_FreeAudio	AudioCtrl=A2	void	void AHI_FreeAudio(struct AHIAudioCtrl * AudioCtrl)		public
+-60	-$3C	AHI_ControlAudioA	AudioCtrl=A2, tagList=A1	ULONG	ULONG AHI_ControlAudioA(struct AHIAudioCtrl * AudioCtrl, struct TagItem * tagList)	AHI_ControlAudio	public
+-66	-$42	AHI_SetVol	Channel=D0, Volume=D1, Pan=D2, AudioCtrl=A2, Flags=D3	void	void AHI_SetVol(UWORD Channel, Fixed Volume, sposition Pan, struct AHIAudioCtrl * AudioCtrl, ULONG Flags)		public
+-72	-$48	AHI_SetFreq	Channel=D0, Freq=D1, AudioCtrl=A2, Flags=D2	void	void AHI_SetFreq(UWORD Channel, ULONG Freq, struct AHIAudioCtrl * AudioCtrl, ULONG Flags)		public
+-78	-$4E	AHI_SetSound	Channel=D0, Sound=D1, Offset=D2, Length=D3, AudioCtrl=A2, Flags=D4	void	void AHI_SetSound(UWORD Channel, UWORD Sound, ULONG Offset, LONG Length, struct AHIAudioCtrl * AudioCtrl, ULONG Flags)		public
+-84	-$54	AHI_SetEffect	Effect=A0, AudioCtrl=A2	ULONG	ULONG AHI_SetEffect(APTR Effect, struct AHIAudioCtrl * AudioCtrl)		public
+-90	-$5A	AHI_LoadSound	Sound=D0, Type=D1, Info=A0, AudioCtrl=A2	ULONG	ULONG AHI_LoadSound(UWORD Sound, ULONG Type, APTR Info, struct AHIAudioCtrl * AudioCtrl)		public
+-96	-$60	AHI_UnloadSound	Sound=D0, Audioctrl=A2	void	void AHI_UnloadSound(UWORD Sound, struct AHIAudioCtrl * Audioctrl)		public
+-102	-$66	AHI_NextAudioID	Last_ID=D0	ULONG	ULONG AHI_NextAudioID(ULONG Last_ID)		public
+-108	-$6C	AHI_GetAudioAttrsA	ID=D0, Audioctrl=A2, tagList=A1	BOOL	BOOL AHI_GetAudioAttrsA(ULONG ID, struct AHIAudioCtrl * Audioctrl, struct TagItem * tagList)	AHI_GetAudioAttrs	public
+-114	-$72	AHI_BestAudioIDA	tagList=A1	ULONG	ULONG AHI_BestAudioIDA(struct TagItem * tagList)	AHI_BestAudioID	public
+-120	-$78	AHI_AllocAudioRequestA	tagList=A0	struct AHIAudioModeRequester *	struct AHIAudioModeRequester * AHI_AllocAudioRequestA(struct TagItem * tagList)	AHI_AllocAudioRequest	public
+-126	-$7E	AHI_AudioRequestA	Requester=A0, tagList=A1	BOOL	BOOL AHI_AudioRequestA(struct AHIAudioModeRequester * Requester, struct TagItem * tagList)	AHI_AudioRequest	public
+-132	-$84	AHI_FreeAudioRequest	Requester=A0	void	void AHI_FreeAudioRequest(struct AHIAudioModeRequester * Requester)		public
+-138	-$8A	AHI_PlayA	Audioctrl=A2, tagList=A1	void	void AHI_PlayA(struct AHIAudioCtrl * Audioctrl, struct TagItem * tagList)	AHI_Play	public
+-144	-$90	AHI_SampleFrameSize	SampleType=D0	ULONG	ULONG AHI_SampleFrameSize(ULONG SampleType)		public
+-150	-$96	AHI_AddAudioMode	AHIPrivate=A0	ULONG	ULONG AHI_AddAudioMode(struct TagItem * AHIPrivate)		public
+-156	-$9C	AHI_RemoveAudioMode	AHIPrivate=D0	ULONG	ULONG AHI_RemoveAudioMode(ULONG AHIPrivate)		public
+-162	-$A2	AHI_LoadModeFile	AHIPrivate=A0	ULONG	ULONG AHI_LoadModeFile(STRPTR AHIPrivate)		public

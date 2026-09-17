@@ -1,0 +1,4 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-6	-$6	AllocPotBits	bits=D0	UWORD	UWORD AllocPotBits(ULONG bits)		public
+-12	-$C	FreePotBits	bits=D0	VOID	VOID FreePotBits(ULONG bits)		public
+-18	-$12	WritePotgo	word=D0, mask=D1	VOID	VOID WritePotgo(ULONG word, ULONG mask)		public

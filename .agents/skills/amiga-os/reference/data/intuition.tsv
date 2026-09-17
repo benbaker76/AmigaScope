@@ -1,0 +1,124 @@
+lvo	hex	function	registers	returns	prototype	aliases	visibility
+-30	-$1E	OpenIntuition	none	VOID	VOID OpenIntuition(VOID)		public
+-36	-$24	Intuition	iEvent=A0	VOID	VOID Intuition(struct InputEvent *iEvent)		public
+-42	-$2A	AddGadget	window=A0, gadget=A1, position=D0	UWORD	UWORD AddGadget(struct Window *window, struct Gadget *gadget, ULONG position)		public
+-48	-$30	ClearDMRequest	window=A0	BOOL	BOOL ClearDMRequest(struct Window *window)		public
+-54	-$36	ClearMenuStrip	window=A0	VOID	VOID ClearMenuStrip(struct Window *window)		public
+-60	-$3C	ClearPointer	window=A0	VOID	VOID ClearPointer(struct Window *window)		public
+-66	-$42	CloseScreen	screen=A0	BOOL	BOOL CloseScreen(struct Screen *screen)		public
+-72	-$48	CloseWindow	window=A0	VOID	VOID CloseWindow(struct Window *window)		public
+-78	-$4E	CloseWorkBench	none	LONG	LONG CloseWorkBench(VOID)		public
+-84	-$54	CurrentTime	seconds=A0, micros=A1	VOID	VOID CurrentTime(ULONG *seconds, ULONG *micros)		public
+-90	-$5A	DisplayAlert	alertNumber=D0, string=A0, height=D1	BOOL	BOOL DisplayAlert(ULONG alertNumber, CONST_STRPTR string, ULONG height)		public
+-96	-$60	DisplayBeep	screen=A0	VOID	VOID DisplayBeep(struct Screen *screen)		public
+-102	-$66	DoubleClick	sSeconds=D0, sMicros=D1, cSeconds=D2, cMicros=D3	BOOL	BOOL DoubleClick(ULONG sSeconds, ULONG sMicros, ULONG cSeconds, ULONG cMicros)		public
+-108	-$6C	DrawBorder	rp=A0, border=A1, leftOffset=D0, topOffset=D1	VOID	VOID DrawBorder(struct RastPort *rp, CONST struct Border *border, LONG leftOffset, LONG topOffset)		public
+-114	-$72	DrawImage	rp=A0, image=A1, leftOffset=D0, topOffset=D1	VOID	VOID DrawImage(struct RastPort *rp, struct Image *image, LONG leftOffset, LONG topOffset)		public
+-120	-$78	EndRequest	requester=A0, window=A1	VOID	VOID EndRequest(struct Requester *requester, struct Window *window)		public
+-126	-$7E	GetDefPrefs	preferences=A0, size=D0	struct Preferences *	struct Preferences * GetDefPrefs(struct Preferences *preferences, LONG size)		public
+-132	-$84	GetPrefs	preferences=A0, size=D0	struct Preferences *	struct Preferences * GetPrefs(struct Preferences *preferences, LONG size)		public
+-138	-$8A	InitRequester	requester=A0	VOID	VOID InitRequester(struct Requester *requester)		public
+-144	-$90	ItemAddress	menuStrip=A0, menuNumber=D0	struct MenuItem *	struct MenuItem * ItemAddress(CONST struct Menu *menuStrip, ULONG menuNumber)		public
+-150	-$96	ModifyIDCMP	window=A0, flags=D0	BOOL	BOOL ModifyIDCMP(struct Window *window, ULONG flags)		public
+-156	-$9C	ModifyProp	gadget=A0, window=A1, requester=A2, flags=D0, horizPot=D1, vertPot=D2, horizBody=D3, vertBody=D4	VOID	VOID ModifyProp(struct Gadget *gadget, struct Window *window, struct Requester *requester, ULONG flags, ULONG horizPot, ULONG vertPot, ULONG horizBody, ULONG vertBody)		public
+-162	-$A2	MoveScreen	screen=A0, dx=D0, dy=D1	VOID	VOID MoveScreen(struct Screen *screen, LONG dx, LONG dy)		public
+-168	-$A8	MoveWindow	window=A0, dx=D0, dy=D1	VOID	VOID MoveWindow(struct Window *window, LONG dx, LONG dy)		public
+-174	-$AE	OffGadget	gadget=A0, window=A1, requester=A2	VOID	VOID OffGadget(struct Gadget *gadget, struct Window *window, struct Requester *requester)		public
+-180	-$B4	OffMenu	window=A0, menuNumber=D0	VOID	VOID OffMenu(struct Window *window, ULONG menuNumber)		public
+-186	-$BA	OnGadget	gadget=A0, window=A1, requester=A2	VOID	VOID OnGadget(struct Gadget *gadget, struct Window *window, struct Requester *requester)		public
+-192	-$C0	OnMenu	window=A0, menuNumber=D0	VOID	VOID OnMenu(struct Window *window, ULONG menuNumber)		public
+-198	-$C6	OpenScreen	newScreen=A0	struct Screen *	struct Screen * OpenScreen(CONST struct NewScreen *newScreen)		public
+-204	-$CC	OpenWindow	newWindow=A0	struct Window *	struct Window * OpenWindow(CONST struct NewWindow *newWindow)		public
+-210	-$D2	OpenWorkBench	none	ULONG	ULONG OpenWorkBench(VOID)		public
+-216	-$D8	PrintIText	rp=A0, iText=A1, left=D0, top=D1	VOID	VOID PrintIText(struct RastPort *rp, CONST struct IntuiText *iText, LONG left, LONG top)		public
+-222	-$DE	RefreshGadgets	gadgets=A0, window=A1, requester=A2	VOID	VOID RefreshGadgets(struct Gadget *gadgets, struct Window *window, struct Requester *requester)		public
+-228	-$E4	RemoveGadget	window=A0, gadget=A1	UWORD	UWORD RemoveGadget(struct Window *window, struct Gadget *gadget)		public
+-234	-$EA	ReportMouse	flag=D0, window=A0	VOID	VOID ReportMouse(LONG flag, struct Window *window)	ReportMouse1	public
+-240	-$F0	Request	requester=A0, window=A1	BOOL	BOOL Request(struct Requester *requester, struct Window *window)		public
+-246	-$F6	ScreenToBack	screen=A0	VOID	VOID ScreenToBack(struct Screen *screen)		public
+-252	-$FC	ScreenToFront	screen=A0	VOID	VOID ScreenToFront(struct Screen *screen)		public
+-258	-$102	SetDMRequest	window=A0, requester=A1	BOOL	BOOL SetDMRequest(struct Window *window, struct Requester *requester)		public
+-264	-$108	SetMenuStrip	window=A0, menu=A1	BOOL	BOOL SetMenuStrip(struct Window *window, struct Menu *menu)		public
+-270	-$10E	SetPointer	window=A0, pointer=A1, height=D0, width=D1, xOffset=D2, yOffset=D3	VOID	VOID SetPointer(struct Window *window, UWORD *pointer, LONG height, LONG width, LONG xOffset, LONG yOffset)		public
+-276	-$114	SetWindowTitles	window=A0, windowTitle=A1, screenTitle=A2	VOID	VOID SetWindowTitles(struct Window *window, CONST_STRPTR windowTitle, CONST_STRPTR screenTitle)		public
+-282	-$11A	ShowTitle	screen=A0, showIt=D0	VOID	VOID ShowTitle(struct Screen *screen, LONG showIt)		public
+-288	-$120	SizeWindow	window=A0, dx=D0, dy=D1	VOID	VOID SizeWindow(struct Window *window, LONG dx, LONG dy)		public
+-294	-$126	ViewAddress	none	struct View *	struct View * ViewAddress(VOID)		public
+-300	-$12C	ViewPortAddress	window=A0	struct ViewPort *	struct ViewPort * ViewPortAddress(CONST struct Window *window)		public
+-306	-$132	WindowToBack	window=A0	VOID	VOID WindowToBack(struct Window *window)		public
+-312	-$138	WindowToFront	window=A0	VOID	VOID WindowToFront(struct Window *window)		public
+-318	-$13E	WindowLimits	window=A0, widthMin=D0, heightMin=D1, widthMax=D2, heightMax=D3	BOOL	BOOL WindowLimits(struct Window *window, LONG widthMin, LONG heightMin, ULONG widthMax, ULONG heightMax)		public
+-324	-$144	SetPrefs	preferences=A0, size=D0, inform=D1	struct Preferences *	struct Preferences * SetPrefs(CONST struct Preferences *preferences, LONG size, LONG inform)		public
+-330	-$14A	IntuiTextLength	iText=A0	LONG	LONG IntuiTextLength(CONST struct IntuiText *iText)		public
+-336	-$150	WBenchToBack	none	BOOL	BOOL WBenchToBack(VOID)		public
+-342	-$156	WBenchToFront	none	BOOL	BOOL WBenchToFront(VOID)		public
+-348	-$15C	AutoRequest	window=A0, body=A1, posText=A2, negText=A3, pFlag=D0, nFlag=D1, width=D2, height=D3	BOOL	BOOL AutoRequest(struct Window *window, CONST struct IntuiText *body, CONST struct IntuiText *posText, CONST struct IntuiText *negText, ULONG pFlag, ULONG nFlag, ULONG width, ULONG height)		public
+-354	-$162	BeginRefresh	window=A0	VOID	VOID BeginRefresh(struct Window *window)		public
+-360	-$168	BuildSysRequest	window=A0, body=A1, posText=A2, negText=A3, flags=D0, width=D1, height=D2	struct Window *	struct Window * BuildSysRequest(struct Window *window, CONST struct IntuiText *body, CONST struct IntuiText *posText, CONST struct IntuiText *negText, ULONG flags, ULONG width, ULONG height)		public
+-366	-$16E	EndRefresh	window=A0, complete=D0	VOID	VOID EndRefresh(struct Window *window, LONG complete)		public
+-372	-$174	FreeSysRequest	window=A0	VOID	VOID FreeSysRequest(struct Window *window)		public
+-378	-$17A	MakeScreen	screen=A0	LONG	LONG MakeScreen(struct Screen *screen)		public
+-384	-$180	RemakeDisplay	none	LONG	LONG RemakeDisplay(VOID)		public
+-390	-$186	RethinkDisplay	none	LONG	LONG RethinkDisplay(VOID)		public
+-396	-$18C	AllocRemember	rememberKey=A0, size=D0, flags=D1	APTR	APTR AllocRemember(struct Remember **rememberKey, ULONG size, ULONG flags)		public
+-408	-$198	FreeRemember	rememberKey=A0, reallyForget=D0	VOID	VOID FreeRemember(struct Remember **rememberKey, LONG reallyForget)		public
+-414	-$19E	LockIBase	dontknow=D0	ULONG	ULONG LockIBase(ULONG dontknow)		public
+-420	-$1A4	UnlockIBase	ibLock=A0	VOID	VOID UnlockIBase(ULONG ibLock)		public
+-426	-$1AA	GetScreenData	buffer=A0, size=D0, type=D1, screen=A1	LONG	LONG GetScreenData(APTR buffer, ULONG size, ULONG type, CONST struct Screen *screen)		public
+-432	-$1B0	RefreshGList	gadgets=A0, window=A1, requester=A2, numGad=D0	VOID	VOID RefreshGList(struct Gadget *gadgets, struct Window *window, struct Requester *requester, LONG numGad)		public
+-438	-$1B6	AddGList	window=A0, gadget=A1, position=D0, numGad=D1, requester=A2	UWORD	UWORD AddGList(struct Window *window, struct Gadget *gadget, ULONG position, LONG numGad, struct Requester *requester)		public
+-444	-$1BC	RemoveGList	remPtr=A0, gadget=A1, numGad=D0	UWORD	UWORD RemoveGList(struct Window *remPtr, struct Gadget *gadget, LONG numGad)		public
+-450	-$1C2	ActivateWindow	window=A0	VOID	VOID ActivateWindow(struct Window *window)		public
+-456	-$1C8	RefreshWindowFrame	window=A0	VOID	VOID RefreshWindowFrame(struct Window *window)		public
+-462	-$1CE	ActivateGadget	gadgets=A0, window=A1, requester=A2	BOOL	BOOL ActivateGadget(struct Gadget *gadgets, struct Window *window, struct Requester *requester)		public
+-468	-$1D4	NewModifyProp	gadget=A0, window=A1, requester=A2, flags=D0, horizPot=D1, vertPot=D2, horizBody=D3, vertBody=D4, numGad=D5	VOID	VOID NewModifyProp(struct Gadget *gadget, struct Window *window, struct Requester *requester, ULONG flags, ULONG horizPot, ULONG vertPot, ULONG horizBody, ULONG vertBody, LONG numGad)		public
+-474	-$1DA	QueryOverscan	displayID=A0, rect=A1, oScanType=D0	LONG	LONG QueryOverscan(ULONG displayID, struct Rectangle *rect, LONG oScanType)		public
+-480	-$1E0	MoveWindowInFrontOf	window=A0, behindWindow=A1	VOID	VOID MoveWindowInFrontOf(struct Window *window, struct Window *behindWindow)		public
+-486	-$1E6	ChangeWindowBox	window=A0, left=D0, top=D1, width=D2, height=D3	VOID	VOID ChangeWindowBox(struct Window *window, LONG left, LONG top, LONG width, LONG height)		public
+-492	-$1EC	SetEditHook	hook=A0	struct Hook *	struct Hook * SetEditHook(struct Hook *hook)		public
+-498	-$1F2	SetMouseQueue	window=A0, queueLength=D0	LONG	LONG SetMouseQueue(struct Window *window, ULONG queueLength)		public
+-504	-$1F8	ZipWindow	window=A0	VOID	VOID ZipWindow(struct Window *window)		public
+-510	-$1FE	LockPubScreen	name=A0	struct Screen *	struct Screen * LockPubScreen(CONST_STRPTR name)		public
+-516	-$204	UnlockPubScreen	name=A0, screen=A1	VOID	VOID UnlockPubScreen(CONST_STRPTR name, struct Screen *screen)		public
+-522	-$20A	LockPubScreenList	none	struct List *	struct List * LockPubScreenList(VOID)		public
+-528	-$210	UnlockPubScreenList	none	VOID	VOID UnlockPubScreenList(VOID)		public
+-534	-$216	NextPubScreen	screen=A0, namebuf=A1	STRPTR	STRPTR NextPubScreen(CONST struct Screen *screen, STRPTR namebuf)		public
+-540	-$21C	SetDefaultPubScreen	name=A0	VOID	VOID SetDefaultPubScreen(CONST_STRPTR name)		public
+-546	-$222	SetPubScreenModes	modes=D0	UWORD	UWORD SetPubScreenModes(ULONG modes)		public
+-552	-$228	PubScreenStatus	screen=A0, statusFlags=D0	UWORD	UWORD PubScreenStatus(struct Screen *screen, ULONG statusFlags)		public
+-558	-$22E	ObtainGIRPort	gInfo=A0	struct RastPort *	struct RastPort * ObtainGIRPort(struct GadgetInfo *gInfo)		public
+-564	-$234	ReleaseGIRPort	rp=A0	VOID	VOID ReleaseGIRPort(struct RastPort *rp)		public
+-570	-$23A	GadgetMouse	gadget=A0, gInfo=A1, mousePoint=A2	VOID	VOID GadgetMouse(struct Gadget *gadget, struct GadgetInfo *gInfo, WORD *mousePoint)		public
+-582	-$246	GetDefaultPubScreen	nameBuffer=A0	VOID	VOID GetDefaultPubScreen(STRPTR nameBuffer)		public
+-588	-$24C	EasyRequestArgs	window=A0, easyStruct=A1, idcmpPtr=A2, args=A3	LONG	LONG EasyRequestArgs(struct Window *window, CONST struct EasyStruct *easyStruct, ULONG *idcmpPtr, CONST APTR args)	EasyRequest	public
+-594	-$252	BuildEasyRequestArgs	window=A0, easyStruct=A1, idcmp=D0, args=A3	struct Window *	struct Window * BuildEasyRequestArgs(struct Window *window, CONST struct EasyStruct *easyStruct, ULONG idcmp, CONST APTR args)	BuildEasyRequest	public
+-600	-$258	SysReqHandler	window=A0, idcmpPtr=A1, waitInput=D0	LONG	LONG SysReqHandler(struct Window *window, ULONG *idcmpPtr, LONG waitInput)		public
+-606	-$25E	OpenWindowTagList	newWindow=A0, tagList=A1	struct Window *	struct Window * OpenWindowTagList(CONST struct NewWindow *newWindow, CONST struct TagItem *tagList)	OpenWindowTags	public
+-612	-$264	OpenScreenTagList	newScreen=A0, tagList=A1	struct Screen *	struct Screen * OpenScreenTagList(CONST struct NewScreen *newScreen, CONST struct TagItem *tagList)	OpenScreenTags	public
+-618	-$26A	DrawImageState	rp=A0, image=A1, leftOffset=D0, topOffset=D1, state=D2, drawInfo=A2	VOID	VOID DrawImageState(struct RastPort *rp, struct Image *image, LONG leftOffset, LONG topOffset, ULONG state, CONST struct DrawInfo *drawInfo)		public
+-624	-$270	PointInImage	point=D0, image=A0	BOOL	BOOL PointInImage(ULONG point, struct Image *image)		public
+-630	-$276	EraseImage	rp=A0, image=A1, leftOffset=D0, topOffset=D1	VOID	VOID EraseImage(struct RastPort *rp, struct Image *image, LONG leftOffset, LONG topOffset)		public
+-636	-$27C	NewObjectA	classPtr=A0, classID=A1, tagList=A2	APTR	APTR NewObjectA(struct IClass *classPtr, CONST_STRPTR classID, CONST struct TagItem *tagList)	NewObject	public
+-642	-$282	DisposeObject	object=A0	VOID	VOID DisposeObject(APTR object)		public
+-648	-$288	SetAttrsA	object=A0, tagList=A1	ULONG	ULONG SetAttrsA(APTR object, CONST struct TagItem *tagList)	SetAttrs	public
+-654	-$28E	GetAttr	attrID=D0, object=A0, storagePtr=A1	ULONG	ULONG GetAttr(ULONG attrID, APTR object, ULONG *storagePtr)		public
+-660	-$294	SetGadgetAttrsA	gadget=A0, window=A1, requester=A2, tagList=A3	ULONG	ULONG SetGadgetAttrsA(struct Gadget *gadget, struct Window *window, struct Requester *requester, CONST struct TagItem *tagList)	SetGadgetAttrs	public
+-666	-$29A	NextObject	objectPtrPtr=A0	APTR	APTR NextObject(APTR objectPtrPtr)		public
+-678	-$2A6	MakeClass	classID=A0, superClassID=A1, superClassPtr=A2, instanceSize=D0, flags=D1	struct IClass *	struct IClass * MakeClass(CONST_STRPTR classID, CONST_STRPTR superClassID, CONST struct IClass *superClassPtr, ULONG instanceSize, ULONG flags)		public
+-684	-$2AC	AddClass	classPtr=A0	VOID	VOID AddClass(struct IClass *classPtr)		public
+-690	-$2B2	GetScreenDrawInfo	screen=A0	struct DrawInfo *	struct DrawInfo * GetScreenDrawInfo(struct Screen *screen)		public
+-696	-$2B8	FreeScreenDrawInfo	screen=A0, drawInfo=A1	VOID	VOID FreeScreenDrawInfo(struct Screen *screen, struct DrawInfo *drawInfo)		public
+-702	-$2BE	ResetMenuStrip	window=A0, menu=A1	BOOL	BOOL ResetMenuStrip(struct Window *window, struct Menu *menu)		public
+-708	-$2C4	RemoveClass	classPtr=A0	VOID	VOID RemoveClass(struct IClass *classPtr)		public
+-714	-$2CA	FreeClass	classPtr=A0	BOOL	BOOL FreeClass(struct IClass *classPtr)		public
+-768	-$300	AllocScreenBuffer	sc=A0, bm=A1, flags=D0	struct ScreenBuffer *	struct ScreenBuffer * AllocScreenBuffer(struct Screen *sc, struct BitMap *bm, ULONG flags)		public
+-774	-$306	FreeScreenBuffer	sc=A0, sb=A1	VOID	VOID FreeScreenBuffer(struct Screen *sc, struct ScreenBuffer *sb)		public
+-780	-$30C	ChangeScreenBuffer	sc=A0, sb=A1	ULONG	ULONG ChangeScreenBuffer(struct Screen *sc, struct ScreenBuffer *sb)		public
+-786	-$312	ScreenDepth	screen=A0, flags=D0, reserved=A1	VOID	VOID ScreenDepth(struct Screen *screen, ULONG flags, APTR reserved)		public
+-792	-$318	ScreenPosition	screen=A0, flags=D0, x1=D1, y1=D2, x2=D3, y2=D4	VOID	VOID ScreenPosition(struct Screen *screen, ULONG flags, LONG x1, LONG y1, LONG x2, LONG y2)		public
+-798	-$31E	ScrollWindowRaster	win=A1, dx=D0, dy=D1, xMin=D2, yMin=D3, xMax=D4, yMax=D5	VOID	VOID ScrollWindowRaster(struct Window *win, LONG dx, LONG dy, LONG xMin, LONG yMin, LONG xMax, LONG yMax)		public
+-804	-$324	LendMenus	fromwindow=A0, towindow=A1	VOID	VOID LendMenus(struct Window *fromwindow, struct Window *towindow)		public
+-810	-$32A	DoGadgetMethodA	gad=A0, win=A1, req=A2, message=A3	ULONG	ULONG DoGadgetMethodA(struct Gadget *gad, struct Window *win, struct Requester *req, Msg message)	DoGadgetMethod	public
+-816	-$330	SetWindowPointerA	win=A0, taglist=A1	VOID	VOID SetWindowPointerA(struct Window *win, CONST struct TagItem *taglist)	SetWindowPointer	public
+-822	-$336	TimedDisplayAlert	alertNumber=D0, string=A0, height=D1, time=A1	BOOL	BOOL TimedDisplayAlert(ULONG alertNumber, CONST_STRPTR string, ULONG height, ULONG time)		public
+-828	-$33C	HelpControl	win=A0, flags=D0	VOID	VOID HelpControl(struct Window *win, ULONG flags)		public
